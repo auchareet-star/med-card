@@ -1542,17 +1542,17 @@
             box-shadow:0 2px 16px rgba(0,0,0,0.04);
         }
         .db-action:hover { transform:translateY(-4px); box-shadow:0 12px 36px rgba(0,0,0,0.09); }
-        .db-action.primary { border-color:#99f6e4; }
-        .db-action.primary:hover { box-shadow:0 12px 36px rgba(13,148,136,0.13); border-color:#0D9488; }
-        .db-action.secondary { border-color:#bfdbfe; }
-        .db-action.secondary:hover { box-shadow:0 12px 36px rgba(59,130,246,0.13); border-color:#3b82f6; }
+        .db-action.primary { border-color:#ddd6fe; }
+        .db-action.primary:hover { box-shadow:0 12px 36px rgba(124,58,237,0.13); border-color:#7c3aed; }
+        .db-action.secondary { border-color:#99f6e4; }
+        .db-action.secondary:hover { box-shadow:0 12px 36px rgba(13,148,136,0.13); border-color:#0D9488; }
         .db-action::before {
             content:''; position:absolute; top:0; right:0;
             width:110px; height:110px; border-radius:0 20px 0 0;
-            background:radial-gradient(circle at top right,rgba(13,148,136,.06),transparent 70%);
+            background:radial-gradient(circle at top right,rgba(124,58,237,.06),transparent 70%);
             pointer-events:none;
         }
-        .db-action.secondary::before { background:radial-gradient(circle at top right,rgba(59,130,246,.06),transparent 70%); }
+        .db-action.secondary::before { background:radial-gradient(circle at top right,rgba(13,148,136,.06),transparent 70%); }
         .db-action-badge {
             position:absolute; top:14px; right:14px;
             font-size:10px; font-weight:700; padding:3px 10px;
@@ -2761,7 +2761,7 @@
             box-shadow: 0 5px 22px rgba(13,148,136,.35);
             transition: all .18s;
             width: 100%;
-            max-width: 100%;
+            max-width: 500px;
         }
         .spt-scan-btn:hover { background: var(--green-dark); transform: translateY(-1px); }
 
@@ -3593,6 +3593,25 @@
             background:rgba(204,251,241,0.2);
             box-shadow:0 2px 8px rgba(13,148,136,0.08);
         }
+
+        /* ══════════════════════════════════════════════
+           MULTI-DRUG SCAN CARDS (.mdc-*)
+        ══════════════════════════════════════════════ */
+        .mdc { background:var(--white); border:2px solid var(--border); border-radius:14px; margin-bottom:10px; display:flex; align-items:stretch; gap:0; overflow:hidden; transition:border-color .2s, background .2s; }
+        .mdc.done { border-color:#059669; background:#ecfdf5; }
+        .mdc-bar { width:5px; flex-shrink:0; background:#cbd5e1; transition:background .3s; }
+        .mdc.done .mdc-bar { background:#059669; }
+        .mdc-body { flex:1; padding:14px 14px 14px 12px; }
+        .mdc-header { display:flex; align-items:center; gap:10px; }
+        .mdc-info { flex:1; }
+        .mdc-name { font-size:14px; font-weight:700; color:var(--text-1); }
+        .mdc-sub { font-size:11px; color:var(--text-2); margin-top:2px; }
+        .mdc-btn { flex-shrink:0; padding:8px 16px; border-radius:10px; border:none; cursor:pointer; font-size:13px; font-weight:700; color:white; transition:opacity .2s; }
+        .mdc-btn:disabled { opacity:.45; cursor:not-allowed; }
+        .mdc-done-row { margin-top:10px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+        .mdc-rights { display:grid; gap:4px; margin:0 0 6px; grid-template-columns:repeat(7,1fr); }
+        .mdc-result-tag { display:inline-flex; align-items:center; gap:5px; background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:4px 10px; font-size:11px; color:#166534; font-weight:600; }
+        .mdc-badge-warn { display:inline-block; font-size:9px; font-weight:700; border-radius:5px; padding:2px 5px; background:#fef2f2; color:#dc2626; border:1px solid #fca5a5; margin-left:4px; vertical-align:middle; }
 
         /* ══════════════════════════════════════════════
            PAGE 20 — STAT MED FLOW (จ่ายยา STAT)
@@ -5565,7 +5584,7 @@
                     <div class="hdr-user-role">พยาบาลวิชาชีพ</div>
                 </div>
             </div>
-            <button class="logout-btn" onclick="doLogout()">
+            <button class="logout-btn" onclick="doLogout()" style="background:#fef2f2;border-color:#fecaca;color:#ef4444;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
@@ -5670,27 +5689,27 @@
             <!-- จ่ายยา -->
             <div class="db-action primary" onclick="nav('pg-routine')">
                 <span class="db-action-badge" style="background:#EF4444;">3 รอจ่าย</span>
-                <div class="db-action-icon" style="background:linear-gradient(135deg,#0D9488,#14B8A6);">
+                <div class="db-action-icon" style="background:linear-gradient(135deg,#7c3aed,#8b5cf6);box-shadow:0 6px 16px rgba(124,58,237,0.25);">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 002 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
                 </div>
-                <div class="db-action-title" style="color:#0F766E;">จ่ายยา</div>
+                <div class="db-action-title" style="color:#6d28d9;">จ่ายยา</div>
                 <div class="db-action-sub">Medication Administration</div>
                 <div class="db-action-desc">บริหารยาตามรายการสั่งของแพทย์ พร้อม 7 Rights ครบถ้วน</div>
-                <div class="db-action-cta" style="color:#0D9488;">
+                <div class="db-action-cta" style="color:#7c3aed;">
                     เริ่มจ่ายยา
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                 </div>
             </div>
             <!-- จัดยา -->
             <div class="db-action secondary" onclick="goToPrepType()">
-                <span class="db-action-badge" style="background:#3b82f6;">5 รอจัด</span>
-                <div class="db-action-icon" style="background:linear-gradient(135deg,#2563eb,#3b82f6);box-shadow:0 6px 16px rgba(59,130,246,0.25);">
+                <span class="db-action-badge" style="background:#0D9488;">5 รอจัด</span>
+                <div class="db-action-icon" style="background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 6px 16px rgba(13,148,136,0.25);">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                 </div>
-                <div class="db-action-title" style="color:#1d4ed8;">จัดยา</div>
+                <div class="db-action-title" style="color:#0F766E;">จัดยา</div>
                 <div class="db-action-sub">Medication Preparation</div>
                 <div class="db-action-desc">เตรียมยาเข้ารถเข็น ตามผู้ป่วย / ตามยา / ตามเวลา</div>
-                <div class="db-action-cta" style="color:#3b82f6;">
+                <div class="db-action-cta" style="color:#0D9488;">
                     เริ่มจัดยา
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
                 </div>
@@ -5717,11 +5736,11 @@
                 </div>
                 <div><div class="db-alert-num" style="color:#d97706;">2</div><div class="db-alert-label">High Alert</div></div>
             </div>
-            <div class="db-alert" style="border-color:#fde68a;border-left:3px solid #d97706;" onclick="nav('pg-omit-flow')">
-                <div class="db-alert-icon" style="background:linear-gradient(135deg,#d97706,#f59e0b);box-shadow:0 3px 8px rgba(217,119,6,0.25);">
+            <div class="db-alert" style="border-color:#e2e8f0;border-left:3px solid #64748b;" onclick="nav('pg-omit-flow')">
+                <div class="db-alert-icon" style="background:linear-gradient(135deg,#475569,#64748b);box-shadow:0 3px 8px rgba(100,116,139,0.25);">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
                 </div>
-                <div><div class="db-alert-num" style="color:#d97706;">2</div><div class="db-alert-label">งดยาวันนี้</div></div>
+                <div><div class="db-alert-num" style="color:#475569;">2</div><div class="db-alert-label">งดยาวันนี้</div></div>
             </div>
         </div>
 
@@ -8056,55 +8075,100 @@
 
         <!-- ══ STEP 4: สแกนยา ══ -->
         <div class="rt-panel" id="rtStep4">
-            <div class="rt-inner wide">
-                <div style="display:grid;grid-template-columns:280px 1fr;gap:20px;">
-                    <!-- LEFT: Drug list -->
-                    <div style="background:rgba(255,255,255,0.88);backdrop-filter:blur(20px);border:1.5px solid rgba(226,232,240,0.4);border-radius:20px;padding:18px;box-shadow:0 2px 16px rgba(0,0,0,0.03);">
-                        <div style="font-size:12px;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
-                            <div style="width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--green-light),var(--green-mid));display:flex;align-items:center;justify-content:center;">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+            <div class="rt-inner" style="max-width:600px;">
+                <div style="font-size:13px;font-weight:700;color:var(--text-2);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
+                    สแกนยาทุกรายการ (สแกนพร้อมกันได้)
+                </div>
+
+                <!-- Drug 0: Amlodipine -->
+                <div class="mdc" id="rdrug_0" data-flow="r" data-done="false">
+                    <div class="mdc-bar" style="background:#0d9488;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Amlodipine 5 mg</div>
+                                <div class="mdc-sub">PO · 5 mg × 1 เม็ด · รอบเช้า</div>
                             </div>
-                            รายการยา (3)
+                            <button class="mdc-btn" id="rdrug_0_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);" onclick="scanMultiDrug('r',0)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
                         </div>
-                        <div class="rt-drug active" onclick="rtPickDrug(this)"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Amlodipine 5 mg</div><div class="rt-drug-sub">PO · รอบเช้า</div></div></div>
-                        <div class="rt-drug" onclick="rtPickDrug(this)"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Metformin 500 mg</div><div class="rt-drug-sub">PO · รอบเช้า</div></div></div>
-                        <div class="rt-drug" onclick="rtPickDrug(this)"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Omeprazole 20 mg</div><div class="rt-drug-sub">PO · รอบเช้า</div></div></div>
+                        <div class="mdc-done-row" id="rdrug_0_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_0_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="rdrug_0_lot">—</span>
+                        </div>
                     </div>
-                    <!-- RIGHT: Drug detail + scan -->
-                    <div style="display:flex;flex-direction:column;gap:16px;">
-                        <div class="am-detail" style="margin-bottom:0;">
-                            <div style="font-size:18px;font-weight:800;color:var(--text-1);margin-bottom:12px;letter-spacing:-0.2px;">Amlodipine 5 mg</div>
-                            <div class="am-detail-grid">
-                                <div><div class="am-dl">Dose</div><div class="am-dv green">5 mg x 1 เม็ด</div></div>
-                                <div><div class="am-dl">Route</div><div class="am-dv">PO (รับประทาน)</div></div>
-                                <div><div class="am-dl">เวลา</div><div class="am-dv">06:00–08:00 น.</div></div>
-                                <div><div class="am-dl">Frequency</div><div class="am-dv">OD เช้า</div></div>
+                </div>
+
+                <!-- Drug 1: Metformin -->
+                <div class="mdc" id="rdrug_1" data-flow="r" data-done="false">
+                    <div class="mdc-bar" style="background:#0d9488;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Metformin 500 mg</div>
+                                <div class="mdc-sub">PO · 500 mg × 1 เม็ด · รอบเช้า</div>
                             </div>
+                            <button class="mdc-btn" id="rdrug_1_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);" onclick="scanMultiDrug('r',1)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
                         </div>
-                        <div class="rt-rights" id="rtRights">
-                            <div class="rt-r pass">Patient</div>
-                            <div class="rt-r pend" id="rtRD">Drug</div>
-                            <div class="rt-r pend" id="rtRDs">Dose</div>
-                            <div class="rt-r pend" id="rtRR">Route</div>
-                            <div class="rt-r pass">Time</div>
-                            <div class="rt-r pend" id="rtRDc">Doc.</div>
-                            <div class="rt-r pend" id="rtRRs">Reason</div>
-                        </div>
-                        <button class="scan-btn-big" onclick="rtScanDrug()" style="margin-bottom:12px;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 4px 16px rgba(13,148,136,0.3);">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
-                            สแกนยา
-                        </button>
-                        <div class="am-scan-result" id="rtDrugScanResult">
-                            <div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Amlodipine 5 mg</span></div>
-                            <div class="am-sr-grid">
-                                <div><div class="am-sr-l">Lot</div><div class="am-sr-v">AML-2025-108</div></div>
-                                <div><div class="am-sr-l">Expiry</div><div class="am-sr-v">15/03/2570</div></div>
+                        <div class="mdc-done-row" id="rdrug_1_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
                             </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_1_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="rdrug_1_lot">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drug 2: Omeprazole -->
+                <div class="mdc" id="rdrug_2" data-flow="r" data-done="false">
+                    <div class="mdc-bar" style="background:#0d9488;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Omeprazole 20 mg</div>
+                                <div class="mdc-sub">PO · 20 mg × 1 แคปซูล · รอบเช้า</div>
+                            </div>
+                            <button class="mdc-btn" id="rdrug_2_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);" onclick="scanMultiDrug('r',2)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="rdrug_2_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_2_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="rdrug_2_lot">—</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="rt-bottom wide"><button class="btn-secondary" onclick="rtGoStep(3)">ย้อนกลับ</button><button class="btn-primary" id="rtBtnConfirmDrug" onclick="rtGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา</button></div>
+            <div class="rt-bottom wide"><button class="btn-secondary" onclick="rtGoStep(3)">ย้อนกลับ</button><button class="btn-primary" id="rtBtnConfirmDrug" onclick="rtGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา (3/3)</button></div>
         </div>
 
         <!-- ══ STEP 5: ยืนยัน ══ -->
@@ -8158,7 +8222,8 @@
                     </div>
                 </div>
                 <div class="ok-actions" style="max-width:400px;width:100%;">
-                    <button class="btn-primary" onclick="rtGoStep(4);rtResetDrugScan();">ให้ยารายการถัดไป</button>
+                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Amlodipine 5 mg',detail:'PO · 5 mg',type:'Routine',givenTime:'08:05 น.',showPain:false,origin:'pg-routine'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
+                    <button class="btn-primary" onclick="rtGoStep(4);rtResetDrugScan();" style="background:rgba(255,255,255,0.9);color:#0F766E;border:2px solid #99f6e4;">ให้ยารายการถัดไป</button>
                     <div class="ok-act-row">
                         <button class="btn-secondary" onclick="rtGoStep(1)">กลับรายการผู้ป่วย</button>
                         <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>
@@ -8267,7 +8332,7 @@
                     </div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="stScan3H">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;" id="stScan3T">ยืนยันตัวตนก่อนให้ยา STAT</div>
-                    <button class="btn-stat" style="max-width:440px;" onclick="stScanPt()" id="stScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
+                    <button class="btn-stat" style="max-width:440px;" onclick="stScanPt()" id="stScan3Btn" style="max-width:500px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="stStep3Bot" style="display:none;"><button class="btn-secondary" onclick="stResetScan3()">สแกนใหม่</button><button class="btn-stat" style="flex:2;" onclick="stGoStep(4)">ดำเนินการต่อ</button></div>
@@ -8275,45 +8340,71 @@
 
         <!-- ══ STEP 4: สแกนยา + ยืนยัน STAT ══ -->
         <div class="rt-panel" id="stStep4">
-            <div class="rt-inner">
-                <div class="stat-banner">
+            <div class="rt-inner" style="max-width:600px;">
+                <div class="stat-banner" style="margin-bottom:16px;">
                     <div class="stat-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div>
-                    <div><div class="stat-banner-text">สแกนยาและยืนยัน — STAT</div><div class="stat-banner-sub" id="stBanner4Sub"></div></div>
+                    <div><div class="stat-banner-text">สแกนยา STAT — สแกนพร้อมกันได้</div><div class="stat-banner-sub">สแกนยาครบทุกรายการเพื่อยืนยัน</div></div>
                 </div>
 
-                <div class="am-detail" style="margin-bottom:14px;">
-                    <div class="am-detail-name" style="display:flex;align-items:center;gap:6px;" id="stDrugName4"></div>
-                    <div class="am-detail-grid">
-                        <div><div class="am-dl">Dose</div><div class="am-dv green" id="stDose4"></div></div>
-                        <div><div class="am-dl">Route</div><div class="am-dv" id="stRoute4"></div></div>
-                        <div><div class="am-dl">สั่งเมื่อ</div><div class="am-dv" style="color:#dc2626;font-weight:800;" id="stOrderTime4"></div></div>
-                        <div><div class="am-dl">แพทย์สั่ง</div><div class="am-dv" id="stDoctor4"></div></div>
+                <!-- Drug 0: Heparin -->
+                <div class="mdc" id="stdrug_0" data-flow="st" data-done="false">
+                    <div class="mdc-bar" style="background:#dc2626;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Heparin 5000 units <span class="mdc-badge-warn">High Alert</span><span class="mdc-badge-warn">STAT</span></div>
+                                <div class="mdc-sub">SC · 5,000 units · สั่งด่วน</div>
+                            </div>
+                            <button class="mdc-btn" id="stdrug_0_btn" style="background:linear-gradient(135deg,#b91c1c,#dc2626);" onclick="scanMultiDrug('st',0)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="stdrug_0_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="stdrug_0_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="stdrug_0_lot">—</span>
+                        </div>
                     </div>
-                    <div class="am-warn-box" id="stWarnBox4"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span id="stWarnText4"></span></div>
                 </div>
 
-                <!-- 7 Rights -->
-                <div class="rt-rights" id="stRights">
-                    <div class="rt-r pass">Patient</div>
-                    <div class="rt-r pend" id="stRD">Drug</div>
-                    <div class="rt-r pend" id="stRDs">Dose</div>
-                    <div class="rt-r pend" id="stRR">Route</div>
-                    <div class="rt-r pass">Time</div>
-                    <div class="rt-r pend" id="stRDc">Doc.</div>
-                    <div class="rt-r pend" id="stRRs">Reason</div>
-                </div>
-
-                <button class="btn-stat" onclick="stScanDrug()" style="margin-bottom:14px;" id="stScanDrugBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนยา</button>
-
-                <div class="am-scan-result" id="stDrugResult">
-                    <div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name" id="stScanName4"></span></div>
-                    <div class="am-sr-grid">
-                        <div><div class="am-sr-l">Lot</div><div class="am-sr-v" id="stLot4"></div></div>
-                        <div><div class="am-sr-l">Expiry</div><div class="am-sr-v" id="stExpiry4"></div></div>
+                <!-- Drug 1: Ondansetron -->
+                <div class="mdc" id="stdrug_1" data-flow="st" data-done="false">
+                    <div class="mdc-bar" style="background:#dc2626;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Ondansetron 4 mg <span class="mdc-badge-warn">STAT</span></div>
+                                <div class="mdc-sub">IV · 4 mg · สั่งด่วน</div>
+                            </div>
+                            <button class="mdc-btn" id="stdrug_1_btn" style="background:linear-gradient(135deg,#b91c1c,#dc2626);" onclick="scanMultiDrug('st',1)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="stdrug_1_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="stdrug_1_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="stdrug_1_lot">—</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="rt-bottom wide"><button class="btn-secondary" onclick="stGoStep(3)">ย้อนกลับ</button><button class="btn-stat" style="flex:2;" id="stBtnConfirm" onclick="stGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา STAT ตอนนี้</button></div>
+            <div class="rt-bottom wide"><button class="btn-secondary" onclick="stGoStep(3)">ย้อนกลับ</button><button class="btn-stat" style="flex:2;" id="stBtnConfirm" onclick="stGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา STAT (2/2)</button></div>
         </div>
 
         <!-- ══ STEP 5: สำเร็จ ══ -->
@@ -8335,6 +8426,7 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:400px;width:100%;">
+                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายธนกร วิเศษสิทธิ์',bed:'6405001 · 3A-10',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'STAT',givenTime:'08:18 น.',showPain:false,origin:'pg-stat'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
                     <button class="btn-primary" onclick="stGoStep(1)" style="background:#dc2626;box-shadow:0 5px 22px rgba(220,38,38,.3);">กลับรายการผู้ป่วย STAT</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -8382,8 +8474,6 @@
             <div class="rt-step" data-s="5"><div class="rt-step-dot">5</div><span class="rt-step-label">สแกนยา</span></div>
             <div class="rt-step-line"></div>
             <div class="rt-step" data-s="6"><div class="rt-step-dot">6</div><span class="rt-step-label">สำเร็จ</span></div>
-            <div class="rt-step-line"></div>
-            <div class="rt-step" data-s="7"><div class="rt-step-dot">7</div><span class="rt-step-label">ประเมินหลังยา</span></div>
         </div>
 
         <!-- ══ STEP 1: เลือกผู้ป่วย PRN ══ -->
@@ -8465,7 +8555,7 @@
                     </div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="prnScan3H">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;" id="prnScan3Sub"></div>
-                    <button class="btn-prn" style="max-width:440px;width:100%;" onclick="prnScanPt()" id="prnScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
+                    <button class="btn-prn" style="max-width:500px;width:100%;" onclick="prnScanPt()" id="prnScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="prnStep3Bot" style="display:none;"><button class="btn-secondary" onclick="prnResetScan3()">สแกนใหม่</button><button class="btn-prn" style="flex:2;" onclick="prnGoStep(4)">ดำเนินการต่อ</button></div>
@@ -8531,43 +8621,71 @@
 
         <!-- ══ STEP 5: สแกนยา + ยืนยัน ══ -->
         <div class="rt-panel" id="prnStep5">
-            <div class="rt-inner">
-                <div class="prn-banner">
+            <div class="rt-inner" style="max-width:600px;">
+                <div class="prn-banner" style="margin-bottom:16px;">
                     <div class="prn-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
-                    <div><div class="prn-banner-text">สแกนยาและยืนยัน — PRN</div><div class="prn-banner-sub" id="prnBannerSub5"></div></div>
+                    <div><div class="prn-banner-text">สแกนยา PRN — สแกนพร้อมกันได้</div><div class="prn-banner-sub">สแกนยาครบทุกรายการเพื่อยืนยัน</div></div>
                 </div>
 
-                <div class="am-detail" style="margin-bottom:14px;">
-                    <div class="am-detail-name" style="display:flex;align-items:center;gap:6px;" id="prnDrugName5"></div>
-                    <div class="am-detail-grid">
-                        <div><div class="am-dl">Dose</div><div class="am-dv" style="color:#7c3aed;font-weight:800;" id="prnDose5"></div></div>
-                        <div><div class="am-dl">Route</div><div class="am-dv" id="prnRoute5"></div></div>
-                        <div><div class="am-dl">เงื่อนไข</div><div class="am-dv" id="prnCondition5"></div></div>
-                        <div><div class="am-dl">ให้ล่าสุด</div><div class="am-dv" id="prnLastGiven5"></div></div>
+                <!-- Drug 0: Morphine -->
+                <div class="mdc" id="prndrug_0" data-flow="prn" data-done="false">
+                    <div class="mdc-bar" style="background:#7c3aed;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Morphine 5 mg <span class="mdc-badge-warn">High Alert</span><span class="mdc-badge-warn">Narcotic</span></div>
+                                <div class="mdc-sub">IV · 5 mg · PRN pain score ≥ 7</div>
+                            </div>
+                            <button class="mdc-btn" id="prndrug_0_btn" style="background:linear-gradient(135deg,#6d28d9,#7c3aed);" onclick="scanMultiDrug('prn',0)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="prndrug_0_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Assess.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="prndrug_0_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="prndrug_0_lot">—</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="rt-rights" id="prnRights">
-                    <div class="rt-r pass">Patient</div>
-                    <div class="rt-r pend" id="prnRD">Drug</div>
-                    <div class="rt-r pend" id="prnRDs">Dose</div>
-                    <div class="rt-r pend" id="prnRR">Route</div>
-                    <div class="rt-r pass">Time</div>
-                    <div class="rt-r pass">Assess.</div>
-                    <div class="rt-r pend" id="prnRDc">Doc.</div>
-                </div>
-
-                <button class="btn-prn" onclick="prnScanDrug()" style="margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนยา</button>
-
-                <div class="am-scan-result" id="prnDrugResult">
-                    <div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name" id="prnScanResultName"></span></div>
-                    <div class="am-sr-grid">
-                        <div><div class="am-sr-l">Lot</div><div class="am-sr-v" id="prnLot5"></div></div>
-                        <div><div class="am-sr-l">Expiry</div><div class="am-sr-v" id="prnExpiry5"></div></div>
+                <!-- Drug 1: Ondansetron -->
+                <div class="mdc" id="prndrug_1" data-flow="prn" data-done="false">
+                    <div class="mdc-bar" style="background:#7c3aed;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Ondansetron 4 mg</div>
+                                <div class="mdc-sub">IV · 4 mg · PRN nausea/vomiting</div>
+                            </div>
+                            <button class="mdc-btn" id="prndrug_1_btn" style="background:linear-gradient(135deg,#6d28d9,#7c3aed);" onclick="scanMultiDrug('prn',1)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="prndrug_1_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Assess.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="prndrug_1_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="prndrug_1_lot">—</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="rt-bottom wide"><button class="btn-secondary" onclick="prnGoStep(4)">ย้อนกลับ</button><button class="btn-prn" style="flex:2;" id="btnPrnConfirm" onclick="prnGoStep(6)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา PRN</button></div>
+            <div class="rt-bottom wide"><button class="btn-secondary" onclick="prnGoStep(4)">ย้อนกลับ</button><button class="btn-prn" style="flex:2;" id="btnPrnConfirm" onclick="prnGoStep(6)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา PRN (2/2)</button></div>
         </div>
 
         <!-- ══ STEP 6: สำเร็จ ══ -->
@@ -8589,178 +8707,13 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:420px;width:100%;">
-                    <button class="btn-prn" onclick="prnGoStep(7)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>บันทึกการประเมินหลังให้ยา</button>
+                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Morphine 5 mg',detail:'IV · 5 mg',type:'PRN',givenTime:'08:18 น.',showPain:true,origin:'pg-prn'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา (บังคับสำหรับ PRN)</button>
                     <div class="ok-act-row">
                         <button class="btn-secondary" onclick="prnGoStep(1)">กลับรายการผู้ป่วย</button>
                         <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- ══ STEP 7: ประเมินหลังให้ยา ══ -->
-        <div class="rt-panel" id="prnStep7">
-            <div class="rt-inner" id="prnPostAssessForm">
-                <div class="prn-banner">
-                    <div class="prn-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M9 2v6h2V4h10v16H11v-4H9v6h14V2H9zM7.5 7L3 12l4.5 5v-3.5H16v-3H7.5V7z"/></svg></div>
-                    <div><div class="prn-banner-text">ประเมินหลังให้ยา PRN</div><div class="prn-banner-sub" id="prnBannerSub7"></div></div>
-                </div>
-
-                <!-- Drug info reminder -->
-                <div class="am-detail" style="margin-bottom:14px;">
-                    <div class="am-detail-name" style="display:flex;align-items:center;gap:6px;" id="prnDrugName7"></div>
-                    <div class="am-detail-grid">
-                        <div><div class="am-dl">ข้อบ่งชี้</div><div class="am-dv" style="color:#7c3aed;font-weight:800;" id="prnIndic7"></div></div>
-                        <div><div class="am-dl">เวลาที่ให้ยา</div><div class="am-dv" id="prnPostGivenTime">--</div></div>
-                        <div><div class="am-dl">Route</div><div class="am-dv" id="prnRoute7"></div></div>
-                        <div><div class="am-dl">Dose</div><div class="am-dv" id="prnDose7"></div></div>
-                    </div>
-                </div>
-
-                <!-- Assessment Form -->
-                <div class="prn-assess">
-                    <div class="prn-assess-title">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="#7c3aed"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/></svg>
-                        แบบประเมินหลังให้ยา
-                    </div>
-
-                    <!-- Pain Score Re-evaluation -->
-                    <div class="prn-field">
-                        <label>Pain Score หลังให้ยา (ประเมินซ้ำ) <span style="color:#dc2626;">*</span></label>
-                        <div class="pain-scale" id="postPainScale">
-                            <div class="pain-dot" style="background:#E8F5E9;color:#2E7D32;border-color:#A5D6A7;" onclick="selectPostPain(0)">0</div>
-                            <div class="pain-dot" style="background:#F1F8E9;color:#558B2F;border-color:#C5E1A5;" onclick="selectPostPain(1)">1</div>
-                            <div class="pain-dot" style="background:#F9FBE7;color:#9E9D24;border-color:#E6EE9C;" onclick="selectPostPain(2)">2</div>
-                            <div class="pain-dot" style="background:#FFFDE7;color:#F9A825;border-color:#FFF59D;" onclick="selectPostPain(3)">3</div>
-                            <div class="pain-dot" style="background:#FFF8E1;color:#FF8F00;border-color:#FFE082;" onclick="selectPostPain(4)">4</div>
-                            <div class="pain-dot" style="background:#FFF3E0;color:#EF6C00;border-color:#FFCC80;" onclick="selectPostPain(5)">5</div>
-                            <div class="pain-dot" style="background:#FBE9E7;color:#D84315;border-color:#FFAB91;" onclick="selectPostPain(6)">6</div>
-                            <div class="pain-dot" style="background:#FFEBEE;color:#C62828;border-color:#EF9A9A;" onclick="selectPostPain(7)">7</div>
-                            <div class="pain-dot" style="background:#FCE4EC;color:#AD1457;border-color:#F48FB1;" onclick="selectPostPain(8)">8</div>
-                            <div class="pain-dot" style="background:#F3E5F5;color:#6A1B9A;border-color:#CE93D8;" onclick="selectPostPain(9)">9</div>
-                            <div class="pain-dot" style="background:#EDE7F6;color:#4A148C;border-color:#B39DDB;" onclick="selectPostPain(10)">10</div>
-                        </div>
-                        <div id="postPainCompare" style="margin-top:8px;font-size:12px;color:var(--text-3);display:none;">
-                            <span id="postPainCompareText"></span>
-                        </div>
-                    </div>
-
-                    <!-- Response Level -->
-                    <div class="prn-field">
-                        <label>การตอบสนองต่อยา <span style="color:#dc2626;">*</span></label>
-                        <select id="prnResponseLevel" onchange="checkPostAssess()">
-                            <option value="">— เลือกระดับการตอบสนอง —</option>
-                            <option value="excellent">ตอบสนองดีมาก — อาการดีขึ้นชัดเจน</option>
-                            <option value="good">ตอบสนองดี — อาการดีขึ้นบางส่วน</option>
-                            <option value="partial">ตอบสนองเล็กน้อย — อาการดีขึ้นเล็กน้อย</option>
-                            <option value="none">ไม่ตอบสนอง — อาการไม่เปลี่ยนแปลง</option>
-                            <option value="worse">อาการแย่ลง</option>
-                        </select>
-                    </div>
-
-                    <!-- Side Effects -->
-                    <div class="prn-field">
-                        <label>อาการข้างเคียง (เลือกได้หลายข้อ) <span style="color:#dc2626;">*</span></label>
-                        <div class="post-side-effects">
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="none" checked onchange="handleNoSideEffect(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>ไม่มีอาการข้างเคียง</span>
-                            </label>
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="nausea" onchange="handleSideEffectCheck(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>คลื่นไส้ / อาเจียน</span>
-                            </label>
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="drowsy" onchange="handleSideEffectCheck(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>ง่วงซึม / สับสน</span>
-                            </label>
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="rash" onchange="handleSideEffectCheck(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>ผื่น / ลมพิษ / คัน</span>
-                            </label>
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="breathing" onchange="handleSideEffectCheck(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>หายใจลำบาก / หายใจช้า</span>
-                            </label>
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="hypotension" onchange="handleSideEffectCheck(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>ความดันโลหิตต่ำ / เวียนศีรษะ</span>
-                            </label>
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="constipation" onchange="handleSideEffectCheck(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>ท้องผูก</span>
-                            </label>
-                            <label class="post-se-item" onclick="toggleSideEffect(this)">
-                                <input type="checkbox" value="other" onchange="handleSideEffectCheck(this)">
-                                <span class="post-se-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>
-                                <span>อื่นๆ</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Vital Signs (optional) -->
-                    <div class="prn-field">
-                        <label>สัญญาณชีพ (ถ้ามี)</label>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                            <input type="text" id="postBP" placeholder="BP เช่น 120/80" style="font-size:13px;">
-                            <input type="text" id="postHR" placeholder="HR เช่น 78" style="font-size:13px;">
-                            <input type="text" id="postRR" placeholder="RR เช่น 18" style="font-size:13px;">
-                            <input type="text" id="postSpO2" placeholder="SpO2 เช่น 98%" style="font-size:13px;">
-                        </div>
-                    </div>
-
-                    <!-- Notes -->
-                    <div class="prn-field">
-                        <label>หมายเหตุเพิ่มเติม</label>
-                        <textarea id="postNote" placeholder="บันทึกข้อสังเกตเพิ่มเติม เช่น ผู้ป่วยหลับพักผ่อนได้..." style="min-height:50px;"></textarea>
-                    </div>
-
-                    <!-- Assessment Time -->
-                    <div class="prn-field">
-                        <label>เวลาที่ประเมิน <span style="color:#dc2626;">*</span></label>
-                        <div style="display:flex;align-items:center;gap:10px;">
-                            <input type="text" id="postAssessTime" readonly style="background:#f5f3ff;font-weight:700;color:#5b21b6;flex:1;">
-                            <button style="padding:8px 14px;border:1.5px solid #c4b5fd;border-radius:12px;background:#f5f3ff;color:#5b21b6;font-family:'Prompt',sans-serif;font-size:13px;font-weight:600;cursor:pointer;" onclick="document.getElementById('postAssessTime').value=new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';">ตอนนี้</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Success State (hidden initially) -->
-            <div class="rt-inner center" id="prnPostAssessSuccess" style="display:none;">
-                <div class="prn-ok-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
-                <div style="font-size:26px;font-weight:800;color:#5b21b6;margin-bottom:4px;">บันทึกการประเมินสำเร็จ</div>
-                <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;" id="prnSuccessSub7"></div>
-
-                <div class="ok-summary" style="max-width:420px;width:100%;">
-                    <div class="ok-summary-grid">
-                        <div><div class="wit-ml">ยา</div><div class="wit-mv" style="color:#7c3aed;font-weight:800;" id="prnDrugSummary7"></div></div>
-                        <div><div class="wit-ml">Pain ก่อนให้ยา</div><div class="wit-mv" id="prnPrePainSummary7"></div></div>
-                        <div><div class="wit-ml">Pain หลังให้ยา</div><div class="wit-mv" id="postPainResult" style="color:var(--green);font-weight:800;">--</div></div>
-                        <div><div class="wit-ml">การตอบสนอง</div><div class="wit-mv" id="postResponseResult">--</div></div>
-                        <div><div class="wit-ml">อาการข้างเคียง</div><div class="wit-mv" id="postSideEffectResult">ไม่มี</div></div>
-                        <div><div class="wit-ml">เวลาประเมิน</div><div class="wit-mv" id="postTimeResult">--</div></div>
-                        <div><div class="wit-ml">ผู้ประเมิน</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
-                        <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">บันทึกแล้ว</div></div>
-                    </div>
-                </div>
-
-                <div class="ok-actions" style="max-width:420px;width:100%;margin-top:18px;">
-                    <div class="ok-act-row">
-                        <button class="btn-secondary" onclick="prnGoStep(1)">กลับรายการผู้ป่วย</button>
-                        <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="rt-bottom" id="prnStep7Bot"><button class="btn-secondary" onclick="prnGoStep(6)">ย้อนกลับ</button><button class="btn-prn" style="flex:2;" id="btnPostAssess" onclick="submitPostAssess()" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>บันทึกการประเมิน</button></div>
         </div>
 
     </div>
@@ -8857,7 +8810,7 @@
                     <div class="rt-scan-circle idle" id="haScan3C"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="haScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="haScan3H">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">สมชาย มานะ · 3A-01 · HN: 6401234</div>
-                    <button class="btn-ha" style="max-width:260px;" onclick="haScanPt()" id="haScan3Btn">เริ่มสแกน</button>
+                    <button class="btn-ha" style="max-width:500px;" onclick="haScanPt()" id="haScan3Btn">เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="haStep3Bot" style="display:none;"><button class="btn-secondary" onclick="haResetScan3()">สแกนใหม่</button><button class="btn-ha" style="flex:2;" onclick="haGoStep(4)">ดำเนินการต่อ</button></div>
@@ -8865,17 +8818,68 @@
 
         <!-- ══ STEP 4: สแกนยา + 7 Rights ══ -->
         <div class="rt-panel" id="haStep4">
-            <div class="rt-inner">
-                <div class="ha-banner"><div class="ha-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="ha-banner-text">สแกนยา High Alert — Heparin 5000 units</div><div class="ha-banner-sub">สแกนยาแล้วระบบจะไปขั้นตอนพยานโดยอัตโนมัติ</div></div></div>
+            <div class="rt-inner" style="max-width:600px;">
+                <div class="ha-banner" style="margin-bottom:16px;"><div class="ha-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg></div><div><div class="ha-banner-text">สแกนยา High Alert — สแกนพร้อมกันได้</div><div class="ha-banner-sub">สแกนยาครบทุกรายการเพื่อไปขั้นตอนพยาน</div></div></div>
 
-                <div class="am-detail" style="margin-bottom:14px;"><div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge high-alert" style="font-size:10px;">High Alert</span></div><div class="am-detail-grid"><div><div class="am-dl">Dose</div><div class="am-dv" style="color:#d97706;font-weight:800;">5,000 units</div></div><div><div class="am-dl">Route</div><div class="am-dv">SC (ฉีดใต้ผิวหนัง)</div></div><div><div class="am-dl">เวลา</div><div class="am-dv">08:00 น.</div></div><div><div class="am-dl">Frequency</div><div class="am-dv">OD</div></div></div></div>
+                <!-- Drug 0: Heparin -->
+                <div class="mdc" id="hadrug_0" data-flow="ha" data-done="false">
+                    <div class="mdc-bar" style="background:#d97706;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Heparin 5000 units <span class="mdc-badge-warn">High Alert</span></div>
+                                <div class="mdc-sub">SC · 5,000 units · OD · 08:00 น.</div>
+                            </div>
+                            <button class="mdc-btn" id="hadrug_0_btn" style="background:linear-gradient(135deg,#b45309,#d97706);" onclick="scanMultiDrug('ha',0)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="hadrug_0_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="hadrug_0_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="hadrug_0_lot">—</span>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="rt-rights" id="haRights"><div class="rt-r pass">Patient</div><div class="rt-r pend" id="haRD">Drug</div><div class="rt-r pend" id="haRDs">Dose</div><div class="rt-r pend" id="haRR">Route</div><div class="rt-r pass">Time</div><div class="rt-r pend" id="haRDc">Doc.</div><div class="rt-r pend" id="haRRs">Reason</div></div>
-
-                <button class="btn-ha" onclick="haScanDrug()" style="margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนยา</button>
-                <div class="am-scan-result" id="haDrugResult"><div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Heparin 5000 units</span></div><div class="am-sr-grid"><div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div><div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div></div></div>
+                <!-- Drug 1: Warfarin -->
+                <div class="mdc" id="hadrug_1" data-flow="ha" data-done="false">
+                    <div class="mdc-bar" style="background:#d97706;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Warfarin 3 mg <span class="mdc-badge-warn">High Alert</span></div>
+                                <div class="mdc-sub">PO · 3 mg · OD · ก่อนนอน</div>
+                            </div>
+                            <button class="mdc-btn" id="hadrug_1_btn" style="background:linear-gradient(135deg,#b45309,#d97706);" onclick="scanMultiDrug('ha',1)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="hadrug_1_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Time</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="hadrug_1_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="hadrug_1_lot">—</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="rt-bottom wide"><button class="btn-secondary" onclick="haGoStep(3)">ย้อนกลับ</button><button class="btn-ha" style="flex:2;" id="haBtnWit" onclick="haGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>ไปขั้นตอนพยาน</button></div>
+            <div class="rt-bottom wide"><button class="btn-secondary" onclick="haGoStep(3)">ย้อนกลับ</button><button class="btn-ha" style="flex:2;" id="haBtnWit" onclick="haGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>ไปขั้นตอนพยาน (2/2)</button></div>
         </div>
 
         <!-- ══ STEP 5: พยาน / IDC ══ -->
@@ -8935,6 +8939,7 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:420px;width:100%;">
+                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'High Alert',givenTime:'08:10 น.',showPain:false,origin:'pg-highalert'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
                     <button class="btn-primary" onclick="haGoStep(1)" style="background:#d97706;box-shadow:0 5px 22px rgba(217,119,6,.3);">กลับรายการผู้ป่วย</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
                 </div>
@@ -9008,7 +9013,7 @@
                     <div class="rt-scan-circle idle" id="omScan3C"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="omScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="omScan3H">สแกนยืนยันตัวผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">สมชาย มานะ · 3A-01</div>
-                    <button class="btn-om" style="max-width:260px;" onclick="omScanPt()" id="omScan3Btn">เริ่มสแกน</button>
+                    <button class="btn-om" style="max-width:500px;" onclick="omScanPt()" id="omScan3Btn">เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="omStep3Bot" style="display:none;"><button class="btn-secondary" onclick="omResetScan3()">สแกนใหม่</button><button class="btn-om" style="flex:2;" onclick="omGoStep(4)">ดำเนินการต่อ</button></div>
@@ -9165,7 +9170,7 @@
                     <div class="rt-scan-circle idle" id="ovScan3C"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="ovScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="ovScan3H">สแกนยืนยันตัวผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">ธนกร วิเศษสิทธิ์ · 3A-10</div>
-                    <button class="btn-ov" style="max-width:260px;" onclick="ovScanPt()" id="ovScan3Btn">เริ่มสแกน</button>
+                    <button class="btn-ov" style="max-width:500px;" onclick="ovScanPt()" id="ovScan3Btn">เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="ovStep3Bot" style="display:none;"><button class="btn-secondary" onclick="ovResetScan3()">สแกนใหม่</button><button class="btn-ov" style="flex:2;" onclick="ovGoStep(4)">ดำเนินการต่อ</button></div>
@@ -9205,17 +9210,68 @@
 
         <!-- ══ STEP 5: สแกนยา ══ -->
         <div class="rt-panel" id="ovStep5">
-            <div class="rt-inner">
-                <div class="ov-banner"><div class="ov-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div><div><div class="ov-banner-text">สแกนยา — Overdue Dose</div><div class="ov-banner-sub">Heparin 5000 units SC · เลยเวลา 48 นาที</div></div></div>
+            <div class="rt-inner" style="max-width:600px;">
+                <div class="ov-banner" style="margin-bottom:16px;"><div class="ov-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div><div><div class="ov-banner-text">สแกนยา Overdue — สแกนพร้อมกันได้</div><div class="ov-banner-sub">สแกนยาครบทุกรายการเพื่อยืนยัน</div></div></div>
 
-                <div class="am-detail" style="margin-bottom:14px;"><div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;">Overdue</span></div><div class="am-detail-grid"><div><div class="am-dl">Dose</div><div class="am-dv" style="color:#be123c;font-weight:800;">5,000 units</div></div><div><div class="am-dl">Route</div><div class="am-dv">SC</div></div><div><div class="am-dl">ควรให้</div><div class="am-dv" style="color:#be123c;">07:30 (เลยเวลา)</div></div><div><div class="am-dl">Overdue</div><div class="am-dv" style="color:#be123c;font-weight:800;">48 นาที</div></div></div></div>
+                <!-- Drug 0: Heparin -->
+                <div class="mdc" id="ovdrug_0" data-flow="ov" data-done="false">
+                    <div class="mdc-bar" style="background:#be123c;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Heparin 5000 units <span class="mdc-badge-warn">Overdue 48 min</span></div>
+                                <div class="mdc-sub">SC · 5,000 units · ควรให้ 07:30 น.</div>
+                            </div>
+                            <button class="mdc-btn" id="ovdrug_0_btn" style="background:linear-gradient(135deg,#9f1239,#be123c);" onclick="scanMultiDrug('ov',0)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="ovdrug_0_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r" style="background:#fff1f2;color:#be123c;font-size:9px;padding:3px 2px;">Time!</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="ovdrug_0_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="ovdrug_0_lot">—</span>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="rt-rights" id="ovRights"><div class="rt-r pass">Patient</div><div class="rt-r pend" id="ovRD">Drug</div><div class="rt-r pend" id="ovRDs">Dose</div><div class="rt-r pend" id="ovRR">Route</div><div class="rt-r" id="ovRT" style="background:#fff1f2;color:#be123c;">Time!</div><div class="rt-r pend" id="ovRDc">Doc.</div><div class="rt-r pend" id="ovRRs">Reason</div></div>
-
-                <button class="btn-ov" onclick="ovScanDrug()" style="margin-bottom:14px;">สแกนยา</button>
-                <div class="am-scan-result" id="ovDrugResult"><div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Heparin 5000 units</span></div><div class="am-sr-grid"><div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div><div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div></div></div>
+                <!-- Drug 1: Metoprolol -->
+                <div class="mdc" id="ovdrug_1" data-flow="ov" data-done="false">
+                    <div class="mdc-bar" style="background:#be123c;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Metoprolol 50 mg <span class="mdc-badge-warn">Overdue</span></div>
+                                <div class="mdc-sub">PO · 50 mg · ควรให้ 07:30 น.</div>
+                            </div>
+                            <button class="mdc-btn" id="ovdrug_1_btn" style="background:linear-gradient(135deg,#9f1239,#be123c);" onclick="scanMultiDrug('ov',1)">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                            </button>
+                        </div>
+                        <div class="mdc-done-row" id="ovdrug_1_done" style="display:none;">
+                            <div class="mdc-rights">
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Patient</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Drug</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Dose</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Route</div>
+                                <div class="rt-r" style="background:#fff1f2;color:#be123c;font-size:9px;padding:3px 2px;">Time!</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Doc.</div>
+                                <div class="rt-r pass" style="font-size:9px;padding:3px 2px;">Reason</div>
+                            </div>
+                            <span class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="#166534"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="ovdrug_1_resname">—</span></span>
+                            <span style="font-size:11px;color:var(--text-2);" id="ovdrug_1_lot">—</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="rt-bottom"><button class="btn-secondary" onclick="ovGoStep(4)">ย้อนกลับ</button><button class="btn-ov" style="flex:2;" id="ovBtnConfirm" onclick="ovGoStep(6)" disabled>ยืนยันให้ยา (Overdue)</button></div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="ovGoStep(4)">ย้อนกลับ</button><button class="btn-ov" style="flex:2;" id="ovBtnConfirm" onclick="ovGoStep(6)" disabled>ยืนยันให้ยา Overdue (2/2)</button></div>
         </div>
 
         <!-- ══ STEP 6: ยืนยันบันทึก ══ -->
@@ -9257,12 +9313,171 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:400px;width:100%;">
+                    <button class="btn-primary" onclick="goPostAssessI({patient:'นายธนกร วิเศษสิทธิ์',bed:'6405001 · 3A-10',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'Overdue',givenTime:'08:18 น.',showPain:false,origin:'pg-overdue'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>ประเมินหลังให้ยา</button>
                     <button class="btn-primary" onclick="ovGoStep(1)" style="background:#be123c;box-shadow:0 5px 22px rgba(190,18,60,.3);">กลับรายการผู้ป่วย</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
                 </div>
             </div>
         </div>
 
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     POST-MEDICATION ASSESSMENT
+═══════════════════════════════════════════════════════════ -->
+<div id="pg-post-assess" class="page">
+
+    <header class="header" style="border-bottom-color:#86efac;">
+        <div class="header-left">
+            <button class="hdr-back" onclick="postAssessBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon" style="background:linear-gradient(135deg,#059669,#10b981);"><svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/><line x1="16" y1="17" x2="8" y2="17" stroke="white" stroke-width="2"/></svg></div>
+                <div><div class="brand-name" style="color:#065f46;">Med Cart — ประเมินหลังให้ยา</div><div class="brand-sub" id="paSubtitleI">บันทึกผลการติดตามหลังให้ยา</div></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockPAI">--:--:--</div><div class="dt-date" id="dateStrPAI">--</div></div>
+            <div class="status-pill" style="background:#d1fae5;color:#065f46;"><span class="dot" style="background:#059669;"></span> ติดตาม</div>
+        </div>
+    </header>
+
+    <!-- FORM STATE -->
+    <div id="paFormI" class="rec-body" style="max-width:640px;margin:0 auto;padding:20px;">
+        <div class="rec-status-banner success" style="border-color:#059669;background:#ecfdf5;margin-bottom:18px;">
+            <div class="rec-st-icon" style="background:linear-gradient(135deg,#059669,#10b981);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <div>
+                <div class="rec-st-title" style="color:#065f46;">ให้ยาแล้ว — ประเมินผลการให้ยา</div>
+                <div class="rec-st-sub" style="color:#059669;">บันทึกการตอบสนองของผู้ป่วยหลังได้รับยา</div>
+            </div>
+        </div>
+
+        <div class="rec-card" style="margin-bottom:14px;">
+            <div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>ข้อมูลผู้ป่วยและยาที่ให้</div>
+            <div class="rec-grid">
+                <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv" id="paPatientNameI">—</div></div>
+                <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv" id="paPatientBedI">—</div></div>
+                <div><div class="wit-ml">ยาที่ให้</div><div class="wit-mv green" id="paDrugNameI">—</div></div>
+                <div><div class="wit-ml">Route / Dose</div><div class="wit-mv" id="paDrugDetailI">—</div></div>
+                <div><div class="wit-ml">ประเภท</div><div class="wit-mv" id="paFlowLabelI">—</div></div>
+                <div><div class="wit-ml">เวลาให้ยาจริง</div><div class="wit-mv" id="paGivenTimeI">—</div></div>
+            </div>
+        </div>
+
+        <div class="rec-card" style="margin-bottom:14px;">
+            <div class="rec-card-title"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>แบบประเมินหลังให้ยา</div>
+
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">เวลาที่ประเมิน <span style="color:#dc2626;">*</span></div>
+                <input type="time" class="rec-doc-input" id="paAssessTimeI" style="max-width:180px;">
+            </div>
+
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">การตอบสนองต่อยา <span style="color:#dc2626;">*</span></div>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;">
+                    <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;" onclick="paPickResponseI(this,'better')" id="paResBetterI">
+                        <div style="width:18px;height:18px;border-radius:50%;border:2px solid #22c55e;display:flex;align-items:center;justify-content:center;flex-shrink:0;" class="pa-radio-dot"><div style="width:9px;height:9px;border-radius:50%;background:#22c55e;display:none;" class="pa-radio-fill"></div></div>
+                        <span style="font-size:14px;font-weight:600;color:#15803d;">ดีขึ้น / อาการบรรเทา</span>
+                        <span style="margin-left:auto;font-size:11px;color:var(--text-3);">ตอบสนองดี</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;" onclick="paPickResponseI(this,'same')" id="paResSameI">
+                        <div style="width:18px;height:18px;border-radius:50%;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;flex-shrink:0;" class="pa-radio-dot"><div style="width:9px;height:9px;border-radius:50%;background:#f59e0b;display:none;" class="pa-radio-fill"></div></div>
+                        <span style="font-size:14px;font-weight:600;color:#92400e;">ไม่เปลี่ยนแปลง</span>
+                        <span style="margin-left:auto;font-size:11px;color:var(--text-3);">ติดตามต่อ</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;" onclick="paPickResponseI(this,'worse')" id="paResWorseI">
+                        <div style="width:18px;height:18px;border-radius:50%;border:2px solid #ef4444;display:flex;align-items:center;justify-content:center;flex-shrink:0;" class="pa-radio-dot"><div style="width:9px;height:9px;border-radius:50%;background:#ef4444;display:none;" class="pa-radio-fill"></div></div>
+                        <span style="font-size:14px;font-weight:600;color:#991b1b;">แย่ลง / ต้องการการดูแล</span>
+                        <span style="margin-left:auto;font-size:11px;color:var(--text-3);">แจ้งแพทย์</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="rec-doc-group" id="paPainGroupI" style="display:none;">
+                <div class="rec-doc-label">Pain Score หลังให้ยา (0–10)</div>
+                <div class="pain-scale" id="paPainScaleI" style="margin-top:6px;">
+                    <div class="pain-dot" style="background:#22c55e20;color:#22c55e;" onclick="pickPainPostI(this,0)">0</div>
+                    <div class="pain-dot" style="background:#22c55e20;color:#22c55e;" onclick="pickPainPostI(this,1)">1</div>
+                    <div class="pain-dot" style="background:#84cc1620;color:#84cc16;" onclick="pickPainPostI(this,2)">2</div>
+                    <div class="pain-dot" style="background:#eab30820;color:#eab308;" onclick="pickPainPostI(this,3)">3</div>
+                    <div class="pain-dot" style="background:#eab30820;color:#eab308;" onclick="pickPainPostI(this,4)">4</div>
+                    <div class="pain-dot" style="background:#f9731620;color:#f97316;" onclick="pickPainPostI(this,5)">5</div>
+                    <div class="pain-dot" style="background:#f9731620;color:#f97316;" onclick="pickPainPostI(this,6)">6</div>
+                    <div class="pain-dot" style="background:#ef444420;color:#ef4444;" onclick="pickPainPostI(this,7)">7</div>
+                    <div class="pain-dot" style="background:#ef444420;color:#ef4444;" onclick="pickPainPostI(this,8)">8</div>
+                    <div class="pain-dot" style="background:#dc262620;color:#dc2626;" onclick="pickPainPostI(this,9)">9</div>
+                    <div class="pain-dot" style="background:#dc262620;color:#dc2626;" onclick="pickPainPostI(this,10)">10</div>
+                </div>
+            </div>
+
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">Vital Signs หลังให้ยา <span style="font-size:11px;color:var(--text-3);font-weight:400;">(ถ้ามี)</span></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;">
+                    <div><div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">BP (mmHg)</div><input type="text" class="rec-doc-input" placeholder="เช่น 120/80" style="font-size:13px;"></div>
+                    <div><div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">HR (bpm)</div><input type="number" class="rec-doc-input" placeholder="เช่น 72" style="font-size:13px;"></div>
+                    <div><div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">RR (ครั้ง/นาที)</div><input type="number" class="rec-doc-input" placeholder="เช่น 18" style="font-size:13px;"></div>
+                    <div><div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">SpO₂ (%)</div><input type="number" class="rec-doc-input" placeholder="เช่น 98" style="font-size:13px;"></div>
+                </div>
+            </div>
+
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">อาการไม่พึงประสงค์ที่พบ <span style="font-size:11px;color:var(--text-3);font-weight:400;">(เลือกได้หลายข้อ)</span></div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;" id="paAdrGroupI">
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">คลื่นไส้ / อาเจียน</div>
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ง่วงซึม / ซึม</div>
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ผื่น / ลมพิษ</div>
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">หน้ามืด / วิงเวียน</div>
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ความดันต่ำ</div>
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">หัวใจเต้นเร็ว/ผิดจังหวะ</div>
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ไม่มีอาการผิดปกติ</div>
+                    <div onclick="paToggleAdrI(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">อื่นๆ</div>
+                </div>
+            </div>
+
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">หมายเหตุ / บันทึกเพิ่มเติม</div>
+                <textarea class="rec-doc-input" placeholder="อธิบายการตอบสนองหรืออาการที่พบเพิ่มเติม..." style="min-height:60px;"></textarea>
+            </div>
+        </div>
+
+        <div style="display:flex;gap:10px;padding:0 0 24px;">
+            <button class="btn-secondary" onclick="postAssessBack()" style="flex:1;">ข้ามการประเมิน</button>
+            <button class="btn-primary" onclick="savePostAssessI()" style="flex:2;background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                บันทึกการประเมิน
+            </button>
+        </div>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div id="paSuccessI" style="display:none;" class="rec-body">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:40px 24px;max-width:460px;margin:0 auto;">
+            <div style="width:100px;height:100px;background:linear-gradient(135deg,#059669,#10b981);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:0 8px 32px rgba(5,150,105,0.25);animation:ok-pop .5s cubic-bezier(.2,.8,.4,1.2);">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <div style="font-size:24px;font-weight:800;color:#065f46;margin-bottom:6px;">บันทึกการประเมินสำเร็จ</div>
+            <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;text-align:center;">ผลการประเมินหลังให้ยาถูกบันทึกลงในระบบแล้ว</div>
+            <div class="ok-summary" style="width:100%;">
+                <div class="ok-summary-grid">
+                    <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv" id="paOkPatientI">—</div></div>
+                    <div><div class="wit-ml">ยาที่ให้</div><div class="wit-mv green" id="paOkDrugI">—</div></div>
+                    <div><div class="wit-ml">การตอบสนอง</div><div class="wit-mv green" id="paOkResponseI">—</div></div>
+                    <div><div class="wit-ml">เวลาประเมิน</div><div class="wit-mv" id="paSavedTimeI">—</div></div>
+                    <div><div class="wit-ml">ผู้ประเมิน</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                    <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">บันทึกแล้ว</div></div>
+                </div>
+            </div>
+            <div class="ok-actions" style="width:100%;margin-top:20px;">
+                <button class="btn-primary" onclick="postAssessBack()" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;">กลับหน้าก่อนหน้า</button>
+                <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -11607,11 +11822,12 @@
         'pg-prep-patient':'จัดยาตามผู้ป่วย','pg-prep-pt-drugs':'รายการยาผู้ป่วย',
         'pg-prep-fill-pt':'จัดยาลงช่อง','pg-prep-med':'จัดยาตามรายการยา',
         'pg-prep-med-detail':'รายละเอียดยา','pg-ibf':'จัดยาตามรายการ',
-        'pg-prep-sched':'จัดยาตามเวลา','pg-sched-detail':'รายการรอบเวลา','pg-trf':'จัดยาตามรอบ'
+        'pg-prep-sched':'จัดยาตามเวลา','pg-sched-detail':'รายการรอบเวลา','pg-trf':'จัดยาตามรอบ',
+        'pg-post-assess':'ประเมินหลังให้ยา'
     };
 
     // Pages that require dispense access (pharma blocked)
-    const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail'];
+    const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail','pg-post-assess'];
     let currentRole = 'nurse';
 
     function nav(targetId, skipHistory) {
@@ -12035,8 +12251,8 @@
             +'<div style="display:flex;flex-direction:column;gap:14px;">'
             +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">ตรงเวลา</span><span style="font-weight:700;color:#0D9488;font-size:14px;">87%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,#0D9488,#14B8A6);border-radius:4px;"></div></div></div>'
             +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">7 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;font-size:14px;">100%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Overdue rate</span><span style="font-weight:700;color:#f59e0b;font-size:14px;">13%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:4px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Error rate</span><span style="font-weight:700;color:#0D9488;font-size:14px;">0%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">STAT Overdue</span><span style="font-weight:700;color:#f59e0b;font-size:14px;">13%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">การงดให้ยา</span><span style="font-weight:700;color:#0D9488;font-size:14px;">0%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:4px;"></div></div></div>'
             +'</div></div>'
             +'</div>';
     }
@@ -14785,18 +15001,33 @@
 
     /* ── Admin Med (Page 13) ── */
     function selectAmDrug(el) {
+        if (el.classList.contains('done') || el.style.opacity === '0.6') return;
         document.querySelectorAll('.am-drug').forEach(d => d.classList.remove('active'));
         el.classList.add('active');
+        // Reset 7 Rights และ scan result ทุกครั้งที่เปลี่ยนยา
+        ['rDrug','rDose','rRoute','rDoc','rReason'].forEach(id => {
+            const r = document.getElementById(id);
+            if (r) r.className = 'am-r pend';
+        });
+        const scanResult = document.getElementById('amScanResult');
+        if (scanResult) scanResult.classList.remove('show');
+        const confirmBtn = document.getElementById('btnConfirmAdmin');
+        if (confirmBtn) confirmBtn.disabled = true;
     }
 
     function demoScanMed() {
         document.getElementById('amScanResult').classList.add('show');
-        // Update 7 rights
-        ['rDrug','rDose','rRoute','rDoc','rReason'].forEach(id => {
-            const el = document.getElementById(id);
-            el.className = 'am-r pass';
+        // ตั้ง 7 Rights เป็น pass ทีละ right พร้อม delay เล็กน้อยเพื่อ UX
+        const rights = ['rDrug','rDose','rRoute','rDoc','rReason'];
+        rights.forEach((id, i) => {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) el.className = 'am-r pass';
+            }, i * 80);
         });
-        document.getElementById('btnConfirmAdmin').disabled = false;
+        setTimeout(() => {
+            document.getElementById('btnConfirmAdmin').disabled = false;
+        }, rights.length * 80);
         showToast('สแกนยาสำเร็จ — 7 Rights ผ่านทั้งหมด');
         setTimeout(() => showToast(''), 2000);
     }
@@ -14914,6 +15145,128 @@
         document.getElementById('overlay').classList.remove('open');
         document.getElementById('drawer').classList.remove('open');
         document.body.style.overflow = '';
+    }
+
+    /* ── Multi-Drug Scan ── */
+    const multiDrugData = {
+        r:   [{name:'Amlodipine 5 mg',  lot:'AML-2025-108',exp:'15/03/2570'},
+              {name:'Metformin 500 mg', lot:'MET-2025-072',exp:'30/06/2570'},
+              {name:'Omeprazole 20 mg', lot:'OMP-2025-039',exp:'28/02/2570'}],
+        st:  [{name:'Heparin 5000 units',lot:'HEP-2025-042',exp:'30/09/2569'},
+              {name:'Ondansetron 4 mg', lot:'OND-2025-015',exp:'31/05/2570'}],
+        prn: [{name:'Morphine 5 mg',    lot:'MOR-2025-017',exp:'15/06/2569'},
+              {name:'Ondansetron 4 mg', lot:'OND-2025-015',exp:'31/05/2570'}],
+        ha:  [{name:'Heparin 5000 units',lot:'HEP-2025-042',exp:'30/09/2569'},
+              {name:'Warfarin 3 mg',    lot:'WAR-2025-008',exp:'31/12/2569'}],
+        ov:  [{name:'Heparin 5000 units',lot:'HEP-2025-042',exp:'30/09/2569'},
+              {name:'Metoprolol 50 mg', lot:'MTP-2025-021',exp:'31/08/2570'}]
+    };
+    const multiDrugConfirmMap = {
+        r:'rtBtnConfirmDrug', st:'stBtnConfirm', prn:'btnPrnConfirm', ha:'haBtnWit', ov:'ovBtnConfirm'
+    };
+    function scanMultiDrug(flow, idx) {
+        const btn = document.getElementById(`${flow}drug_${idx}_btn`);
+        btn.disabled = true;
+        btn.innerHTML = '...กำลังสแกน...';
+        setTimeout(() => {
+            const card = document.getElementById(`${flow}drug_${idx}`);
+            card.classList.add('done');
+            card.dataset.done = 'true';
+            document.getElementById(`${flow}drug_${idx}_done`).style.display = '';
+            const data = (multiDrugData[flow]||[])[idx];
+            if (data) {
+                document.getElementById(`${flow}drug_${idx}_lot`).textContent = `Lot: ${data.lot} · Exp: ${data.exp}`;
+                document.getElementById(`${flow}drug_${idx}_resname`).textContent = data.name;
+            }
+            btn.style.display = 'none';
+            checkMultiDrugDone(flow);
+        }, 1200);
+    }
+    function checkMultiDrugDone(flow) {
+        const cards = document.querySelectorAll(`.mdc[data-flow="${flow}"]`);
+        if ([...cards].every(c => c.dataset.done === 'true')) {
+            const btn = document.getElementById(multiDrugConfirmMap[flow]);
+            if (btn) btn.disabled = false;
+        }
+    }
+
+    /* ── Post-Medication Assessment (Index.html inline) ── */
+    let postAssessOrigin = 'pg-dashboard';
+
+    function goPostAssessI(meta) {
+        meta = meta || {};
+        postAssessOrigin = meta.origin || 'pg-dashboard';
+        const form = document.getElementById('paFormI');
+        const succ = document.getElementById('paSuccessI');
+        if (form) form.style.display = '';
+        if (succ) succ.style.display = 'none';
+        ['paResBetterI','paResSameI','paResWorseI'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.background = '';
+            el.style.borderColor = 'var(--border)';
+            el.querySelectorAll('.pa-radio-fill').forEach(f => f.style.display = 'none');
+        });
+        document.querySelectorAll('#paAdrGroupI > div').forEach(d => { d.style.background=''; d.style.borderColor='var(--border)'; d.style.color='var(--text-2)'; d.dataset.active='0'; });
+        document.querySelectorAll('#paPainScaleI .pain-dot').forEach(d => d.classList.remove('active'));
+        const now = new Date();
+        const timeEl = document.getElementById('paAssessTimeI');
+        if (timeEl) timeEl.value = now.toTimeString().slice(0,5);
+        if (meta.patient) { const e=document.getElementById('paPatientNameI'); if(e) e.textContent=meta.patient; }
+        if (meta.bed)     { const e=document.getElementById('paPatientBedI');  if(e) e.textContent=meta.bed; }
+        if (meta.drug)    { const e=document.getElementById('paDrugNameI');    if(e) e.textContent=meta.drug; const o=document.getElementById('paOkDrugI');     if(o) o.textContent=meta.drug; }
+        if (meta.detail)  { const e=document.getElementById('paDrugDetailI'); if(e) e.textContent=meta.detail; }
+        if (meta.type)    { const e=document.getElementById('paFlowLabelI');   if(e) e.textContent=meta.type; }
+        if (meta.givenTime){ const e=document.getElementById('paGivenTimeI'); if(e) e.textContent=meta.givenTime; }
+        if (meta.patient) { const o=document.getElementById('paOkPatientI');   if(o) o.textContent=meta.patient; }
+        const pg = document.getElementById('paPainGroupI');
+        if (pg) pg.style.display = meta.showPain ? '' : 'none';
+        nav('pg-post-assess');
+    }
+
+    function postAssessBack() { nav(postAssessOrigin); }
+
+    function savePostAssessI() {
+        const timeEl = document.getElementById('paAssessTimeI');
+        const timeStr = timeEl ? timeEl.value : '';
+        const responseMap = { 'paResBetterI':'ดีขึ้น / อาการบรรเทา', 'paResSameI':'ไม่เปลี่ยนแปลง', 'paResWorseI':'แย่ลง / ต้องการการดูแล' };
+        let respLabel = '—';
+        for (const [id, label] of Object.entries(responseMap)) {
+            const el = document.getElementById(id);
+            if (el && el.style.background && el.style.background !== '') { respLabel = label; break; }
+        }
+        const okResp = document.getElementById('paOkResponseI');
+        if (okResp) { okResp.textContent = respLabel; okResp.style.color = respLabel.includes('ดีขึ้น') ? 'var(--green)' : respLabel.includes('แย่ลง') ? '#dc2626' : '#d97706'; }
+        const savedTime = document.getElementById('paSavedTimeI');
+        if (savedTime) savedTime.textContent = timeStr ? timeStr + ' น.' : new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+        document.getElementById('paFormI').style.display = 'none';
+        document.getElementById('paSuccessI').style.display = '';
+    }
+
+    function paPickResponseI(el, type) {
+        const colorMap = { better:'#22c55e', same:'#f59e0b', worse:'#ef4444' };
+        const bgMap    = { better:'#f0fdf4', same:'#fffbeb', worse:'#fef2f2' };
+        ['paResBetterI','paResSameI','paResWorseI'].forEach(id => {
+            const e = document.getElementById(id);
+            if (!e) return;
+            e.style.background = '';
+            e.style.borderColor = 'var(--border)';
+            e.querySelectorAll('.pa-radio-fill').forEach(f => f.style.display = 'none');
+        });
+        el.style.background = bgMap[type] || '';
+        el.style.borderColor = colorMap[type] || 'var(--border)';
+        el.querySelectorAll('.pa-radio-fill').forEach(f => f.style.display = '');
+    }
+
+    function paToggleAdrI(el) {
+        const active = el.dataset.active === '1';
+        if (active) { el.dataset.active='0'; el.style.background=''; el.style.borderColor='var(--border)'; el.style.color='var(--text-2)'; }
+        else { el.dataset.active='1'; el.style.background='#d1fae5'; el.style.borderColor='#059669'; el.style.color='#065f46'; }
+    }
+
+    function pickPainPostI(el, score) {
+        document.querySelectorAll('#paPainScaleI .pain-dot').forEach(d => d.classList.remove('active'));
+        el.classList.add('active');
     }
 
     /* ── Toast ── */

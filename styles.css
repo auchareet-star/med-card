@@ -3301,6 +3301,60 @@
         .rt-bottom .btn-secondary { flex:1; padding:14px; font-size:13px; }
 
         /* ══════════════════════════════════════════════
+           MULTI-DRUG SCAN CARD (.mdc-*)
+        ══════════════════════════════════════════════ */
+        .mdc {
+            background:var(--white); border:2px solid var(--border);
+            border-radius:14px; margin-bottom:10px;
+            display:flex; align-items:stretch; gap:0;
+            overflow:hidden; transition:border-color .2s, background .2s;
+        }
+        .mdc.done   { border-color:var(--green); background:var(--green-light); }
+        .mdc.active { border-color:var(--green-mid); }
+        .mdc-bar {
+            width:5px; flex-shrink:0; background:var(--text-3);
+            transition:background .3s;
+        }
+        .mdc.done .mdc-bar { background:var(--green); }
+        .mdc-body   { flex:1; padding:14px 14px 14px 12px; }
+        .mdc-header { display:flex; align-items:center; gap:10px; }
+        .mdc-info   { flex:1; }
+        .mdc-name   { font-size:14px; font-weight:700; color:var(--text-1); }
+        .mdc-sub    { font-size:11px; color:var(--text-2); margin-top:2px; }
+        .mdc-btn {
+            flex-shrink:0; padding:8px 16px;
+            border-radius:10px; border:none; cursor:pointer;
+            font-family:'Prompt',sans-serif; font-size:12px; font-weight:700;
+            display:flex; align-items:center; gap:5px;
+            background:var(--green); color:white;
+            transition:opacity .15s, transform .1s;
+        }
+        .mdc-btn:hover  { opacity:.88; transform:translateY(-1px); }
+        .mdc-btn:active { transform:translateY(0); }
+        .mdc-btn:disabled { opacity:.45; cursor:not-allowed; transform:none!important; }
+        .mdc-done-row  { margin-top:10px; }
+        .mdc-rights    { margin:0 0 6px; grid-template-columns:repeat(7,1fr); }
+        .mdc-result-tag {
+            display:inline-flex; align-items:center; gap:5px;
+            background:#f0fdf4; border:1px solid #86efac;
+            border-radius:8px; padding:4px 10px; font-size:11px;
+            color:#166534; font-weight:600;
+        }
+        .mdc-result-tag svg { color:#22c55e; }
+        .mdc-scan-anim {
+            display:flex; align-items:center; gap:6px;
+            font-size:12px; font-weight:600; color:var(--green);
+            padding:6px 0; opacity:0; animation:fade-in .2s .05s forwards;
+        }
+        @keyframes fade-in { to { opacity:1; } }
+        .mdc-badge-warn {
+            display:inline-block; font-size:9px; font-weight:700;
+            padding:2px 7px; border-radius:10px;
+            background:#fef2f2; color:#dc2626; border:1px solid #fca5a5;
+            margin-left:4px;
+        }
+
+        /* ══════════════════════════════════════════════
            PAGE 20 — STAT MED FLOW (จ่ายยา STAT)
         ══════════════════════════════════════════════ */
         /* Reuses .rt-* classes with red overrides */

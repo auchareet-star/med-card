@@ -26,11 +26,12 @@
         'pg-prep-patient':'จัดยาตามผู้ป่วย','pg-prep-pt-drugs':'รายการยาผู้ป่วย',
         'pg-prep-fill-pt':'จัดยาลงช่อง','pg-prep-med':'จัดยาตามรายการยา',
         'pg-prep-med-detail':'รายละเอียดยา','pg-ibf':'จัดยาตามรายการ',
-        'pg-prep-sched':'จัดยาตามเวลา','pg-sched-detail':'รายการรอบเวลา','pg-trf':'จัดยาตามรอบ'
+        'pg-prep-sched':'จัดยาตามเวลา','pg-sched-detail':'รายการรอบเวลา','pg-trf':'จัดยาตามรอบ',
+        'pg-post-assess':'ประเมินหลังให้ยา'
     };
 
     // Pages that require dispense access (pharma blocked)
-    const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail'];
+    const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail','pg-post-assess'];
     let currentRole = 'nurse';
 
     function nav(targetId, skipHistory) {
@@ -1316,26 +1317,46 @@
     }
 
     function rtPickDrug(el) {
+        if (el.classList.contains('done')) return;
         document.querySelectorAll('#rtStep4 .rt-drug').forEach(d => d.classList.remove('active'));
         el.classList.add('active');
+        rtResetDrugScan(); // reset 7 Rights ทุกครั้งที่เปลี่ยนยา
     }
 
     function rtScanDrug() {
+        const activeDrug = document.querySelector('#rtStep4 .rt-drug.active');
+        if (!activeDrug || activeDrug.classList.contains('done')) {
+            showToast('กรุณาเลือกรายการยาก่อนสแกน');
+            setTimeout(() => showToast(''), 1500);
+            return;
+        }
         document.getElementById('rtDrugScanResult').classList.add('show');
+        // ตั้ง 7 Rights เป็น pass ทั้งหมด
         ['rtRD','rtRDs','rtRR','rtRDc','rtRRs'].forEach(id => {
-            document.getElementById(id).className = 'rt-r pass';
+            const el = document.getElementById(id);
+            if (el) el.className = 'rt-r pass';
         });
+        // Mark ยา active เป็น done
+        const bar = activeDrug.querySelector('.rt-drug-bar');
+        if (bar) bar.className = 'rt-drug-bar done';
+        activeDrug.classList.add('done');
+        activeDrug.classList.remove('active');
+        activeDrug.style.opacity = '0.5';
+        activeDrug.style.pointerEvents = 'none';
         document.getElementById('rtBtnConfirmDrug').disabled = false;
         showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน');
         setTimeout(() => showToast(''), 1500);
     }
 
     function rtResetDrugScan() {
-        document.getElementById('rtDrugScanResult').classList.remove('show');
+        const resultEl = document.getElementById('rtDrugScanResult');
+        if (resultEl) resultEl.classList.remove('show');
         ['rtRD','rtRDs','rtRR','rtRDc','rtRRs'].forEach(id => {
-            document.getElementById(id).className = 'rt-r pend';
+            const el = document.getElementById(id);
+            if (el) el.className = 'rt-r pend';
         });
-        document.getElementById('rtBtnConfirmDrug').disabled = true;
+        const btn = document.getElementById('rtBtnConfirmDrug');
+        if (btn) btn.disabled = true;
     }
 
     /* ── Omit (Page 15) ── */
@@ -1389,18 +1410,33 @@
 
     /* ── Admin Med (Page 13) ── */
     function selectAmDrug(el) {
+        if (el.classList.contains('done') || el.style.opacity === '0.6') return;
         document.querySelectorAll('.am-drug').forEach(d => d.classList.remove('active'));
         el.classList.add('active');
+        // Reset 7 Rights และ scan result ทุกครั้งที่เปลี่ยนยา
+        ['rDrug','rDose','rRoute','rDoc','rReason'].forEach(id => {
+            const r = document.getElementById(id);
+            if (r) r.className = 'am-r pend';
+        });
+        const scanResult = document.getElementById('amScanResult');
+        if (scanResult) scanResult.classList.remove('show');
+        const confirmBtn = document.getElementById('btnConfirmAdmin');
+        if (confirmBtn) confirmBtn.disabled = true;
     }
 
     function demoScanMed() {
         document.getElementById('amScanResult').classList.add('show');
-        // Update 7 rights
-        ['rDrug','rDose','rRoute','rDoc','rReason'].forEach(id => {
-            const el = document.getElementById(id);
-            el.className = 'am-r pass';
+        // ตั้ง 7 Rights เป็น pass ทีละ right พร้อม delay เล็กน้อยเพื่อ UX
+        const rights = ['rDrug','rDose','rRoute','rDoc','rReason'];
+        rights.forEach((id, i) => {
+            setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) el.className = 'am-r pass';
+            }, i * 80);
         });
-        document.getElementById('btnConfirmAdmin').disabled = false;
+        setTimeout(() => {
+            document.getElementById('btnConfirmAdmin').disabled = false;
+        }, rights.length * 80);
         showToast('สแกนยาสำเร็จ — 7 Rights ผ่านทั้งหมด');
         setTimeout(() => showToast(''), 2000);
     }
@@ -1514,6 +1550,198 @@
         document.getElementById('overlay').classList.remove('open');
         document.getElementById('drawer').classList.remove('open');
         document.body.style.overflow = '';
+    }
+
+    /* ── Multi-Drug Scan ── */
+    // drugData[flow][idx] = { name, lot, exp }
+    const multiDrugData = {
+        r:   [ { name:'Amlodipine 5 mg',     lot:'AML-2025-108', exp:'15/03/2570' },
+               { name:'Metformin 500 mg',    lot:'MET-2025-072', exp:'30/06/2570' },
+               { name:'Omeprazole 20 mg',    lot:'OMP-2025-039', exp:'28/02/2570' } ],
+        st:  [ { name:'Heparin 5000 units',  lot:'HEP-2025-042', exp:'30/09/2569' },
+               { name:'Ondansetron 4 mg',    lot:'OND-2025-015', exp:'31/05/2570' } ],
+        prn: [ { name:'Morphine 5 mg',       lot:'MOR-2025-017', exp:'15/06/2569' },
+               { name:'Ondansetron 4 mg',    lot:'OND-2025-015', exp:'31/05/2570' } ],
+        ha:  [ { name:'Heparin 5000 units',  lot:'HEP-2025-042', exp:'30/09/2569' },
+               { name:'Warfarin 3 mg',       lot:'WAR-2025-008', exp:'31/12/2569' } ],
+        ov:  [ { name:'Heparin 5000 units',  lot:'HEP-2025-042', exp:'30/09/2569' },
+               { name:'Metoprolol 50 mg',    lot:'MTP-2025-021', exp:'31/08/2570' } ]
+    };
+
+    // Map flow prefix → confirm button ID
+    const multiDrugConfirmMap = {
+        r:   'rtBtnConfirmDrug',
+        st:  'stBtnConfirm',
+        prn: 'btnPrnConfirm',
+        ha:  'haBtnWit',
+        ov:  'ovBtnConfirm'
+    };
+
+    function scanMultiDrug(flow, idx) {
+        const cardId = `${flow}drug_${idx}`;
+        const btnId  = `${flow}drug_${idx}_btn`;
+        const btn    = document.getElementById(btnId);
+        if (!btn || btn.disabled) return;
+
+        // Animate button
+        btn.disabled = true;
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" opacity=".25"/><path d="M21 12a9 9 0 0 1-9 9"/></svg> กำลังสแกน...';
+
+        setTimeout(() => {
+            const card = document.getElementById(cardId);
+            if (!card) return;
+
+            // Mark done
+            card.classList.add('done');
+            card.dataset.done = 'true';
+
+            const doneRow = document.getElementById(`${flow}drug_${idx}_done`);
+            if (doneRow) doneRow.style.display = '';
+
+            const data = (multiDrugData[flow] || [])[idx];
+            if (data) {
+                const lotEl = document.getElementById(`${flow}drug_${idx}_lot`);
+                const nameEl = document.getElementById(`${flow}drug_${idx}_resname`);
+                if (lotEl)  lotEl.textContent  = `Lot: ${data.lot} · Exp: ${data.exp}`;
+                if (nameEl) nameEl.textContent = data.name;
+            }
+
+            btn.style.display = 'none';
+            checkMultiDrugDone(flow);
+        }, 1200);
+    }
+
+    function checkMultiDrugDone(flow) {
+        const cards = document.querySelectorAll(`.mdc[data-flow="${flow}"]`);
+        if (!cards.length) return;
+        const allDone = [...cards].every(c => c.dataset.done === 'true');
+        if (!allDone) return;
+        const confirmId = multiDrugConfirmMap[flow];
+        if (confirmId) {
+            const btn = document.getElementById(confirmId);
+            if (btn) btn.disabled = false;
+        }
+    }
+
+    /* ── Post-Medication Assessment ── */
+    let postAssessOrigin = 'pg-dashboard';
+
+    // flowMeta: { flow, patient, bed, drug, detail, type, givenTime, showPain }
+    function goPostAssess(flowMeta) {
+        const meta = flowMeta || {};
+        postAssessOrigin = meta.origin || 'pg-dashboard';
+
+        // Reset UI
+        const form = document.getElementById('paForm');
+        const succ = document.getElementById('paSuccess');
+        if (form) form.style.display = '';
+        if (succ) succ.style.display = 'none';
+
+        // Reset response selection
+        ['paResBetter','paResSame','paResWorse'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.style.background = '';
+            el.style.borderColor = 'var(--border)';
+            el.querySelectorAll('.pa-radio-fill').forEach(f => f.style.display = 'none');
+        });
+
+        // Reset ADR chips
+        document.querySelectorAll('#paAdrGroup > div').forEach(d => {
+            d.style.background = '';
+            d.style.borderColor = 'var(--border)';
+            d.style.color = 'var(--text-2)';
+        });
+
+        // Reset pain scale
+        document.querySelectorAll('#paPainScale .pain-dot').forEach(d => d.classList.remove('active'));
+
+        // Set assessment time to now
+        const now = new Date();
+        const timeEl = document.getElementById('paAssessTime');
+        if (timeEl) timeEl.value = now.toTimeString().slice(0,5);
+
+        // Populate patient/drug info
+        if (meta.patient) { const e = document.getElementById('paPatientName'); if (e) e.textContent = meta.patient; }
+        if (meta.bed)     { const e = document.getElementById('paPatientBed');  if (e) e.textContent = meta.bed; }
+        if (meta.drug)    { const e = document.getElementById('paDrugName');    if (e) e.textContent = meta.drug; }
+        if (meta.detail)  { const e = document.getElementById('paDrugDetail');  if (e) e.textContent = meta.detail; }
+        if (meta.type)    { const e = document.getElementById('paFlowLabel');   if (e) e.textContent = meta.type; }
+        if (meta.givenTime){ const e = document.getElementById('paGivenTime'); if (e) e.textContent = meta.givenTime; }
+
+        // Show pain scale only for PRN
+        const painGroup = document.getElementById('paPainGroup');
+        if (painGroup) painGroup.style.display = meta.showPain ? '' : 'none';
+
+        // Mirror to success summary
+        if (meta.patient) { const e = document.getElementById('paOkPatient'); if (e) e.textContent = meta.patient; }
+        if (meta.drug)    { const e = document.getElementById('paOkDrug');    if (e) e.textContent = meta.drug; }
+
+        nav('pg-post-assess');
+    }
+
+    function postAssessBack() { nav(postAssessOrigin); }
+
+    function savePostAssess() {
+        const timeEl = document.getElementById('paAssessTime');
+        const timeStr = timeEl ? timeEl.value : '';
+
+        // Determine selected response label
+        const responseMap = { 'paResBetter':'ดีขึ้น / อาการบรรเทา', 'paResSame':'ไม่เปลี่ยนแปลง', 'paResWorse':'แย่ลง / ต้องการการดูแล' };
+        let respLabel = '—';
+        for (const [id, label] of Object.entries(responseMap)) {
+            const el = document.getElementById(id);
+            if (el && el.style.background && el.style.background !== '') { respLabel = label; break; }
+        }
+
+        const okResp = document.getElementById('paOkResponse');
+        if (okResp) {
+            okResp.textContent = respLabel;
+            okResp.style.color = respLabel.includes('ดีขึ้น') ? 'var(--green)' : respLabel.includes('แย่ลง') ? '#dc2626' : '#d97706';
+        }
+        const savedTime = document.getElementById('paSavedTime');
+        if (savedTime) savedTime.textContent = timeStr ? timeStr + ' น.' : new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'}) + ' น.';
+
+        document.getElementById('paForm').style.display = 'none';
+        document.getElementById('paSuccess').style.display = '';
+    }
+
+    function paPickResponse(el, type) {
+        const colorMap = { better: '#22c55e', same: '#f59e0b', worse: '#ef4444' };
+        const bgMap    = { better: '#f0fdf4', same: '#fffbeb', worse: '#fef2f2' };
+        const ids = ['paResBetter','paResSame','paResWorse'];
+        ids.forEach(id => {
+            const e = document.getElementById(id);
+            if (!e) return;
+            e.style.background = '';
+            e.style.borderColor = 'var(--border)';
+            e.querySelectorAll('.pa-radio-fill').forEach(f => f.style.display = 'none');
+        });
+        el.style.background = bgMap[type] || '';
+        el.style.borderColor = colorMap[type] || 'var(--border)';
+        el.querySelectorAll('.pa-radio-fill').forEach(f => f.style.display = '');
+    }
+
+    function paToggleAdr(el) {
+        const active = el.dataset.active === '1';
+        if (active) {
+            el.dataset.active = '0';
+            el.style.background = '';
+            el.style.borderColor = 'var(--border)';
+            el.style.color = 'var(--text-2)';
+        } else {
+            el.dataset.active = '1';
+            el.style.background = '#d1fae5';
+            el.style.borderColor = '#059669';
+            el.style.color = '#065f46';
+        }
+    }
+
+    let postPainScore = -1;
+    function pickPainPost(el, score) {
+        postPainScore = score;
+        document.querySelectorAll('#paPainScale .pain-dot').forEach(d => d.classList.remove('active'));
+        el.classList.add('active');
     }
 
     /* ── Toast ── */

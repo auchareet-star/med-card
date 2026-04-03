@@ -149,50 +149,71 @@
             <div class="rt-bottom" id="rtStep3Bottom" style="display:none;"><button class="btn-secondary" onclick="rtResetStep3();rtGoStep(3)">สแกนใหม่</button><button class="btn-primary" onclick="rtGoStep(4)">ดำเนินการต่อ</button></div>
         </div>
 
-        <!-- ══ STEP 4: สแกนยา ══ -->
+        <!-- ══ STEP 4: สแกนยา (Multi-Drug) ══ -->
         <div class="rt-panel" id="rtStep4">
-            <div class="rt-inner wide">
-                <div style="display:grid;grid-template-columns:260px 1fr;gap:18px;">
-                    <div>
-                        <div style="font-size:13px;font-weight:700;color:var(--text-2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;">รายการยา (3)</div>
-                        <div class="rt-drug active" onclick="rtPickDrug(this)"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Amlodipine 5 mg</div><div class="rt-drug-sub">PO · 08:00</div></div></div>
-                        <div class="rt-drug" onclick="rtPickDrug(this)"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Metformin 500 mg</div><div class="rt-drug-sub">PO · 08:00</div></div></div>
-                        <div class="rt-drug" onclick="rtPickDrug(this)"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Omeprazole 20 mg</div><div class="rt-drug-sub">PO · 08:00</div></div></div>
-                    </div>
-                    <div>
-                        <div style="background:rgba(255,255,255,0.9);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:14px;">
-                            <div style="font-size:18px;font-weight:700;color:var(--text-1);margin-bottom:10px;">Amlodipine 5 mg</div>
-                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;">
-                                <div><div style="font-size:10px;color:var(--text-3);text-transform:uppercase;">Dose</div><div style="font-size:14px;font-weight:600;color:#0D9488;">5 mg x 1 เม็ด</div></div>
-                                <div><div style="font-size:10px;color:var(--text-3);text-transform:uppercase;">Route</div><div style="font-size:14px;font-weight:600;color:var(--text-1);">PO (รับประทาน)</div></div>
-                                <div><div style="font-size:10px;color:var(--text-3);text-transform:uppercase;">เวลา</div><div style="font-size:14px;font-weight:600;color:var(--text-1);">08:00 น.</div></div>
-                                <div><div style="font-size:10px;color:var(--text-3);text-transform:uppercase;">Frequency</div><div style="font-size:14px;font-weight:600;color:var(--text-1);">OD เช้า</div></div>
+            <div class="rt-inner" style="max-width:680px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                    <div style="width:38px;height:38px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
+                    <div><div style="font-size:16px;font-weight:700;color:var(--text-1);">สแกนยาทุกรายการ</div><div style="font-size:12px;color:var(--text-3);">สมชาย มานะ · 3A-01 · สแกนได้พร้อมกัน 3 รายการ</div></div>
+                </div>
+
+                <!-- Drug 0: Amlodipine -->
+                <div class="mdc" id="rdrug_0" data-done="false" data-flow="r">
+                    <div class="mdc-bar" id="rdrug_0_bar"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Amlodipine 5 mg</div>
+                                <div class="mdc-sub">PO · 5 mg × 1 เม็ด · OD เช้า · 08:00 น.</div>
                             </div>
+                            <button class="mdc-btn" id="rdrug_0_btn" onclick="scanMultiDrug('r',0)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
                         </div>
-                        <div class="rt-rights" id="rtRights">
-                            <div class="rt-r pass">Patient</div>
-                            <div class="rt-r pend" id="rtRD">Drug</div>
-                            <div class="rt-r pend" id="rtRDs">Dose</div>
-                            <div class="rt-r pend" id="rtRR">Route</div>
-                            <div class="rt-r pass">Time</div>
-                            <div class="rt-r pend" id="rtRDc">Doc.</div>
-                            <div class="rt-r pend" id="rtRRs">Reason</div>
-                        </div>
-                        <button class="scan-btn-big" onclick="rtScanDrug()" style="margin-bottom:12px;background:linear-gradient(135deg,#0D9488,#14B8A6);box-shadow:0 4px 16px rgba(13,148,136,0.3);">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
-                            สแกนยา
-                        </button>
-                        <div class="am-scan-result" id="rtDrugScanResult">
-                            <div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Amlodipine 5 mg</span></div>
-                            <div class="am-sr-grid">
-                                <div><div class="am-sr-l">Lot</div><div class="am-sr-v">AML-2025-108</div></div>
-                                <div><div class="am-sr-l">Expiry</div><div class="am-sr-v">15/03/2570</div></div>
-                            </div>
+                        <div class="mdc-done-row" id="rdrug_0_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r pass">Time</div><div class="rt-r pass">Doc.</div><div class="rt-r pass">Reason</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_0_resname">Amlodipine 5 mg</span> <span style="color:var(--text-3);" id="rdrug_0_lot"></span></div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Drug 1: Metformin -->
+                <div class="mdc" id="rdrug_1" data-done="false" data-flow="r">
+                    <div class="mdc-bar" id="rdrug_1_bar"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Metformin 500 mg</div>
+                                <div class="mdc-sub">PO · 500 mg × 1 เม็ด · BID หลังอาหาร · 08:00 น.</div>
+                            </div>
+                            <button class="mdc-btn" id="rdrug_1_btn" onclick="scanMultiDrug('r',1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="rdrug_1_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r pass">Time</div><div class="rt-r pass">Doc.</div><div class="rt-r pass">Reason</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_1_resname">Metformin 500 mg</span> <span style="color:var(--text-3);" id="rdrug_1_lot"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drug 2: Omeprazole -->
+                <div class="mdc" id="rdrug_2" data-done="false" data-flow="r">
+                    <div class="mdc-bar" id="rdrug_2_bar"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Omeprazole 20 mg</div>
+                                <div class="mdc-sub">PO · 20 mg × 1 cap · OD ก่อนอาหารเช้า · 08:00 น.</div>
+                            </div>
+                            <button class="mdc-btn" id="rdrug_2_btn" onclick="scanMultiDrug('r',2)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="rdrug_2_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r pass">Time</div><div class="rt-r pass">Doc.</div><div class="rt-r pass">Reason</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="rdrug_2_resname">Omeprazole 20 mg</span> <span style="color:var(--text-3);" id="rdrug_2_lot"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size:12px;color:var(--text-3);text-align:center;margin-top:8px;">กดปุ่ม <strong>สแกน</strong> ที่ยาแต่ละรายการ — สามารถสแกนพร้อมกันได้</div>
             </div>
-            <div class="rt-bottom"><button class="btn-secondary" onclick="rtGoStep(3)">ย้อนกลับ</button><button class="btn-primary" id="rtBtnConfirmDrug" onclick="rtGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา</button></div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="rtGoStep(3)">ย้อนกลับ</button><button class="btn-primary" id="rtBtnConfirmDrug" onclick="rtGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา (3/3)</button></div>
         </div>
 
         <!-- ══ STEP 5: ยืนยัน ══ -->
@@ -241,7 +262,11 @@
                     </div>
                 </div>
                 <div class="ok-actions" style="max-width:400px;width:100%;">
-                    <button class="btn-primary" onclick="rtGoStep(4);rtResetDrugScan();">ให้ยารายการถัดไป</button>
+                    <button class="btn-primary" onclick="goPostAssess({flow:'routine',patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Amlodipine 5 mg',detail:'PO · 5 mg',type:'Routine',givenTime:'08:05 น.',showPain:false,origin:'pg-routine'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>
+                        ประเมินหลังให้ยา
+                    </button>
+                    <button class="btn-primary" onclick="rtGoStep(4);rtResetDrugScan();" style="background:rgba(255,255,255,0.9);color:#0F766E;border:2px solid #99f6e4;">ให้ยารายการถัดไป</button>
                     <div class="ok-act-row">
                         <button class="btn-secondary" onclick="rtGoStep(1)">กลับรายการผู้ป่วย</button>
                         <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>

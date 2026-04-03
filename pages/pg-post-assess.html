@@ -1,0 +1,198 @@
+<div id="pg-post-assess" class="page">
+
+    <header class="header" style="border-bottom-color:#86efac;">
+        <div class="header-left">
+            <button class="hdr-back" onclick="postAssessBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                ย้อนกลับ
+            </button>
+            <div class="header-brand">
+                <div class="brand-icon" style="background:linear-gradient(135deg,#059669,#10b981);"><svg width="27" height="27" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/><line x1="16" y1="17" x2="8" y2="17" stroke="white" stroke-width="2"/></svg></div>
+                <div><div class="brand-name" style="color:#065f46;">Med Cart — ประเมินหลังให้ยา</div><div class="brand-sub" id="paSubtitle">บันทึกผลการติดตามหลังให้ยา</div></div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div><div class="dt-time" id="clockPA">--:--:--</div><div class="dt-date" id="dateStrPA">--</div></div>
+            <div class="status-pill" style="background:#d1fae5;color:#065f46;"><span class="dot" style="background:#059669;"></span> ติดตาม</div>
+        </div>
+    </header>
+
+    <!-- ══ FORM STATE ══ -->
+    <div id="paForm" class="rec-body" style="max-width:640px;margin:0 auto;padding:20px;">
+
+        <!-- Status banner -->
+        <div class="rec-status-banner success" style="border-color:#059669;background:#ecfdf5;margin-bottom:18px;">
+            <div class="rec-st-icon" style="background:linear-gradient(135deg,#059669,#10b981);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <div>
+                <div class="rec-st-title" style="color:#065f46;">ให้ยาแล้ว — ประเมินผลการให้ยา</div>
+                <div class="rec-st-sub" style="color:#059669;">บันทึกการตอบสนองของผู้ป่วยหลังได้รับยา</div>
+            </div>
+        </div>
+
+        <!-- Patient + Drug info -->
+        <div class="rec-card" style="margin-bottom:14px;">
+            <div class="rec-card-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                ข้อมูลผู้ป่วยและยาที่ให้
+            </div>
+            <div class="rec-grid">
+                <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv" id="paPatientName">นายสมชาย มานะ</div></div>
+                <div><div class="wit-ml">HN / เตียง</div><div class="wit-mv" id="paPatientBed">6401234 · 3A-01</div></div>
+                <div><div class="wit-ml">ยาที่ให้</div><div class="wit-mv green" id="paDrugName">Amlodipine 5 mg</div></div>
+                <div><div class="wit-ml">Route / Dose</div><div class="wit-mv" id="paDrugDetail">PO · 5 mg</div></div>
+                <div><div class="wit-ml">ประเภท</div><div class="wit-mv" id="paFlowLabel">—</div></div>
+                <div><div class="wit-ml">เวลาให้ยาจริง</div><div class="wit-mv" id="paGivenTime">08:05 น.</div></div>
+            </div>
+        </div>
+
+        <!-- Assessment form -->
+        <div class="rec-card" style="margin-bottom:14px;">
+            <div class="rec-card-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                แบบประเมินหลังให้ยา
+            </div>
+
+            <!-- เวลาประเมิน -->
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">เวลาที่ประเมิน <span style="color:#dc2626;">*</span></div>
+                <input type="time" class="rec-doc-input" id="paAssessTime" style="max-width:180px;">
+            </div>
+
+            <!-- การตอบสนองต่อยา -->
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">การตอบสนองต่อยา <span style="color:#dc2626;">*</span></div>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;" id="paResponseGroup">
+                    <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;" onclick="paPickResponse(this,'better')" id="paResBetter">
+                        <div style="width:18px;height:18px;border-radius:50%;border:2px solid #22c55e;display:flex;align-items:center;justify-content:center;flex-shrink:0;" class="pa-radio-dot">
+                            <div style="width:9px;height:9px;border-radius:50%;background:#22c55e;display:none;" class="pa-radio-fill"></div>
+                        </div>
+                        <span style="font-size:14px;font-weight:600;color:#15803d;">ดีขึ้น / อาการบรรเทา</span>
+                        <span style="margin-left:auto;font-size:11px;color:var(--text-3);">ตอบสนองดี</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;" onclick="paPickResponse(this,'same')" id="paResSame">
+                        <div style="width:18px;height:18px;border-radius:50%;border:2px solid #f59e0b;display:flex;align-items:center;justify-content:center;flex-shrink:0;" class="pa-radio-dot">
+                            <div style="width:9px;height:9px;border-radius:50%;background:#f59e0b;display:none;" class="pa-radio-fill"></div>
+                        </div>
+                        <span style="font-size:14px;font-weight:600;color:#92400e;">ไม่เปลี่ยนแปลง</span>
+                        <span style="margin-left:auto;font-size:11px;color:var(--text-3);">ติดตามต่อ</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s;" onclick="paPickResponse(this,'worse')" id="paResWorse">
+                        <div style="width:18px;height:18px;border-radius:50%;border:2px solid #ef4444;display:flex;align-items:center;justify-content:center;flex-shrink:0;" class="pa-radio-dot">
+                            <div style="width:9px;height:9px;border-radius:50%;background:#ef4444;display:none;" class="pa-radio-fill"></div>
+                        </div>
+                        <span style="font-size:14px;font-weight:600;color:#991b1b;">แย่ลง / ต้องการการดูแล</span>
+                        <span style="margin-left:auto;font-size:11px;color:var(--text-3);">แจ้งแพทย์</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pain score after (shown for PRN/pain cases) -->
+            <div class="rec-doc-group" id="paPainGroup" style="display:none;">
+                <div class="rec-doc-label">Pain Score หลังให้ยา (0–10)</div>
+                <div class="pain-scale" id="paPainScale" style="margin-top:6px;">
+                    <div class="pain-dot" style="background:#22c55e20;color:#22c55e;" onclick="pickPainPost(this,0)">0</div>
+                    <div class="pain-dot" style="background:#22c55e20;color:#22c55e;" onclick="pickPainPost(this,1)">1</div>
+                    <div class="pain-dot" style="background:#84cc1620;color:#84cc16;" onclick="pickPainPost(this,2)">2</div>
+                    <div class="pain-dot" style="background:#eab30820;color:#eab308;" onclick="pickPainPost(this,3)">3</div>
+                    <div class="pain-dot" style="background:#eab30820;color:#eab308;" onclick="pickPainPost(this,4)">4</div>
+                    <div class="pain-dot" style="background:#f9731620;color:#f97316;" onclick="pickPainPost(this,5)">5</div>
+                    <div class="pain-dot" style="background:#f9731620;color:#f97316;" onclick="pickPainPost(this,6)">6</div>
+                    <div class="pain-dot" style="background:#ef444420;color:#ef4444;" onclick="pickPainPost(this,7)">7</div>
+                    <div class="pain-dot" style="background:#ef444420;color:#ef4444;" onclick="pickPainPost(this,8)">8</div>
+                    <div class="pain-dot" style="background:#dc262620;color:#dc2626;" onclick="pickPainPost(this,9)">9</div>
+                    <div class="pain-dot" style="background:#dc262620;color:#dc2626;" onclick="pickPainPost(this,10)">10</div>
+                </div>
+            </div>
+
+            <!-- Vital signs -->
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">Vital Signs หลังให้ยา <span style="font-size:11px;color:var(--text-3);font-weight:400;">(ถ้ามี)</span></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;">
+                    <div>
+                        <div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">BP (mmHg)</div>
+                        <input type="text" class="rec-doc-input" placeholder="เช่น 120/80" style="font-size:13px;">
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">HR (bpm)</div>
+                        <input type="number" class="rec-doc-input" placeholder="เช่น 72" style="font-size:13px;">
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">RR (ครั้ง/นาที)</div>
+                        <input type="number" class="rec-doc-input" placeholder="เช่น 18" style="font-size:13px;">
+                    </div>
+                    <div>
+                        <div style="font-size:11px;color:var(--text-3);margin-bottom:3px;">SpO₂ (%)</div>
+                        <input type="number" class="rec-doc-input" placeholder="เช่น 98" style="font-size:13px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Adverse events -->
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">อาการไม่พึงประสงค์ที่พบ <span style="font-size:11px;color:var(--text-3);font-weight:400;">(เลือกได้หลายข้อ)</span></div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;" id="paAdrGroup">
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">คลื่นไส้ / อาเจียน</div>
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ง่วงซึม / ซึม</div>
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ผื่น / ลมพิษ</div>
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">หน้ามืด / วิงเวียน</div>
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ความดันต่ำ</div>
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">หัวใจเต้นเร็ว/ผิดจังหวะ</div>
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">ไม่มีอาการผิดปกติ</div>
+                    <div onclick="paToggleAdr(this)" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);transition:.15s;user-select:none;">อื่นๆ</div>
+                </div>
+            </div>
+
+            <!-- หมายเหตุ -->
+            <div class="rec-doc-group">
+                <div class="rec-doc-label">หมายเหตุ / บันทึกเพิ่มเติม</div>
+                <textarea class="rec-doc-input" placeholder="อธิบายการตอบสนองหรืออาการที่พบเพิ่มเติม..." style="min-height:60px;"></textarea>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="rec-actions" style="display:flex;gap:10px;padding:0 0 24px;">
+            <button class="btn-secondary" onclick="postAssessBack()" style="flex:1;">
+                ข้ามการประเมิน
+            </button>
+            <button class="btn-primary" onclick="savePostAssess()" style="flex:2;background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;" id="paSaveBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                บันทึกการประเมิน
+            </button>
+        </div>
+    </div>
+
+    <!-- ══ SUCCESS STATE ══ -->
+    <div id="paSuccess" style="display:none;" class="rec-body">
+        <div style="display:flex;flex-direction:column;align-items:center;padding:40px 24px;max-width:460px;margin:0 auto;">
+            <div style="width:100px;height:100px;background:linear-gradient(135deg,#059669,#10b981);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;box-shadow:0 8px 32px rgba(5,150,105,0.25);animation:ok-pop .5s cubic-bezier(.2,.8,.4,1.2);">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+            <div style="font-size:24px;font-weight:800;color:#065f46;margin-bottom:6px;">บันทึกการประเมินสำเร็จ</div>
+            <div style="font-size:14px;color:var(--text-2);margin-bottom:24px;text-align:center;" id="paSuccessSub">ผลการประเมินหลังให้ยาถูกบันทึกลงในระบบแล้ว</div>
+
+            <div class="ok-summary" style="width:100%;">
+                <div class="ok-summary-grid">
+                    <div><div class="wit-ml">ผู้ป่วย</div><div class="wit-mv" id="paOkPatient">นายสมชาย มานะ</div></div>
+                    <div><div class="wit-ml">ยาที่ให้</div><div class="wit-mv green" id="paOkDrug">Amlodipine 5 mg</div></div>
+                    <div><div class="wit-ml">การตอบสนอง</div><div class="wit-mv green" id="paOkResponse">—</div></div>
+                    <div><div class="wit-ml">เวลาประเมิน</div><div class="wit-mv" id="paSavedTime">—</div></div>
+                    <div><div class="wit-ml">ผู้ประเมิน</div><div class="wit-mv">นส.สมใจ ดีมาก</div></div>
+                    <div><div class="wit-ml">สถานะ</div><div class="wit-mv green">บันทึกแล้ว</div></div>
+                </div>
+            </div>
+
+            <div class="ok-actions" style="width:100%;margin-top:20px;">
+                <button class="btn-primary" onclick="postAssessBack()" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;">
+                    กลับหน้าก่อนหน้า
+                </button>
+                <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    กลับ Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

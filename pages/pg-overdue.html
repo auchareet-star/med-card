@@ -59,7 +59,7 @@
                     <div class="rt-scan-circle idle" id="ovScan3C"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--text-3)" id="ovScan3I"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="ovScan3H">สแกนยืนยันตัวผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">ธนกร วิเศษสิทธิ์ · 3A-10</div>
-                    <button class="btn-ov" style="max-width:260px;" onclick="ovScanPt()" id="ovScan3Btn">เริ่มสแกน</button>
+                    <button class="btn-ov" style="max-width:500px;" onclick="ovScanPt()" id="ovScan3Btn">เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="ovStep3Bot" style="display:none;"><button class="btn-secondary" onclick="ovResetScan3()">สแกนใหม่</button><button class="btn-ov" style="flex:2;" onclick="ovGoStep(4)">ดำเนินการต่อ</button></div>
@@ -97,19 +97,50 @@
             </div>
         </div>
 
-        <!-- ══ STEP 5: สแกนยา ══ -->
+        <!-- ══ STEP 5: สแกนยา Overdue (Multi-Drug) ══ -->
         <div class="rt-panel" id="ovStep5">
-            <div class="rt-inner">
-                <div class="ov-banner"><div class="ov-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div><div><div class="ov-banner-text">สแกนยา — Overdue Dose</div><div class="ov-banner-sub">Heparin 5000 units SC · เลยเวลา 48 นาที</div></div></div>
+            <div class="rt-inner" style="max-width:680px;">
+                <div class="ov-banner" style="margin-bottom:16px;"><div class="ov-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div><div><div class="ov-banner-text">สแกนยา Overdue — ธนกร วิเศษสิทธิ์ (3A-10)</div><div class="ov-banner-sub">สแกนได้พร้อมกัน 2 รายการ · ยาเลยเวลา กรุณาดำเนินการด่วน</div></div></div>
 
-                <div class="am-detail" style="margin-bottom:14px;"><div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge" style="background:#fff1f2;color:#be123c;font-size:10px;">Overdue</span></div><div class="am-detail-grid"><div><div class="am-dl">Dose</div><div class="am-dv" style="color:#be123c;font-weight:800;">5,000 units</div></div><div><div class="am-dl">Route</div><div class="am-dv">SC</div></div><div><div class="am-dl">ควรให้</div><div class="am-dv" style="color:#be123c;">07:30 (เลยเวลา)</div></div><div><div class="am-dl">Overdue</div><div class="am-dv" style="color:#be123c;font-weight:800;">48 นาที</div></div></div></div>
+                <!-- Drug 0: Heparin -->
+                <div class="mdc" id="ovdrug_0" data-done="false" data-flow="ov">
+                    <div class="mdc-bar" id="ovdrug_0_bar" style="background:#be123c;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Heparin 5000 units <span class="mdc-badge-warn">High Alert</span><span class="mdc-badge-warn" style="background:#fff1f2;color:#be123c;border-color:#fda4af;">Overdue 48 นาที</span></div>
+                                <div class="mdc-sub">SC · 5,000 units · ควรให้ 07:30 น. · เลยเวลามา 48 นาที</div>
+                            </div>
+                            <button class="mdc-btn" id="ovdrug_0_btn" onclick="scanMultiDrug('ov',0)" style="background:#be123c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="ovdrug_0_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r" style="background:#fff1f2;color:#be123c;font-size:9px;">Time!</div><div class="rt-r pass">Doc.</div><div class="rt-r pass">Reason</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="ovdrug_0_resname">Heparin 5000 units</span> <span style="color:var(--text-3);" id="ovdrug_0_lot"></span></div>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="rt-rights" id="ovRights"><div class="rt-r pass">Patient</div><div class="rt-r pend" id="ovRD">Drug</div><div class="rt-r pend" id="ovRDs">Dose</div><div class="rt-r pend" id="ovRR">Route</div><div class="rt-r" id="ovRT" style="background:#fff1f2;color:#be123c;">Time!</div><div class="rt-r pend" id="ovRDc">Doc.</div><div class="rt-r pend" id="ovRRs">Reason</div></div>
+                <!-- Drug 1: Metoprolol (เพิ่ม) -->
+                <div class="mdc" id="ovdrug_1" data-done="false" data-flow="ov">
+                    <div class="mdc-bar" id="ovdrug_1_bar" style="background:#be123c;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Metoprolol 50 mg <span class="mdc-badge-warn" style="background:#fff1f2;color:#be123c;border-color:#fda4af;">Overdue 1 ชม.</span></div>
+                                <div class="mdc-sub">PO · 50 mg · BID · ควรให้ 07:00 น. · เลยเวลามา 1 ชม. 18 นาที</div>
+                            </div>
+                            <button class="mdc-btn" id="ovdrug_1_btn" onclick="scanMultiDrug('ov',1)" style="background:#be123c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="ovdrug_1_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r" style="background:#fff1f2;color:#be123c;font-size:9px;">Time!</div><div class="rt-r pass">Doc.</div><div class="rt-r pass">Reason</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="ovdrug_1_resname">Metoprolol 50 mg</span> <span style="color:var(--text-3);" id="ovdrug_1_lot"></span></div>
+                        </div>
+                    </div>
+                </div>
 
-                <button class="btn-ov" onclick="ovScanDrug()" style="margin-bottom:14px;">สแกนยา</button>
-                <div class="am-scan-result" id="ovDrugResult"><div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Heparin 5000 units</span></div><div class="am-sr-grid"><div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div><div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div></div></div>
+                <div style="font-size:12px;color:var(--text-3);text-align:center;margin-top:8px;">กดปุ่ม <strong>สแกน</strong> ที่ยาแต่ละรายการ — สแกนพร้อมกันได้ทั้ง 2 รายการ</div>
             </div>
-            <div class="rt-bottom"><button class="btn-secondary" onclick="ovGoStep(4)">ย้อนกลับ</button><button class="btn-ov" style="flex:2;" id="ovBtnConfirm" onclick="ovGoStep(6)" disabled>ยืนยันให้ยา (Overdue)</button></div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="ovGoStep(4)">ย้อนกลับ</button><button class="btn-ov" style="flex:2;" id="ovBtnConfirm" onclick="ovGoStep(6)" disabled>ยืนยันให้ยา Overdue (2/2)</button></div>
         </div>
 
         <!-- ══ STEP 6: ยืนยันบันทึก ══ -->
@@ -151,6 +182,10 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:400px;width:100%;">
+                    <button class="btn-primary" onclick="goPostAssess({flow:'overdue',patient:'นายธนกร วิเศษสิทธิ์',bed:'6405001 · 3A-10',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'Overdue',givenTime:'08:18 น.',showPain:false,origin:'pg-overdue'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>
+                        ประเมินหลังให้ยา
+                    </button>
                     <button class="btn-primary" onclick="ovGoStep(1)" style="background:#be123c;box-shadow:0 5px 22px rgba(190,18,60,.3);">กลับรายการผู้ป่วย</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>กลับ Dashboard</button>
                 </div>

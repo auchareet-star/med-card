@@ -128,7 +128,7 @@
                     </div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="prnScan3H">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;">สมชาย มานะ · 3A-01 · HN: 6401234</div>
-                    <button class="btn-prn" style="max-width:260px;" onclick="prnScanPt()" id="prnScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
+                    <button class="btn-prn" style="max-width:500px;" onclick="prnScanPt()" id="prnScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="prnStep3Bot" style="display:none;"><button class="btn-secondary" onclick="prnResetScan3()">สแกนใหม่</button><button class="btn-prn" style="flex:2;" onclick="prnGoStep(4)">ดำเนินการต่อ</button></div>
@@ -192,45 +192,53 @@
             <div class="rt-bottom"><button class="btn-secondary" onclick="prnGoStep(3)">ยกเลิก</button><button class="btn-prn" style="flex:2;" id="btnPrnAssess" onclick="prnGoStep(5)" disabled>ยืนยันการประเมิน</button></div>
         </div>
 
-        <!-- ══ STEP 5: สแกนยา + ยืนยัน ══ -->
+        <!-- ══ STEP 5: สแกนยา PRN (Multi-Drug) ══ -->
         <div class="rt-panel" id="prnStep5">
-            <div class="rt-inner">
-                <div class="prn-banner">
+            <div class="rt-inner" style="max-width:680px;">
+                <div class="prn-banner" style="margin-bottom:16px;">
                     <div class="prn-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
-                    <div><div class="prn-banner-text">สแกนยาและยืนยัน — PRN</div><div class="prn-banner-sub">Morphine 5 mg IV · ข้อบ่งชี้: ปวด · Pain score: <span id="prnPainDisplay">7</span>/10</div></div>
+                    <div><div class="prn-banner-text">สแกนยา PRN — สมชาย มานะ (3A-01)</div><div class="prn-banner-sub">ข้อบ่งชี้: ปวด · Pain score: <span id="prnPainDisplay">7</span>/10 · สแกนได้พร้อมกัน 2 รายการ</div></div>
                 </div>
 
-                <div class="am-detail" style="margin-bottom:14px;">
-                    <div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Morphine 5 mg <span class="pt-badge prn" style="font-size:10px;padding:2px 8px;">PRN</span></div>
-                    <div class="am-detail-grid">
-                        <div><div class="am-dl">Dose</div><div class="am-dv" style="color:#7c3aed;font-weight:800;">5 mg</div></div>
-                        <div><div class="am-dl">Route</div><div class="am-dv">IV (หลอดเลือดดำ)</div></div>
-                        <div><div class="am-dl">เงื่อนไข</div><div class="am-dv">q4h PRN pain &ge; 5</div></div>
-                        <div><div class="am-dl">ให้ล่าสุด</div><div class="am-dv">03:00 น. (5 ชม.ก่อน)</div></div>
+                <!-- Drug 0: Morphine (High Alert + Narcotic) -->
+                <div class="mdc" id="prndrug_0" data-done="false" data-flow="prn">
+                    <div class="mdc-bar" id="prndrug_0_bar" style="background:#7c3aed;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Morphine 5 mg <span class="mdc-badge-warn">High Alert</span><span class="mdc-badge-warn" style="background:#faf5ff;color:#7c3aed;border-color:#c4b5fd;">ยาเสพติด</span></div>
+                                <div class="mdc-sub">IV · 5 mg · q4h PRN pain ≥ 5 · ต้องมีพยาน</div>
+                            </div>
+                            <button class="mdc-btn" id="prndrug_0_btn" onclick="scanMultiDrug('prn',0)" style="background:#7c3aed;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="prndrug_0_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r pass">Time</div><div class="rt-r pass">Assess.</div><div class="rt-r pass">Doc.</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="prndrug_0_resname">Morphine 5 mg</span> <span style="color:var(--text-3);" id="prndrug_0_lot"></span></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="rt-rights" id="prnRights">
-                    <div class="rt-r pass">Patient</div>
-                    <div class="rt-r pend" id="prnRD">Drug</div>
-                    <div class="rt-r pend" id="prnRDs">Dose</div>
-                    <div class="rt-r pend" id="prnRR">Route</div>
-                    <div class="rt-r pass">Time</div>
-                    <div class="rt-r pass">Assess.</div>
-                    <div class="rt-r pend" id="prnRDc">Doc.</div>
-                </div>
-
-                <button class="btn-prn" onclick="prnScanDrug()" style="margin-bottom:14px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนยา</button>
-
-                <div class="am-scan-result" id="prnDrugResult">
-                    <div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Morphine 5 mg/mL</span></div>
-                    <div class="am-sr-grid">
-                        <div><div class="am-sr-l">Lot</div><div class="am-sr-v">MOR-2025-017</div></div>
-                        <div><div class="am-sr-l">Expiry</div><div class="am-sr-v">15/06/2569</div></div>
+                <!-- Drug 1: Ondansetron (เพิ่ม) -->
+                <div class="mdc" id="prndrug_1" data-done="false" data-flow="prn">
+                    <div class="mdc-bar" id="prndrug_1_bar" style="background:#7c3aed;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Ondansetron 4 mg <span class="pt-badge prn" style="font-size:9px;padding:1px 6px;">PRN</span></div>
+                                <div class="mdc-sub">IV · 4 mg · PRN nausea · q6h</div>
+                            </div>
+                            <button class="mdc-btn" id="prndrug_1_btn" onclick="scanMultiDrug('prn',1)" style="background:#7c3aed;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="prndrug_1_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r pass">Time</div><div class="rt-r pass">Assess.</div><div class="rt-r pass">Doc.</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="prndrug_1_resname">Ondansetron 4 mg</span> <span style="color:var(--text-3);" id="prndrug_1_lot"></span></div>
+                        </div>
                     </div>
                 </div>
+
+                <div style="font-size:12px;color:var(--text-3);text-align:center;margin-top:8px;">กดปุ่ม <strong>สแกน</strong> ที่ยาแต่ละรายการ — สแกนพร้อมกันได้ทั้ง 2 รายการ</div>
             </div>
-            <div class="rt-bottom"><button class="btn-secondary" onclick="prnGoStep(4)">ย้อนกลับ</button><button class="btn-prn" style="flex:2;" id="btnPrnConfirm" onclick="prnGoStep(6)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา PRN</button></div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="prnGoStep(4)">ย้อนกลับ</button><button class="btn-prn" style="flex:2;" id="btnPrnConfirm" onclick="prnGoStep(6)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา PRN (2/2)</button></div>
         </div>
 
         <!-- ══ STEP 6: สำเร็จ ══ -->
@@ -252,7 +260,10 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:420px;width:100%;">
-                    <button class="btn-prn" onclick="showToast('ไปหน้าประเมินหลังให้ยา...');setTimeout(()=>showToast(''),2000);">บันทึกการประเมินหลังให้ยา</button>
+                    <button class="btn-primary" onclick="goPostAssess({flow:'prn',patient:'นายสมชาย มานะ',bed:'6401234 · 3A-01',drug:'Morphine 5 mg',detail:'IV · 5 mg',type:'PRN',givenTime:'08:18 น.',showPain:true,origin:'pg-prn'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>
+                        ประเมินหลังให้ยา (บังคับสำหรับ PRN)
+                    </button>
                     <div class="ok-act-row">
                         <button class="btn-secondary" onclick="prnGoStep(1)">กลับรายการผู้ป่วย</button>
                         <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">กลับ Dashboard</button>

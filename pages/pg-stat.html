@@ -115,53 +115,59 @@
                     </div>
                     <div style="font-size:20px;font-weight:800;color:var(--text-1);margin-bottom:4px;" id="stScan3H">กรุณาสแกนสายรัดข้อมือผู้ป่วย</div>
                     <div style="font-size:14px;color:var(--text-2);margin-bottom:20px;" id="stScan3T">ยืนยันตัวตนก่อนให้ยา STAT</div>
-                    <button class="btn-stat" style="max-width:260px;" onclick="stScanPt()" id="stScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
+                    <button class="btn-stat" style="max-width:500px;" onclick="stScanPt()" id="stScan3Btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>เริ่มสแกน</button>
                 </div>
             </div>
             <div class="rt-bottom" id="stStep3Bot" style="display:none;"><button class="btn-secondary" onclick="stResetScan3()">สแกนใหม่</button><button class="btn-stat" style="flex:2;" onclick="stGoStep(4)">ดำเนินการต่อ</button></div>
         </div>
 
-        <!-- ══ STEP 4: สแกนยา + ยืนยัน STAT ══ -->
+        <!-- ══ STEP 4: สแกนยา STAT (Multi-Drug) ══ -->
         <div class="rt-panel" id="stStep4">
-            <div class="rt-inner">
-                <div class="stat-banner">
-                    <div class="stat-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10" fill="none" stroke="white" stroke-width="2"/><polyline points="12 6 12 12 16 14" stroke="white" stroke-width="2" fill="none"/></svg></div>
-                    <div><div class="stat-banner-text">สแกนยาและยืนยัน — STAT</div><div class="stat-banner-sub">Heparin 5000 units SC · ธนกร วิเศษสิทธิ์ (3A-10)</div></div>
+            <div class="rt-inner" style="max-width:680px;">
+                <div class="stat-banner" style="margin-bottom:16px;">
+                    <div class="stat-banner-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg></div>
+                    <div><div class="stat-banner-text">สแกนยา STAT — ธนกร วิเศษสิทธิ์ (3A-10)</div><div class="stat-banner-sub">สแกนได้พร้อมกัน 2 รายการ</div></div>
                 </div>
 
-                <div class="am-detail" style="margin-bottom:14px;">
-                    <div class="am-detail-name" style="display:flex;align-items:center;gap:6px;">Heparin 5000 units <span class="pt-badge stat" style="font-size:10px;padding:2px 8px;">STAT</span></div>
-                    <div class="am-detail-grid">
-                        <div><div class="am-dl">Dose</div><div class="am-dv green">5,000 units</div></div>
-                        <div><div class="am-dl">Route</div><div class="am-dv">SC (ฉีดใต้ผิวหนัง)</div></div>
-                        <div><div class="am-dl">สั่งเมื่อ</div><div class="am-dv" style="color:#dc2626;font-weight:800;">07:25 น. (STAT)</div></div>
-                        <div><div class="am-dl">แพทย์สั่ง</div><div class="am-dv">นพ.สุรศักดิ์</div></div>
-                    </div>
-                    <div class="am-warn-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span><strong>High Alert</strong> — ต้องมีพยาน (ระบบจะขอยืนยันพยานหลังสแกนยา)</span></div>
-                </div>
-
-                <!-- 7 Rights -->
-                <div class="rt-rights" id="stRights">
-                    <div class="rt-r pass">Patient</div>
-                    <div class="rt-r pend" id="stRD">Drug</div>
-                    <div class="rt-r pend" id="stRDs">Dose</div>
-                    <div class="rt-r pend" id="stRR">Route</div>
-                    <div class="rt-r pass">Time</div>
-                    <div class="rt-r pend" id="stRDc">Doc.</div>
-                    <div class="rt-r pend" id="stRRs">Reason</div>
-                </div>
-
-                <button class="btn-stat" onclick="stScanDrug()" style="margin-bottom:14px;" id="stScanDrugBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกนยา</button>
-
-                <div class="am-scan-result" id="stDrugResult">
-                    <div class="am-sr-head"><span class="am-sr-status pass">ผ่าน</span><span class="am-sr-name">Heparin 5000 units</span></div>
-                    <div class="am-sr-grid">
-                        <div><div class="am-sr-l">Lot</div><div class="am-sr-v">HEP-2025-042</div></div>
-                        <div><div class="am-sr-l">Expiry</div><div class="am-sr-v">30/09/2569</div></div>
+                <!-- Drug 0: Heparin (High Alert) -->
+                <div class="mdc" id="stdrug_0" data-done="false" data-flow="st">
+                    <div class="mdc-bar" id="stdrug_0_bar" style="background:#dc2626;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Heparin 5000 units <span class="mdc-badge-warn">High Alert</span><span class="mdc-badge-warn" style="background:#fef9c3;color:#854d0e;border-color:#fde047;">STAT</span></div>
+                                <div class="mdc-sub">SC · 5,000 units · ต้องมีพยาน · สั่งเมื่อ 07:25 น.</div>
+                            </div>
+                            <button class="mdc-btn" id="stdrug_0_btn" onclick="scanMultiDrug('st',0)" style="background:#dc2626;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="stdrug_0_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r pass">Time</div><div class="rt-r pass">Doc.</div><div class="rt-r pass">Reason</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="stdrug_0_resname">Heparin 5000 units</span> <span style="color:var(--text-3);" id="stdrug_0_lot"></span></div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Drug 1: Ondansetron (เพิ่ม) -->
+                <div class="mdc" id="stdrug_1" data-done="false" data-flow="st">
+                    <div class="mdc-bar" id="stdrug_1_bar" style="background:#dc2626;"></div>
+                    <div class="mdc-body">
+                        <div class="mdc-header">
+                            <div class="mdc-info">
+                                <div class="mdc-name">Ondansetron 4 mg <span class="mdc-badge-warn" style="background:#fef9c3;color:#854d0e;border-color:#fde047;">STAT</span></div>
+                                <div class="mdc-sub">IV · 4 mg · ป้องกันคลื่นไส้ · สั่งเมื่อ 07:25 น.</div>
+                            </div>
+                            <button class="mdc-btn" id="stdrug_1_btn" onclick="scanMultiDrug('st',1)" style="background:#dc2626;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน</button>
+                        </div>
+                        <div class="mdc-done-row" id="stdrug_1_done" style="display:none;">
+                            <div class="rt-rights mdc-rights"><div class="rt-r pass">Patient</div><div class="rt-r pass">Drug</div><div class="rt-r pass">Dose</div><div class="rt-r pass">Route</div><div class="rt-r pass">Time</div><div class="rt-r pass">Doc.</div><div class="rt-r pass">Reason</div></div>
+                            <div class="mdc-result-tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span id="stdrug_1_resname">Ondansetron 4 mg</span> <span style="color:var(--text-3);" id="stdrug_1_lot"></span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size:12px;color:var(--text-3);text-align:center;margin-top:8px;">กดปุ่ม <strong>สแกน</strong> ที่ยาแต่ละรายการ — สแกนพร้อมกันได้ทั้ง 2 รายการ</div>
             </div>
-            <div class="rt-bottom"><button class="btn-secondary" onclick="stGoStep(3)">ย้อนกลับ</button><button class="btn-stat" style="flex:2;" id="stBtnConfirm" onclick="stGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา STAT ตอนนี้</button></div>
+            <div class="rt-bottom"><button class="btn-secondary" onclick="stGoStep(3)">ย้อนกลับ</button><button class="btn-stat" style="flex:2;" id="stBtnConfirm" onclick="stGoStep(5)" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>ยืนยันให้ยา STAT (2/2)</button></div>
         </div>
 
         <!-- ══ STEP 5: สำเร็จ ══ -->
@@ -183,6 +189,10 @@
                 </div>
 
                 <div class="ok-actions" style="max-width:400px;width:100%;">
+                    <button class="btn-primary" onclick="goPostAssess({flow:'stat',patient:'นายธนกร วิเศษสิทธิ์',bed:'6405001 · 3A-10',drug:'Heparin 5000 units',detail:'SC · 5,000 units',type:'STAT',givenTime:'08:18 น.',showPain:false,origin:'pg-stat'})" style="background:linear-gradient(135deg,#059669,#10b981);box-shadow:0 5px 18px rgba(5,150,105,.25);border:none;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="white" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke="white" stroke-width="2"/></svg>
+                        ประเมินหลังให้ยา
+                    </button>
                     <button class="btn-primary" onclick="stGoStep(1)" style="background:#dc2626;box-shadow:0 5px 22px rgba(220,38,38,.3);">กลับรายการผู้ป่วย STAT</button>
                     <button class="btn-secondary" onclick="nav('pg-dashboard')" style="border-color:var(--text-3);">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
