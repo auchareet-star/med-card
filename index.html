@@ -1717,8 +1717,8 @@
             background:rgba(239,246,255,.9); color:#1d4ed8; border:1px solid rgba(147,197,253,.65);
             font-size:11px; font-weight:800; white-space:nowrap;
         }
-        .db-cassette-body { display:grid; grid-template-columns: minmax(280px,.78fr) 1.42fr; gap:16px; align-items:stretch; position:relative; z-index:1; }
-        .db-cassette-summary { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .db-cassette-body { display:flex; flex-direction:column; gap:16px; position:relative; z-index:1; }
+        .db-cassette-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
         .db-cassette-stat {
             border-radius:17px; padding:14px 14px 13px;
             background:rgba(255,255,255,.9); border:1px solid rgba(226,232,240,.9);
@@ -1784,28 +1784,6 @@
         .db-cassette-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; font-size:10.5px; color:#475569; }
         .db-cassette-legend span { display:inline-flex; align-items:center; gap:6px; font-weight:750; padding:5px 8px; border-radius:999px; background:#f8fafc; border:1px solid #e2e8f0; }
         .db-cassette-legend i { width:10px; height:10px; border-radius:4px; display:inline-block; }
-        .db-cassette-active-list {
-            margin-top:12px; border-radius:18px;
-            background:rgba(255,255,255,.9); border:1px solid rgba(226,232,240,.9);
-            padding:12px; box-shadow:0 6px 18px rgba(15,23,42,.04);
-        }
-        .db-cassette-active-title { font-size:11px; font-weight:900; color:#334155; margin-bottom:9px; }
-        .db-cassette-empty {
-            padding:13px 14px; border-radius:14px; background:#f8fafc;
-            border:1px dashed #cbd5e1; color:var(--text-3); font-size:11px; font-weight:750;
-        }
-        .db-cassette-active-item {
-            display:flex; align-items:center; gap:10px; padding:9px 10px;
-            border-radius:13px; background:#f8fafc; border:1px solid #e2e8f0; margin-bottom:7px;
-        }
-        .db-cassette-active-item:last-child { margin-bottom:0; }
-        .db-cassette-active-swatch {
-            width:20px; height:20px; border-radius:8px; flex-shrink:0;
-            box-shadow:0 0 0 4px rgba(15,23,42,.05);
-        }
-        .db-cassette-active-main { flex:1; min-width:0; font-size:11px; color:#334155; font-weight:850; }
-        .db-cassette-active-sub { font-size:9px; color:#94a3b8; margin-top:1px; font-weight:700; }
-
         /* Bottom grid */
         .db-bottom { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
         .db-bottom.super-head { grid-template-columns:1fr 1fr; }
@@ -1901,7 +1879,7 @@
             .db-bottom.super-head { grid-template-columns:1fr; }
             .db-cassette-head { align-items:flex-start; flex-wrap:wrap; }
             .db-cassette-pill { margin-left:0; }
-            .db-cassette-summary { grid-template-columns:1fr 1fr; }
+            .db-cassette-summary { grid-template-columns:repeat(2,1fr); }
             .db-cassette-map { grid-template-columns:1fr; }
             #dashBanner > div:nth-child(2) { justify-content:flex-start !important; padding:0 24px 20px !important; border-left:0 !important; }
             #dashBanner > div:nth-child(3) { padding:0 24px 24px !important; min-width:100% !important; }
@@ -5112,7 +5090,7 @@
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
                         </div>
                         <div class="p1-stat-label">Cassette พร้อม</div>
-                        <div class="p1-stat-val accent" id="cartCassettes">24 <span style="font-size:13px;color:var(--text-2);font-weight:400;">/ 24 ช่อง</span></div>
+                        <div class="p1-stat-val accent" id="cartCassettes">48 <span style="font-size:13px;color:var(--text-2);font-weight:400;">/ 48 ช่อง</span></div>
                     </div>
                     <div class="p1-stat">
                         <div class="p1-stat-icon blue">
@@ -5921,7 +5899,7 @@
             <!-- Drawer — Rose -->
             <div class="db-stat" style="border-color:#fecdd3;--db-stat-accent-bg:rgba(251,113,133,0.07);--db-stat-icon-bg:linear-gradient(135deg,#E11D48,#FB7185);--db-stat-shadow:rgba(225,29,72,0.25);--db-stat-num-color:#1a0008;--db-stat-color:#E11D48;">
                 <div class="db-stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/></svg></div>
-                <div class="db-stat-num" id="dashStatCassette">6<span style="font-size:15px;color:#94a3b8;font-weight:500;">/24</span></div>
+                <div class="db-stat-num" id="dashStatCassette">6<span style="font-size:15px;color:#94a3b8;font-weight:500;">/48</span></div>
                 <div class="db-stat-label">Drawer / Cassette</div>
             </div>
         </div>
@@ -6033,7 +6011,6 @@
             <div class="db-cassette-body">
                 <div>
                     <div class="db-cassette-summary" id="dashCassetteSummary"></div>
-                    <div id="dashCassetteActiveList" class="db-cassette-active-list"></div>
                 </div>
                 <div class="db-cassette-map-card">
                     <div class="db-cassette-map-head">
@@ -6954,7 +6931,7 @@
                     <span id="cassDrawerLabel">Drawer 1</span>
                     <span class="dw-status ok" id="cassDrawerStatus"><span class="dot"></span> พร้อมใช้งาน</span>
                 </div>
-                <span class="cass-area-badge" id="cassBadge">4 Cassette</span>
+                <span class="cass-area-badge" id="cassBadge">8 Cassette</span>
             </div>
 
             <div class="cass-grid" id="cassGrid">
@@ -12221,8 +12198,8 @@
     <div class="d-section">
         <div class="d-section-title">ฮาร์ดแวร์ &amp; เครือข่าย</div>
         <div class="d-row"><span class="d-key">จำนวน Drawer</span>        <span class="d-val">6 ลิ้นชัก</span></div>
-        <div class="d-row"><span class="d-key">Cassette ทั้งหมด</span>    <span class="d-val">24 ช่อง</span></div>
-        <div class="d-row"><span class="d-key">Cassette พร้อมใช้</span>   <span class="d-val" style="color:var(--green)">24 ช่อง</span></div>
+        <div class="d-row"><span class="d-key">Cassette ทั้งหมด</span>    <span class="d-val">48 ช่อง</span></div>
+        <div class="d-row"><span class="d-key">Cassette พร้อมใช้</span>   <span class="d-val" style="color:var(--green)">48 ช่อง</span></div>
         <div class="d-row"><span class="d-key">แบตเตอรี่</span>           <span class="d-val">85% (กำลังชาร์จ)</span></div>
         <div class="d-row"><span class="d-key">เครือข่าย</span>           <span class="d-val">Wi-Fi (−52 dBm)</span></div>
         <div class="d-row"><span class="d-key">IP Address</span>           <span class="d-val">192.168.10.45</span></div>
@@ -12872,7 +12849,7 @@
     function getRoleSectionHTML(role, name, roleText) {
         const glass = 'background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);';
         let dashMetrics = { done:16, pending:8, total:24, highAlert:2, prn:3 };
-        let dashCassette = { drawers:6, total:24, readyBase:24, perDrawer:4, available:24, inUse:0, maintenance:0, completed:0 };
+        let dashCassette = { drawers:6, total:48, readyBase:48, perDrawer:8, available:48, inUse:0, maintenance:0, completed:0 };
         try { dashMetrics = getDashboardMetrics(); } catch (e) {}
         try { dashCassette = getDashboardCassetteState(); } catch (e) {}
         let omitCount = 0;
@@ -12880,7 +12857,7 @@
         const pharmaCassetteCards = (function() {
             let html = '';
             const drawers = Math.max(dashCassette.drawers || 6, 1);
-            const perDrawer = Math.max(dashCassette.perDrawer || 4, 1);
+            const perDrawer = Math.max(dashCassette.perDrawer || 8, 1);
             const readyBase = Math.max(Math.min(dashCassette.readyBase || dashCassette.total || drawers * perDrawer, dashCassette.total || drawers * perDrawer), 0);
             for (let d = 1; d <= drawers; d++) {
                 const drawerReady = Math.max(Math.min(readyBase - ((d - 1) * perDrawer), perDrawer), 0);
@@ -15081,25 +15058,41 @@
                 {id:'A1',status:'ok',label:'พร้อมใช้งาน'},
                 {id:'A2',status:'ok',label:'พร้อมใช้งาน'},
                 {id:'A3',status:'empty',label:'ว่าง'},
-                {id:'A4',status:'ok',label:'พร้อมใช้งาน'}
+                {id:'A4',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'A5',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'A6',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'A7',status:'empty',label:'ว่าง'},
+                {id:'A8',status:'ok',label:'พร้อมใช้งาน'}
             ]},
         2: { label:'Drawer 2', status:'ok', statusText:'พร้อมใช้งาน', cassettes:[
                 {id:'B1',status:'ok',label:'พร้อมใช้งาน'},
                 {id:'B2',status:'ok',label:'พร้อมใช้งาน'},
                 {id:'B3',status:'ok',label:'พร้อมใช้งาน'},
-                {id:'B4',status:'empty',label:'ว่าง'}
+                {id:'B4',status:'empty',label:'ว่าง'},
+                {id:'B5',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'B6',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'B7',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'B8',status:'empty',label:'ว่าง'}
             ]},
         3: { label:'Drawer 3', status:'ok', statusText:'พร้อมใช้งาน', cassettes:[
                 {id:'C1',status:'ok',label:'พร้อมใช้งาน'},
                 {id:'C2',status:'error',label:'ผิดปกติ'},
                 {id:'C3',status:'ok',label:'พร้อมใช้งาน'},
-                {id:'C4',status:'ok',label:'พร้อมใช้งาน'}
+                {id:'C4',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'C5',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'C6',status:'ok',label:'พร้อมใช้งาน'},
+                {id:'C7',status:'error',label:'ผิดปกติ'},
+                {id:'C8',status:'ok',label:'พร้อมใช้งาน'}
             ]},
         4: { label:'Drawer 4', status:'full', statusText:'เต็ม', cassettes:[
                 {id:'D1',status:'full',label:'เต็ม'},
                 {id:'D2',status:'full',label:'เต็ม'},
                 {id:'D3',status:'full',label:'เต็ม'},
-                {id:'D4',status:'full',label:'เต็ม'}
+                {id:'D4',status:'full',label:'เต็ม'},
+                {id:'D5',status:'full',label:'เต็ม'},
+                {id:'D6',status:'full',label:'เต็ม'},
+                {id:'D7',status:'full',label:'เต็ม'},
+                {id:'D8',status:'full',label:'เต็ม'}
             ]}
     };
 
@@ -17027,13 +17020,13 @@
         const isCritical = /ICU|ER/i.test(currentWardName || cartId);
         const series = (cartId.match(/^[A-Z]+/i) || ['A'])[0].toUpperCase();
         const drawerSpecBySeries = {
-            A: { drawers: 6, cassettes: 24, ready: 24, model: 'OmniRx Pro X2' },
-            B: { drawers: 4, cassettes: 16, ready: cartId === 'B-2' ? 10 : 16, model: 'OmniRx Lite' },
-            C: { drawers: 8, cassettes: 32, ready: 32, model: 'OmniRx Pro X3' },
-            D: { drawers: 4, cassettes: 16, ready: 16, model: 'OmniRx Lite' }
+            A: { drawers: 6, cassettes: 48, ready: 48, model: 'OmniRx Pro X2' },
+            B: { drawers: 4, cassettes: 32, ready: cartId === 'B-2' ? 20 : 32, model: 'OmniRx Lite' },
+            C: { drawers: 8, cassettes: 64, ready: 64, model: 'OmniRx Pro X3' },
+            D: { drawers: 4, cassettes: 32, ready: 32, model: 'OmniRx Lite' }
         };
         const spec = isCritical
-            ? { drawers: 8, cassettes: 32, ready: 32, model: 'OmniRx Pro X3' }
+            ? { drawers: 8, cassettes: 64, ready: 64, model: 'OmniRx Pro X3' }
             : (drawerSpecBySeries[series] || drawerSpecBySeries.A);
         const isMaintenance = /B-2|D-2/i.test(cartId);
         const ready = Math.min(spec.ready, spec.cassettes);
@@ -17060,7 +17053,7 @@
     function getDashboardCassetteState() {
         const cart = getCurrentDashboardCart();
         const drawers = Math.max(parseInt(cart.drawers, 10) || 6, 1);
-        const total = Math.max(parseInt(cart.cassettes, 10) || drawers * 4, drawers);
+        const total = Math.max(parseInt(cart.cassettes, 10) || drawers * 8, drawers);
         const readyBase = Math.max(Math.min(parseInt(cart.cassettesReady, 10) || total, total), 0);
         const perDrawer = Math.max(Math.ceil(total / drawers), 1);
         const locks = Object.values(cassetteModeLocks).filter(function(lock) {
@@ -17180,24 +17173,6 @@
                     + '</div>';
             }
             map.innerHTML = html;
-        }
-
-        const active = document.getElementById('dashCassetteActiveList');
-        if (active) {
-            if (!state.locks.length) {
-                active.innerHTML = '<div class="db-cassette-active-title">Cassette ที่กำลังใช้งาน</div>'
-                    + '<div class="db-cassette-empty">ยังไม่มี Cassette ถูกใช้ใน Ward นี้</div>';
-            } else {
-                active.innerHTML = '<div class="db-cassette-active-title">Cassette ที่กำลังใช้งาน</div>'
-                    + state.locks.slice(0, 5).map(function(lock) {
-                        const cfg = cassetteModeConfig[lock.mode] || { label:'กำลังใช้งาน', dashboardLabel:'In Use', chipBg:'#64748b' };
-                        return '<div class="db-cassette-active-item">'
-                            + '<span class="db-cassette-active-swatch" style="background:' + cfg.chipBg + ';" title="' + escHtml(cfg.label) + '"></span>'
-                            + '<div class="db-cassette-active-main">D' + lock.drawer + ' · Cassette ' + lock.cassette
-                            + '<div class="db-cassette-active-sub">' + escHtml(cfg.label) + '</div></div>'
-                            + '</div>';
-                    }).join('');
-            }
         }
 
     }
@@ -18204,7 +18179,7 @@
             ward: 'Ward 3A', wardNote: 'หอผู้ป่วยอายุรกรรม',
             lastUsed: 'วันนี้ 08:42', lastUser: 'นส.สมใจ ดีมาก',
             battery: 85, battNote: 'กำลังชาร์จ',
-            drawers: 6, cassettes: 24, cassettesReady: 24,
+            drawers: 6, cassettes: 48, cassettesReady: 48,
             connection: 'Wi-Fi', signal: '−52 dBm · สัญญาณแรง', ip: '192.168.10.45', mac: 'A4:C3:F0:12:34:56'
         },
         {
@@ -18214,7 +18189,7 @@
             ward: 'Ward 3B', wardNote: 'หอผู้ป่วยศัลยกรรม',
             lastUsed: 'วันนี้ 07:30', lastUser: 'นส.ปราณี รักดี',
             battery: 62, battNote: 'ใช้งานปกติ',
-            drawers: 6, cassettes: 24, cassettesReady: 22,
+            drawers: 6, cassettes: 48, cassettesReady: 46,
             connection: 'Wi-Fi', signal: '−48 dBm · สัญญาณแรง', ip: '192.168.10.46', mac: 'A4:C3:F0:12:34:57'
         },
         {
@@ -18224,7 +18199,7 @@
             ward: 'Ward 4A', wardNote: 'หอผู้ป่วยกุมารเวช',
             lastUsed: 'เมื่อวาน 20:15', lastUser: 'นส.วรรณา สุขสม',
             battery: 100, battNote: 'ชาร์จเต็ม',
-            drawers: 4, cassettes: 16, cassettesReady: 16,
+            drawers: 4, cassettes: 32, cassettesReady: 32,
             connection: 'Wi-Fi', signal: '−60 dBm · สัญญาณปานกลาง', ip: '192.168.10.50', mac: 'B2:D1:E8:45:67:89'
         },
         {
@@ -18234,7 +18209,7 @@
             ward: 'Ward 4B', wardNote: 'หอผู้ป่วยสูติ-นรีเวช',
             lastUsed: '28 มี.ค. 14:00', lastUser: 'นส.จันทร์เพ็ญ ศรีสุข',
             battery: 30, battNote: 'แบตเตอรี่ต่ำ',
-            drawers: 4, cassettes: 16, cassettesReady: 10,
+            drawers: 4, cassettes: 32, cassettesReady: 20,
             connection: 'Offline', signal: 'ไม่มีสัญญาณ', ip: '—', mac: 'B2:D1:E8:45:67:8A'
         },
         {
@@ -18244,7 +18219,7 @@
             ward: 'Ward 5A', wardNote: 'หอผู้ป่วยออร์โธปิดิกส์',
             lastUsed: 'วันนี้ 09:10', lastUser: 'พว.กานต์ ปัญญาดี',
             battery: 95, battNote: 'กำลังชาร์จ',
-            drawers: 8, cassettes: 32, cassettesReady: 32,
+            drawers: 8, cassettes: 64, cassettesReady: 64,
             connection: 'Wi-Fi', signal: '−40 dBm · สัญญาณแรงมาก', ip: '192.168.10.60', mac: 'C6:A2:B3:78:90:AB'
         }
     ];
