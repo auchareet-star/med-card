@@ -1687,36 +1687,60 @@
 
         /* Shared Cassette monitor */
         .db-cassette-panel {
-            margin-bottom:22px; padding:18px 20px;
-            background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(248,250,252,.9));
-            border:1px solid rgba(203,213,225,.9); border-radius:22px;
-            box-shadow:0 12px 36px rgba(15,23,42,.07);
+            margin-bottom:22px; padding:20px;
+            background:
+                radial-gradient(circle at 8% 0%,rgba(20,184,166,.18),transparent 28%),
+                radial-gradient(circle at 94% 12%,rgba(59,130,246,.16),transparent 30%),
+                linear-gradient(135deg,rgba(255,255,255,.96),rgba(248,250,252,.9));
+            border:1px solid rgba(203,213,225,.86); border-radius:26px;
+            box-shadow:0 18px 50px rgba(15,23,42,.09);
+            position:relative; overflow:hidden;
         }
-        .db-cassette-head { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+        .db-cassette-panel::after {
+            content:''; position:absolute; inset:12px; border-radius:22px;
+            border:1px solid rgba(255,255,255,.62); pointer-events:none;
+        }
+        .db-cassette-head { display:flex; align-items:center; gap:14px; margin-bottom:18px; position:relative; z-index:1; }
         .db-cassette-icon {
-            width:44px; height:44px; border-radius:15px;
+            width:48px; height:48px; border-radius:17px;
             display:flex; align-items:center; justify-content:center;
-            color:white; background:linear-gradient(135deg,#0F172A,#334155);
-            box-shadow:0 8px 18px rgba(15,23,42,.22);
+            color:white; background:linear-gradient(135deg,#0F766E,#14B8A6);
+            box-shadow:0 12px 24px rgba(13,148,136,.24);
             flex-shrink:0;
         }
-        .db-cassette-title { font-size:16px; font-weight:800; color:#0f172a; letter-spacing:-.2px; }
-        .db-cassette-sub { font-size:11px; color:var(--text-3); margin-top:2px; }
+        .db-cassette-kicker { font-size:9px; font-weight:900; color:#0f766e; letter-spacing:.12em; text-transform:uppercase; margin-bottom:2px; }
+        .db-cassette-title { font-size:18px; font-weight:900; color:#0f172a; letter-spacing:-.35px; }
+        .db-cassette-sub { font-size:11px; color:var(--text-3); margin-top:3px; }
         .db-cassette-pill {
             margin-left:auto; display:inline-flex; align-items:center; gap:6px;
-            padding:7px 12px; border-radius:999px;
-            background:#eff6ff; color:#1d4ed8;
+            padding:8px 13px; border-radius:999px;
+            background:rgba(239,246,255,.9); color:#1d4ed8; border:1px solid rgba(147,197,253,.65);
             font-size:11px; font-weight:800; white-space:nowrap;
         }
-        .db-cassette-body { display:grid; grid-template-columns: minmax(260px,.8fr) 1.4fr; gap:16px; align-items:stretch; }
+        .db-cassette-body { display:grid; grid-template-columns: minmax(280px,.78fr) 1.42fr; gap:16px; align-items:stretch; position:relative; z-index:1; }
         .db-cassette-summary { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
         .db-cassette-stat {
-            border-radius:15px; padding:14px;
-            background:#fff; border:1px solid #e2e8f0;
-            min-height:82px;
+            border-radius:17px; padding:14px 14px 13px;
+            background:rgba(255,255,255,.9); border:1px solid rgba(226,232,240,.9);
+            min-height:86px; position:relative; overflow:hidden;
+            box-shadow:0 6px 18px rgba(15,23,42,.04);
         }
-        .db-cassette-stat-val { font-size:25px; font-weight:850; line-height:1; color:#0f172a; }
-        .db-cassette-stat-label { font-size:10px; font-weight:800; color:var(--text-3); margin-top:7px; }
+        .db-cassette-stat::before {
+            content:''; position:absolute; top:0; left:0; right:0; height:4px;
+            background:var(--accent,#94a3b8);
+        }
+        .db-cassette-stat-val { font-size:27px; font-weight:900; line-height:1; color:#0f172a; }
+        .db-cassette-stat-label { font-size:10px; font-weight:850; color:#475569; margin-top:8px; }
+        .db-cassette-stat-note { font-size:9px; color:#94a3b8; margin-top:3px; font-weight:700; }
+        .db-cassette-map-card {
+            background:rgba(255,255,255,.94);
+            border:1px solid rgba(226,232,240,.95);
+            border-radius:22px; padding:14px;
+            box-shadow:0 8px 22px rgba(15,23,42,.05);
+        }
+        .db-cassette-map-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+        .db-cassette-map-title { color:#0f172a; font-size:12px; font-weight:900; letter-spacing:.02em; }
+        .db-cassette-map-sub { color:#64748b; font-size:10px; font-weight:700; margin-top:2px; }
         .db-cassette-map {
             display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
             background:#f8fafc; border:1px solid #e2e8f0;
@@ -1726,10 +1750,10 @@
             background:white; border:1px solid #e2e8f0;
             border-radius:15px; padding:10px;
         }
-        .db-cassette-drawer-head { display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:800; color:#334155; margin-bottom:8px; }
+        .db-cassette-drawer-head { display:flex; align-items:center; justify-content:space-between; font-size:11px; font-weight:900; color:#334155; margin-bottom:8px; }
         .db-cassette-drawer-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
         .db-cassette-cell {
-            min-height:30px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+            min-height:32px; border-radius:10px; display:flex; align-items:center; justify-content:center;
             border:1px solid transparent; position:relative; overflow:hidden;
             color:#64748b; background:#f1f5f9;
             transition:transform .14s ease, box-shadow .14s ease;
@@ -1757,9 +1781,30 @@
         .db-cassette-cell.schedule::after {
             width:14px; height:14px; background:rgba(255,255,255,.78);
         }
-        .db-cassette-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; font-size:10.5px; color:var(--text-2); }
-        .db-cassette-legend span { display:inline-flex; align-items:center; gap:5px; font-weight:700; }
-        .db-cassette-legend i { width:9px; height:9px; border-radius:3px; display:inline-block; }
+        .db-cassette-legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; font-size:10.5px; color:#475569; }
+        .db-cassette-legend span { display:inline-flex; align-items:center; gap:6px; font-weight:750; padding:5px 8px; border-radius:999px; background:#f8fafc; border:1px solid #e2e8f0; }
+        .db-cassette-legend i { width:10px; height:10px; border-radius:4px; display:inline-block; }
+        .db-cassette-active-list {
+            margin-top:12px; border-radius:18px;
+            background:rgba(255,255,255,.9); border:1px solid rgba(226,232,240,.9);
+            padding:12px; box-shadow:0 6px 18px rgba(15,23,42,.04);
+        }
+        .db-cassette-active-title { font-size:11px; font-weight:900; color:#334155; margin-bottom:9px; }
+        .db-cassette-empty {
+            padding:13px 14px; border-radius:14px; background:#f8fafc;
+            border:1px dashed #cbd5e1; color:var(--text-3); font-size:11px; font-weight:750;
+        }
+        .db-cassette-active-item {
+            display:flex; align-items:center; gap:10px; padding:9px 10px;
+            border-radius:13px; background:#f8fafc; border:1px solid #e2e8f0; margin-bottom:7px;
+        }
+        .db-cassette-active-item:last-child { margin-bottom:0; }
+        .db-cassette-active-swatch {
+            width:20px; height:20px; border-radius:8px; flex-shrink:0;
+            box-shadow:0 0 0 4px rgba(15,23,42,.05);
+        }
+        .db-cassette-active-main { flex:1; min-width:0; font-size:11px; color:#334155; font-weight:850; }
+        .db-cassette-active-sub { font-size:9px; color:#94a3b8; margin-top:1px; font-weight:700; }
 
         /* Bottom grid */
         .db-bottom { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
@@ -5976,6 +6021,7 @@
                     </svg>
                 </div>
                 <div style="flex:1;min-width:220px;">
+                    <div class="db-cassette-kicker">Live Cart Inventory</div>
                     <div class="db-cassette-title">ข้อมูล Cassette รถเข็นยา</div>
                     <div class="db-cassette-sub" id="dashCassetteSub">Med Cart A-1 · Ward 3A · อัปเดตจากสถานะการจัดยา</div>
                 </div>
@@ -5987,8 +6033,15 @@
             <div class="db-cassette-body">
                 <div>
                     <div class="db-cassette-summary" id="dashCassetteSummary"></div>
+                    <div id="dashCassetteActiveList" class="db-cassette-active-list"></div>
                 </div>
-                <div>
+                <div class="db-cassette-map-card">
+                    <div class="db-cassette-map-head">
+                        <div>
+                            <div class="db-cassette-map-title">Drawer Map</div>
+                            <div class="db-cassette-map-sub" id="dashCassetteMapSub">สีแทนสถานะ Cassette ในรถเข็น</div>
+                        </div>
+                    </div>
                     <div class="db-cassette-map" id="dashCassetteMap"></div>
                     <div class="db-cassette-legend">
                         <span><i style="background:#dcfce7;border:1px solid #bbf7d0;"></i>พร้อมใช้</span>
@@ -11794,7 +11847,7 @@
             </div>
 
             <!-- Noon Card -->
-            <div onclick="showToast('เลือกรอบเที่ยง'); setTimeout(()=>showToast(''),2000);" style="background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 12px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 36px rgba(239,68,68,0.15)';this.style.borderColor='#FCA5A5'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.04)';this.style.borderColor='var(--border)'">
+            <div onclick="nav('pg-sched-detail')" style="background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 12px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 36px rgba(239,68,68,0.15)';this.style.borderColor='#FCA5A5'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.04)';this.style.borderColor='var(--border)'">
                 <!-- Gradient Header -->
                 <div style="background:linear-gradient(135deg,#EF4444,#F87171);padding:20px 20px 16px;position:relative;overflow:hidden;">
                     <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.1);top:-25px;right:-15px;"></div>
@@ -11829,7 +11882,7 @@
             </div>
 
             <!-- Evening Card -->
-            <div onclick="showToast('เลือกรอบเย็น'); setTimeout(()=>showToast(''),2000);" style="background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 12px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 36px rgba(249,115,22,0.15)';this.style.borderColor='#FDBA74'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.04)';this.style.borderColor='var(--border)'">
+            <div onclick="nav('pg-sched-detail')" style="background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 12px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 36px rgba(249,115,22,0.15)';this.style.borderColor='#FDBA74'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.04)';this.style.borderColor='var(--border)'">
                 <!-- Gradient Header -->
                 <div style="background:linear-gradient(135deg,#F97316,#FB923C);padding:20px 20px 16px;position:relative;overflow:hidden;">
                     <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.1);top:-25px;right:-15px;"></div>
@@ -11864,7 +11917,7 @@
             </div>
 
             <!-- Bedtime Card -->
-            <div onclick="showToast('เลือกก่อนนอน'); setTimeout(()=>showToast(''),2000);" style="background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 12px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 36px rgba(99,102,241,0.18)';this.style.borderColor='#A5B4FC'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.04)';this.style.borderColor='var(--border)'">
+            <div onclick="nav('pg-sched-detail')" style="background:rgba(255,255,255,0.88);backdrop-filter:blur(14px);border:1.5px solid var(--border);border-radius:18px;overflow:hidden;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 12px rgba(0,0,0,0.04);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 36px rgba(99,102,241,0.18)';this.style.borderColor='#A5B4FC'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(0,0,0,0.04)';this.style.borderColor='var(--border)'">
                 <!-- Gradient Header -->
                 <div style="background:linear-gradient(135deg,#6366F1,#818CF8);padding:20px 20px 16px;position:relative;overflow:hidden;">
                     <div style="position:absolute;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,0.1);top:-25px;right:-15px;"></div>
@@ -17074,26 +17127,29 @@
         renderDashboardCartCard(state);
         const sub = document.getElementById('dashCassetteSub');
         if (sub) sub.textContent = cart.name + ' · ' + (currentWardName || cart.ward) + ' · ' + (cart.statusText || 'พร้อมใช้งาน');
+        const mapSub = document.getElementById('dashCassetteMapSub');
+        if (mapSub) mapSub.textContent = state.drawers + ' Drawer · ' + state.perDrawer + ' Cassette ต่อ Drawer · ' + state.total + ' ช่องทั้งหมด';
         const pill = document.getElementById('dashCassetteModePill');
         if (pill) {
             const modeText = state.inUse
-                ? state.inUse + ' ช่องกำลังถูกจอง'
+                ? state.inUse + ' ช่องเติมยาเรียบร้อยแล้ว'
                 : 'พร้อมใช้ทุก Role';
             pill.innerHTML = '<span style="width:7px;height:7px;background:' + (state.inUse ? '#3b82f6' : '#22c55e') + ';border-radius:50%;box-shadow:0 0 0 3px ' + (state.inUse ? 'rgba(59,130,246,.16)' : 'rgba(34,197,94,.16)') + ';"></span>' + modeText;
         }
 
         const statData = [
-            { val: state.total, label: 'Cassette ทั้งหมด', color: '#0f172a', bg: '#f8fafc' },
-            { val: state.available, label: 'พร้อมใช้', color: '#15803d', bg: '#f0fdf4' },
-            { val: state.completed, label: 'เติมยาเรียบร้อยแล้ว', color: '#1d4ed8', bg: '#eff6ff' },
-            { val: state.maintenance, label: 'ไม่พร้อมใช้', color: '#b91c1c', bg: '#fef2f2' }
+            { val: state.total, label: 'Cassette ทั้งหมด', note: state.drawers + ' Drawer', color: '#0f172a', accent: '#64748b', bg: '#f8fafc' },
+            { val: state.available, label: 'พร้อมใช้', note: 'เปิดให้เลือกได้', color: '#15803d', accent: '#22c55e', bg: '#f0fdf4' },
+            { val: state.completed, label: 'เติมยาเรียบร้อยแล้ว', note: 'จัดยาครบแล้ว', color: '#1d4ed8', accent: '#3b82f6', bg: '#eff6ff' },
+            { val: state.maintenance, label: 'ไม่พร้อมใช้', note: cart.connection === 'Offline' ? 'รถเข็น Offline' : 'งดใช้งานชั่วคราว', color: '#b91c1c', accent: '#ef4444', bg: '#fef2f2' }
         ];
         const summary = document.getElementById('dashCassetteSummary');
         if (summary) {
             summary.innerHTML = statData.map(function(item) {
-                return '<div class="db-cassette-stat" style="background:' + item.bg + ';">'
+                return '<div class="db-cassette-stat" style="background:' + item.bg + ';--accent:' + item.accent + ';">'
                     + '<div class="db-cassette-stat-val" style="color:' + item.color + ';">' + item.val + '</div>'
                     + '<div class="db-cassette-stat-label">' + item.label + '</div>'
+                    + '<div class="db-cassette-stat-note">' + escHtml(item.note) + '</div>'
                     + '</div>';
             }).join('');
         }
@@ -17124,6 +17180,24 @@
                     + '</div>';
             }
             map.innerHTML = html;
+        }
+
+        const active = document.getElementById('dashCassetteActiveList');
+        if (active) {
+            if (!state.locks.length) {
+                active.innerHTML = '<div class="db-cassette-active-title">Cassette ที่กำลังใช้งาน</div>'
+                    + '<div class="db-cassette-empty">ยังไม่มี Cassette ถูกใช้ใน Ward นี้</div>';
+            } else {
+                active.innerHTML = '<div class="db-cassette-active-title">Cassette ที่กำลังใช้งาน</div>'
+                    + state.locks.slice(0, 5).map(function(lock) {
+                        const cfg = cassetteModeConfig[lock.mode] || { label:'กำลังใช้งาน', dashboardLabel:'In Use', chipBg:'#64748b' };
+                        return '<div class="db-cassette-active-item">'
+                            + '<span class="db-cassette-active-swatch" style="background:' + cfg.chipBg + ';" title="' + escHtml(cfg.label) + '"></span>'
+                            + '<div class="db-cassette-active-main">D' + lock.drawer + ' · Cassette ' + lock.cassette
+                            + '<div class="db-cassette-active-sub">' + escHtml(cfg.label) + '</div></div>'
+                            + '</div>';
+                    }).join('');
+            }
         }
 
     }
