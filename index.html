@@ -134,6 +134,24 @@
 
         /* ── BACK BUTTON (hidden — use browser back) ── */
         .hdr-back { display: none !important; }
+        .page > .hdr-back {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 8px;
+            position: fixed;
+            top: 80px;
+            left: 24px;
+            z-index: 210;
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 12px;
+            background: rgba(15,23,42,0.18);
+            color: white;
+            font-family: 'Prompt', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
 
         /* ── GLOBAL HEADER & FOOTER (always visible) ── */
         #globalHeader, #globalFooter { display: flex; }
@@ -11965,11 +11983,11 @@
         <span>85%</span>
     </div>
     <div style="display:flex;align-items:center;gap:12px;">
-        <button onclick="nav('pg-dashboard')" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
+        <button type="button" onclick="nav('pg-dashboard')" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             Dashboard
         </button>
-        <button onclick="history.back()" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
+        <button type="button" onclick="appBack()" style="background:none;border:none;font-family:'Prompt',sans-serif;font-size:11px;font-weight:500;color:var(--text-3);cursor:pointer;display:flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;transition:all .15s;" onmouseover="this.style.background='var(--bg)';this.style.color='var(--text-1)'" onmouseout="this.style.background='';this.style.color='var(--text-3)'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
             ย้อนกลับ
         </button>
@@ -12111,6 +12129,9 @@
     const dispensePages = ['pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail','pg-post-assess','pg-assess-list'];
     let currentRole = 'nurse';
 
+    let currentPageId = 'pg-cart';
+    let lastPageId = '';
+
     function nav(targetId, skipHistory) {
         // Block pharma from accessing dispense pages
         if (currentRole === 'pharma' && dispensePages.includes(targetId)) {
@@ -12118,8 +12139,15 @@
             setTimeout(() => showToast(''), 2500);
             return;
         }
+        const nextPage = document.getElementById(targetId);
+        if (!nextPage) {
+            console.warn('Navigation target not found:', targetId);
+            return;
+        }
+        lastPageId = currentPageId;
+        currentPageId = targetId;
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(targetId).classList.add('active');
+        nextPage.classList.add('active');
         window.scrollTo(0, 0);
         if (!skipHistory) {
             history.pushState({ page: targetId }, '', '#' + targetId);
@@ -12127,6 +12155,14 @@
         // Update global header page name
         const ghName = document.getElementById('ghPageName');
         if (ghName) ghName.textContent = pageNames[targetId] || '';
+    }
+
+    function appBack() {
+        if (lastPageId && lastPageId !== currentPageId) {
+            history.back();
+            return;
+        }
+        nav(sessionStorage.getItem('mcRole') ? 'pg-dashboard' : 'pg-cart');
     }
 
     // Browser back/forward
@@ -14453,57 +14489,40 @@
     function prnSelectPt(idx) {
         prnSelectedIdx = idx;
         var p = prnPatients[idx];
+        const setText = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+        const setHtml = (id, value) => { const el = document.getElementById(id); if (el) el.innerHTML = value; };
+        const setDisplay = (id, value) => { const el = document.getElementById(id); if (el) el.style.display = value; };
 
         // Step 2 — Patient detail
-        document.getElementById('prnAvatar2').textContent = p.initials;
-        document.getElementById('prnDetailName2').textContent = p.name;
-        document.getElementById('prnDetailMeta2').innerHTML = '<span>HN: '+p.hn+'</span><span>เตียง '+p.bed+'</span><span>'+p.gender+', '+p.age+' ปี</span>';
-        document.getElementById('prnAllergyText2').textContent = 'แพ้ยา: '+p.allergy;
-        if (p.allergy === '-') document.getElementById('prnDetailAllergy2').style.display = 'none';
-        else document.getElementById('prnDetailAllergy2').style.display = '';
+        setText('prnAvatar2', p.initials);
+        setText('prnDetailName2', p.name);
+        setHtml('prnDetailMeta2', '<span>HN: '+p.hn+'</span><span>เตียง '+p.bed+'</span><span>'+p.gender+', '+p.age+' ปี</span>');
+        setText('prnAllergyText2', 'แพ้ยา: '+p.allergy);
+        setDisplay('prnDetailAllergy2', p.allergy === '-' ? 'none' : '');
 
         // Step 2 — Drug card
         var dnHtml = p.drug + ' <span class="pt-badge prn" style="font-size:9px;padding:1px 6px;">PRN</span>';
         if (p.isHighAlert) dnHtml += '<span class="pt-badge halert" style="font-size:8px;padding:1px 5px;background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;">High Alert</span>';
-        document.getElementById('prnDrugName2').innerHTML = dnHtml;
-        document.getElementById('prnDrugSub2').textContent = p.route+' · '+p.routeDesc+' · '+p.condition;
+        setHtml('prnDrugName2', dnHtml);
+        setText('prnDrugSub2', p.route+' · '+p.routeDesc+' · '+p.condition);
         var tagsHtml = '';
         if (p.needWitness) tagsHtml += '<span class="pt-badge" style="background:#fef2f2;color:#dc2626;font-size:9px;">ต้องมีพยาน</span>';
         if (p.isNarcotic) tagsHtml += '<span class="pt-badge" style="background:#faf5ff;color:#7c3aed;font-size:9px;">ยาเสพติด</span>';
-        document.getElementById('prnDrugTags2').innerHTML = tagsHtml;
+        setHtml('prnDrugTags2', tagsHtml);
         var svgOk2 = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
-        document.getElementById('prnDrugInterval2').innerHTML = svgOk2+' ให้ได้ · ล่าสุด '+p.lastGiven+' น. (ผ่าน '+p.hrsAgo+' ชม.) · Interval: '+p.interval;
+        setHtml('prnDrugInterval2', svgOk2+' ให้ได้ · ล่าสุด '+p.lastGiven+' น. (ผ่าน '+p.hrsAgo+' ชม.) · Interval: '+p.interval);
 
         // Step 3 — Scan subtitle
-        document.getElementById('prnScan3Sub').textContent = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' · '+p.bed+' · HN: '+p.hn;
+        setText('prnScan3Sub', p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' · '+p.bed+' · HN: '+p.hn);
 
         // Step 4 — Banner
-        document.getElementById('prnBannerSub4').textContent = p.drug+' '+p.route+' — '+p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' ('+p.bed+')';
-
-        // Step 5 — Drug detail
-        document.getElementById('prnBannerSub5').innerHTML = p.drug+' '+p.route+' · ข้อบ่งชี้: <span id="prnIndicText5">--</span> · Pain score: <span id="prnPainDisplay">--</span>/10';
-        document.getElementById('prnDrugName5').innerHTML = p.drug+' <span class="pt-badge prn" style="font-size:10px;padding:2px 8px;">PRN</span>';
-        document.getElementById('prnDose5').textContent = p.dose;
-        document.getElementById('prnRoute5').textContent = p.routeTh;
-        document.getElementById('prnCondition5').textContent = p.condition;
-        document.getElementById('prnLastGiven5').textContent = p.lastGiven+' น. ('+p.hrsAgo+' ชม.ก่อน)';
-        document.getElementById('prnScanResultName').textContent = p.drugFull;
-        document.getElementById('prnLot5').textContent = p.lot;
-        document.getElementById('prnExpiry5').textContent = p.expiry;
+        setText('prnBannerSub4', p.drug+' '+p.route+' — '+p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim()+' ('+p.bed+')');
 
         // Step 6 — Success
         var shortName = p.name.replace(/^(นาย|นาง|นางสาว)/,'').trim();
-        document.getElementById('prnSuccessSub6').textContent = p.drug+' '+p.route+' — '+p.name+' ('+p.bed+')';
-        document.getElementById('prnDrugSummary6').textContent = p.drug+' (PRN)';
-        document.getElementById('prnNextDose6').textContent = 'หลัง '+p.intervalHrs+' ชม.';
-
-        // Step 7 — Post-assessment
-        document.getElementById('prnBannerSub7').textContent = p.drug+' '+p.route+' — '+shortName+' ('+p.bed+')';
-        document.getElementById('prnDrugName7').innerHTML = p.drug+' <span class="pt-badge prn" style="font-size:10px;padding:2px 8px;">PRN</span>';
-        document.getElementById('prnRoute7').textContent = p.routeTh;
-        document.getElementById('prnDose7').textContent = p.dose;
-        document.getElementById('prnSuccessSub7').textContent = p.drug+' '+p.route+' — '+p.name+' ('+p.bed+')';
-        document.getElementById('prnDrugSummary7').textContent = p.drug+' (PRN)';
+        setText('prnSuccessSub6', p.drug+' '+p.route+' — '+p.name+' ('+p.bed+')');
+        setText('prnDrugSummary6', p.drug+' (PRN)');
+        setText('prnNextDose6', 'หลัง '+p.intervalHrs+' ชม.');
 
         prnGoStep(2);
     }
@@ -14532,19 +14551,6 @@
             var indicMap2 = {pain:'ปวด',nausea:'คลื่นไส้',fever:'ไข้',insomnia:'นอนไม่หลับ',anxiety:'กระวนกระวาย',other:'อื่นๆ'};
             var indVal2 = document.getElementById('prnIndication').value;
             document.getElementById('prnIndicSummary6').textContent = (indicMap2[indVal2]||'--') + (selectedPain!==null ? ' · Pain '+selectedPain+'/10' : '');
-        }
-        if(n===7) {
-            document.getElementById('prnPostAssessForm').style.display='';
-            document.getElementById('prnPostAssessSuccess').style.display='none';
-            document.getElementById('prnStep7Bot').style.display='';
-            document.getElementById('postAssessTime').value = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})+' น.';
-            var gt = document.getElementById('prnGivenTime').textContent;
-            document.getElementById('prnPostGivenTime').textContent = gt;
-            // Indication for step 7
-            var indicMap3 = {pain:'ปวด',nausea:'คลื่นไส้',fever:'ไข้',insomnia:'นอนไม่หลับ',anxiety:'กระวนกระวาย',other:'อื่นๆ'};
-            var indVal3 = document.getElementById('prnIndication').value;
-            document.getElementById('prnIndic7').textContent = (indicMap3[indVal3]||'--') + (selectedPain!==null ? ' · Pain '+selectedPain+'/10' : '');
-            document.getElementById('prnPrePainSummary7').textContent = selectedPain!==null ? selectedPain+'/10' : '--';
         }
     }
 
