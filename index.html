@@ -272,79 +272,6 @@
         }
         .gh-nav-btn.back { color: #475569; }
 
-        /* Backoffice hub */
-        .bo-body {
-            min-height:100%;
-            background:
-                radial-gradient(circle at 12% 10%, rgba(13,148,136,0.16), transparent 28%),
-                radial-gradient(circle at 86% 6%, rgba(37,99,235,0.14), transparent 30%),
-                linear-gradient(160deg,#F8FAFC 0%,#EEF6F4 48%,#F8FAFC 100%);
-            padding:28px;
-            overflow-y:auto;
-        }
-        .bo-inner { max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
-        .bo-hero {
-            display:grid; grid-template-columns:minmax(0,1fr) 300px; gap:18px;
-            background:linear-gradient(135deg,#0F766E,#0D9488 55%,#14B8A6);
-            border-radius:30px; padding:26px; color:white; position:relative; overflow:hidden;
-            box-shadow:0 22px 58px rgba(13,148,136,0.22);
-        }
-        .bo-hero::after { content:''; position:absolute; width:260px; height:260px; border-radius:50%; background:rgba(255,255,255,0.09); right:-84px; top:-112px; }
-        .bo-kicker { font-size:10px; font-weight:950; letter-spacing:.18em; text-transform:uppercase; opacity:.68; }
-        .bo-title { font-size:30px; font-weight:950; letter-spacing:-.06em; margin-top:6px; }
-        .bo-sub { font-size:13px; line-height:1.7; opacity:.78; max-width:650px; margin-top:8px; }
-        .bo-hero-card {
-            background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.24);
-            border-radius:22px; padding:18px; backdrop-filter:blur(12px); position:relative; z-index:1;
-        }
-        .bo-hero-card .label { font-size:10px; font-weight:850; opacity:.7; text-transform:uppercase; letter-spacing:.12em; }
-        .bo-hero-card .value { font-size:20px; font-weight:950; margin-top:6px; }
-        .bo-stat-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; }
-        .bo-stat {
-            background:white; border:1px solid #E2E8F0; border-radius:20px; padding:16px;
-            box-shadow:0 8px 24px rgba(15,23,42,0.05); min-height:104px; position:relative; overflow:hidden;
-        }
-        .bo-stat::before { content:''; position:absolute; inset:0 auto 0 0; width:4px; background:var(--bo-accent,#0D9488); }
-        .bo-stat-num { font-size:28px; font-weight:950; color:var(--bo-accent,#0D9488); line-height:1; }
-        .bo-stat-label { font-size:11px; color:#334155; font-weight:850; margin-top:10px; }
-        .bo-stat-sub { font-size:9.5px; color:#94A3B8; font-weight:650; margin-top:4px; line-height:1.35; }
-        .bo-grid { display:grid; grid-template-columns:1.3fr .7fr; gap:18px; align-items:start; }
-        .bo-panel { background:white; border:1px solid #E2E8F0; border-radius:26px; padding:18px; box-shadow:0 10px 30px rgba(15,23,42,0.06); }
-        .bo-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
-        .bo-panel-title { font-size:15px; font-weight:950; color:#0F172A; }
-        .bo-panel-sub { font-size:11px; color:#94A3B8; font-weight:700; margin-top:2px; }
-        .bo-mod-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-        .bo-module {
-            border:1.5px solid var(--bo-border,#E2E8F0); background:linear-gradient(135deg,var(--bo-bg,#F8FAFC),#fff);
-            border-radius:20px; padding:16px; min-height:154px; display:flex; flex-direction:column; gap:12px;
-            cursor:pointer; transition:transform .16s, box-shadow .16s, border-color .16s;
-        }
-        .bo-module:hover { transform:translateY(-2px); box-shadow:0 14px 34px rgba(15,23,42,0.08); border-color:var(--bo-color,#0D9488); }
-        .bo-module.locked { opacity:.62; }
-        .bo-module-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
-        .bo-module-icon {
-            width:42px; height:42px; border-radius:15px; display:flex; align-items:center; justify-content:center;
-            color:white; background:linear-gradient(135deg,var(--bo-color,#0D9488),var(--bo-color2,#14B8A6));
-            box-shadow:0 8px 18px rgba(13,148,136,0.18);
-        }
-        .bo-module-title { font-size:14px; font-weight:950; color:#0F172A; }
-        .bo-module-desc { font-size:11px; color:#64748B; line-height:1.55; font-weight:650; }
-        .bo-module-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; }
-        .bo-chip { font-size:9.5px; font-weight:900; border-radius:999px; padding:4px 9px; background:white; border:1px solid var(--bo-border,#E2E8F0); color:var(--bo-color,#0D9488); }
-        .bo-timeline { display:flex; flex-direction:column; gap:10px; }
-        .bo-log { display:flex; align-items:flex-start; gap:10px; padding:12px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px; }
-        .bo-log-dot { width:10px; height:10px; border-radius:50%; background:var(--bo-color,#0D9488); margin-top:5px; flex-shrink:0; box-shadow:0 0 0 4px var(--bo-bg,#F0FDFA); }
-        .bo-log-title { font-size:12px; font-weight:900; color:#0F172A; }
-        .bo-log-sub { font-size:10px; color:#64748B; font-weight:650; margin-top:2px; line-height:1.4; }
-        @media (max-width: 980px) {
-            .bo-hero, .bo-grid { grid-template-columns:1fr; }
-            .bo-stat-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
-        }
-        @media (max-width: 640px) {
-            .bo-body { padding:16px; }
-            .bo-stat-grid, .bo-mod-grid { grid-template-columns:1fr; }
-            .bo-title { font-size:24px; }
-        }
         @media (max-width: 900px) {
             #globalHeader { grid-template-columns: 1fr auto minmax(280px, 1fr); padding: 0 16px; gap: 10px; }
             .gh-subtitle, .gh-ward-chip .dc-pill, .gh-time-card { display: none; }
@@ -571,6 +498,93 @@
         .p1-stat-val { font-size: 18px; font-weight: 700; color: var(--text-1); }
         .p1-stat-val.accent { color: var(--green); font-size: 22px; }
         .p1-stat-note { font-size: 11px; color: var(--text-2); }
+        .cart-env-card {
+            background: rgba(255,255,255,0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224,230,239,0.65);
+            border-radius: 18px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.04);
+            padding: 16px;
+        }
+        .cart-env-head {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px; margin-bottom: 12px;
+        }
+        .cart-env-title { font-size: 13px; font-weight: 800; color: var(--text-1); }
+        .cart-env-sub { font-size: 10.5px; color: var(--text-3); margin-top: 2px; }
+        .cart-env-actions { display:flex; align-items:center; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+        .cart-env-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 10px; font-weight: 800; border-radius: 999px;
+            padding: 5px 10px; background: var(--green-light);
+            color: var(--green); border: 1px solid var(--green-mid);
+            white-space: nowrap;
+        }
+        .cart-env-pill.warn { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+        .cart-env-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+        .cart-env-toggle {
+            display:inline-flex; align-items:center; gap:6px; border:1px solid #99F6E4;
+            border-radius:999px; background:#F0FDFA; color:#0F766E;
+            font-family:'Prompt', sans-serif; font-size:10px; font-weight:850;
+            padding:5px 10px; cursor:pointer; transition:all .16s ease;
+        }
+        .cart-env-toggle:hover { background:#CCFBF1; transform:translateY(-1px); }
+        .cart-env-toggle svg { transition:transform .18s ease; }
+        .cart-env-toggle[aria-expanded="true"] svg { transform:rotate(180deg); }
+        .cart-env-summary {
+            display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px; margin-bottom: 12px;
+        }
+        .cart-env-metric {
+            background: #f8fafc; border: 1px solid #e2e8f0;
+            border-radius: 14px; padding: 12px;
+        }
+        .cart-env-label {
+            font-size: 10px; font-weight: 800; color: var(--text-3);
+            text-transform: uppercase; letter-spacing: .5px;
+        }
+        .cart-env-value { font-size: 19px; font-weight: 850; color: #0f766e; margin-top: 4px; }
+        .cart-env-note { font-size: 10.5px; color: var(--text-2); margin-top: 2px; }
+        .cart-env-table-wrap {
+            overflow: hidden; border: 1px solid #e2e8f0;
+            border-radius: 14px; background: white;
+        }
+        .cart-env-collapsible {
+            max-height: 560px; opacity: 1; margin-top: 0;
+            transition: max-height .24s ease, opacity .18s ease, margin-top .18s ease;
+        }
+        .cart-env-collapsible.is-collapsed {
+            max-height: 0; opacity: 0; margin-top: 0;
+            border-color: transparent; pointer-events: none;
+        }
+        .cart-env-table {
+            width: 100%; border-collapse: collapse; table-layout: fixed;
+            font-size: 11px;
+        }
+        .cart-env-table th {
+            background: #f8fafc; color: var(--text-3);
+            font-size: 9.5px; font-weight: 850; text-transform: uppercase;
+            letter-spacing: .35px; text-align: left; padding: 9px 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .cart-env-table td {
+            padding: 10px; border-bottom: 1px solid #f1f5f9;
+            color: var(--text-2); font-weight: 650; vertical-align: middle;
+        }
+        .cart-env-table tr:last-child td { border-bottom: none; }
+        .cart-env-table tr.warn td { background: #fff7ed; }
+        .cart-env-table .drawer-name { color: var(--text-1); font-weight: 900; }
+        .cart-env-table .metric-main { color: #0f766e; font-weight: 900; font-size: 12px; }
+        .cart-env-table tr.warn .metric-main { color: #c2410c; }
+        .cart-env-table .metric-sub { font-size: 10px; color: var(--text-3); margin-top: 2px; }
+        .cart-env-status {
+            display:inline-flex; align-items:center; gap:5px; border-radius:999px;
+            padding:3px 8px; font-size:9.5px; font-weight:900;
+            background: var(--green-light); color: var(--green); border:1px solid var(--green-mid);
+            white-space: nowrap;
+        }
+        .cart-env-status.warn { background:#fff7ed; color:#c2410c; border-color:#fed7aa; }
+        .cart-env-status::before { content:''; width:6px; height:6px; border-radius:50%; background:currentColor; }
 
         /* Permissions redesign */
         .p1-perms {
@@ -600,6 +614,9 @@
             .p1-hero { flex-direction: column; }
             .p1-illust { width: 100%; height: 180px; }
             .p1-stats { grid-template-columns: repeat(2, 1fr); }
+            .cart-env-summary { grid-template-columns: 1fr; }
+            .cart-env-table-wrap { overflow-x:auto; }
+            .cart-env-table { min-width: 620px; }
         }
 
         /* ── CART LIST PAGE ───────────────────────────── */
@@ -5508,6 +5525,7 @@
                     <div class="brand-name">Med Cart</div>
                     <div class="brand-sub">ระบบรถเข็นยาอัจฉริยะ</div>
                 </div>
+
             </div>
         </div>
         <div class="header-right">
@@ -5688,12 +5706,12 @@
                         <div class="p1-stat-icon amber">
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/></svg>
                         </div>
-                        <div class="p1-stat-label">แบตเตอรี่</div>
+                        <div class="p1-stat-label">แบตเตอรี่ · (กำลังชาร์จ)</div>
                         <div class="batt-row" style="margin:2px 0;">
                             <div class="batt-wrap"><div class="batt-fill" id="cartBattFill" style="width:85%"></div></div>
                             <span class="batt-val" id="cartBattVal" style="font-size:15px;">85%</span>
                         </div>
-                        <div class="p1-stat-note" id="cartBattNote">กำลังชาร์จ</div>
+                        <div class="p1-stat-note" id="cartBattNote">ใช้งานได้ประมาณ 6 ชม. 48 นาที</div>
                     </div>
                     <div class="p1-stat">
                         <div class="p1-stat-icon green">
@@ -5716,6 +5734,49 @@
                         <div class="p1-stat-label">การเชื่อมต่อ</div>
                         <div class="p1-stat-val" id="cartConnection" style="color:#2563eb;">Wi-Fi</div>
                         <div class="p1-stat-note" id="cartSignal">−52 dBm · สัญญาณแรง</div>
+                    </div>
+                </div>
+
+                <div class="cart-env-card" id="cartEnvCard">
+                    <div class="cart-env-head">
+                        <div>
+                            <div class="cart-env-title">สภาพแวดล้อม Drawer / Cassette</div>
+                            <div class="cart-env-sub" id="cartEnvUpdated">อัปเดตล่าสุด วันนี้ 08:42</div>
+                        </div>
+                        <div class="cart-env-actions">
+                            <div class="cart-env-pill" id="cartEnvStatus"><span class="dot"></span> ปกติ</div>
+                            <button type="button" class="cart-env-toggle" id="cartEnvToggle" aria-expanded="false" onclick="toggleCartEnvTable('cart')">
+                                <span>แสดงรายละเอียด</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-env-summary">
+                        <div class="cart-env-metric">
+                            <div class="cart-env-label">Drawer Avg</div>
+                            <div class="cart-env-value" id="cartDrawerTemp">24.1°C</div>
+                            <div class="cart-env-note" id="cartDrawerHum">ความชื้น 47% RH</div>
+                        </div>
+                        <div class="cart-env-metric">
+                            <div class="cart-env-label">Cassette Avg</div>
+                            <div class="cart-env-value" id="cartCassetteTemp">24.3°C</div>
+                            <div class="cart-env-note" id="cartCassetteHum">ความชื้น 49% RH · 36 ช่อง</div>
+                        </div>
+                    </div>
+                    <div class="cart-env-table-wrap cart-env-collapsible is-collapsed" id="cartEnvTableWrap">
+                        <table class="cart-env-table" aria-label="รายละเอียดอุณหภูมิและความชื้นของ Drawer และ Cassette">
+                            <thead>
+                                <tr>
+                                    <th>Drawer</th>
+                                    <th>Drawer Temp</th>
+                                    <th>Drawer RH</th>
+                                    <th>Cassette Temp</th>
+                                    <th>Cassette RH</th>
+                                    <th>สถานะ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cartEnvTableBody"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -6802,57 +6863,6 @@
         <div id="dashRoleBottom" class="db-role-section"></div>
 
     </div>
-    </div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════
-     BACKOFFICE HUB PAGE
-═══════════════════════════════════════════════════════════ -->
-<div id="pg-backoffice" class="page">
-    <div class="bo-body">
-        <div class="bo-inner">
-            <div class="bo-hero">
-                <div style="position:relative;z-index:1;">
-                    <div class="bo-kicker">Backoffice Control</div>
-                    <div class="bo-title">ระบบหลังบ้าน</div>
-                    <div class="bo-sub" id="boHeroSub">จัดการข้อมูลตั้งต้น สิทธิ์การใช้งาน รถเข็นยา และรายงานของ Ward ปัจจุบัน</div>
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">
-                        <span class="bo-chip" id="boRoleBadge">หัวหน้าเวร</span>
-                        <span class="bo-chip" id="boWardBadge">Ward 3A</span>
-                    </div>
-                </div>
-                <div class="bo-hero-card">
-                    <div class="label">Current Scope</div>
-                    <div class="value" id="boCartScope">Med Cart A-1</div>
-                    <div style="font-size:12px;line-height:1.6;opacity:.75;margin-top:10px;" id="boAccessNote">เลือกเมนูเพื่อเข้าสู่ระบบหลังบ้านแบบ Demo</div>
-                </div>
-            </div>
-
-            <div class="bo-stat-grid" id="boStatGrid"></div>
-
-            <div class="bo-grid">
-                <section class="bo-panel">
-                    <div class="bo-panel-head">
-                        <div>
-                            <div class="bo-panel-title">เมนูระบบหลังบ้าน</div>
-                            <div class="bo-panel-sub">Demo hub สำหรับจัดการข้อมูลตั้งต้นและรายงาน</div>
-                        </div>
-                        <span class="bo-chip" id="boModeChip">Supervisor mode</span>
-                    </div>
-                    <div class="bo-mod-grid" id="boModuleGrid"></div>
-                </section>
-
-                <aside class="bo-panel">
-                    <div class="bo-panel-head">
-                        <div>
-                            <div class="bo-panel-title">System Activity</div>
-                            <div class="bo-panel-sub">สถานะล่าสุดของ Ward/Cart ปัจจุบัน</div>
-                        </div>
-                    </div>
-                    <div class="bo-timeline" id="boTimeline"></div>
-                </aside>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -12999,10 +13009,39 @@
         <div class="d-row"><span class="d-key">จำนวน Drawer</span>        <span class="d-val">6 ลิ้นชัก</span></div>
         <div class="d-row"><span class="d-key">Cassette ทั้งหมด</span>    <span class="d-val">36 ช่อง</span></div>
         <div class="d-row"><span class="d-key">Cassette พร้อมใช้</span>   <span class="d-val" style="color:var(--green)">36 ช่อง</span></div>
-        <div class="d-row"><span class="d-key">แบตเตอรี่</span>           <span class="d-val">85% (กำลังชาร์จ)</span></div>
+        <div class="d-row"><span class="d-key">แบตเตอรี่</span>           <span class="d-val">85% (กำลังชาร์จ · ใช้งานได้ประมาณ 6 ชม. 48 นาที)</span></div>
         <div class="d-row"><span class="d-key">เครือข่าย</span>           <span class="d-val">Wi-Fi (−52 dBm)</span></div>
         <div class="d-row"><span class="d-key">IP Address</span>           <span class="d-val">192.168.10.45</span></div>
         <div class="d-row"><span class="d-key">MAC Address</span>          <span class="d-val">A4:C3:F0:12:34:56</span></div>
+    </div>
+
+    <div class="d-section" id="drawerEnvSection">
+        <div class="d-section-title" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+            <span>อุณหภูมิ / ความชื้น</span>
+            <button type="button" class="cart-env-toggle" id="drawerEnvToggle" aria-expanded="false" onclick="toggleCartEnvTable('drawer')">
+                <span>แสดงรายละเอียด</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+        </div>
+        <div class="d-row"><span class="d-key">สถานะ Sensor</span>         <span class="d-val" id="drawerEnvStatus" style="color:var(--green)">ปกติ</span></div>
+        <div class="d-row"><span class="d-key">Drawer เฉลี่ย</span>         <span class="d-val" id="drawerEnvDrawerAvg">24.1°C · 47% RH</span></div>
+        <div class="d-row"><span class="d-key">Cassette เฉลี่ย</span>       <span class="d-val" id="drawerEnvCassetteAvg">24.3°C · 49% RH</span></div>
+        <div class="d-row"><span class="d-key">ช่วง Cassette</span>          <span class="d-val" id="drawerEnvCassetteRange">23.9–24.8°C · 46–52% RH</span></div>
+        <div class="cart-env-table-wrap cart-env-collapsible is-collapsed" id="drawerEnvTableWrap" style="margin-top:12px;">
+            <table class="cart-env-table" aria-label="รายละเอียดอุณหภูมิและความชื้นในรถเข็น">
+                <thead>
+                    <tr>
+                        <th>Drawer</th>
+                        <th>Drawer Temp</th>
+                        <th>Drawer RH</th>
+                        <th>Cassette Temp</th>
+                        <th>Cassette RH</th>
+                        <th>สถานะ</th>
+                    </tr>
+                </thead>
+                <tbody id="drawerEnvTableBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <div class="d-section">
@@ -13072,7 +13111,7 @@
                 <div class="gh-user-role" id="ghUserRole">หัวหน้าเวร</div>
             </div>
         </div>
-        <button id="ghBackendBtn" class="gh-icon-action backend" onclick="nav('pg-backoffice')" title="ระบบหลังบ้าน" aria-label="ระบบหลังบ้าน" style="display:none;">
+        <button id="ghBackendBtn" class="gh-icon-action backend" onclick="openBackofficePage()" title="ระบบหลังบ้าน" aria-label="ระบบหลังบ้าน" style="display:none;">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg>
             <span>หลังบ้าน</span>
         </button>
@@ -13210,7 +13249,7 @@
     /* ── Generic navigation ── */
     const pageNames = {
         'pg-cart-list':'รถเข็นยาทั้งหมด','pg-cart':'ข้อมูลรถเข็นยา','pg-confirm':'ยืนยัน Ward','pg-ward-select':'เลือก Ward',
-        'pg-login':'เข้าสู่ระบบ','pg-role':'เลือกสิทธิ์','pg-dashboard':'Dashboard','pg-backoffice':'ระบบหลังบ้าน',
+        'pg-login':'เข้าสู่ระบบ','pg-role':'เลือกสิทธิ์','pg-dashboard':'Dashboard',
         'pg-prep-type':'เลือกประเภทจัดยา','pg-hw':'เลือก Drawer','pg-fill':'จัดยาเข้าช่อง',
         'pg-summary':'สรุปผลจัดยา','pg-dispense':'รายการผู้ป่วย','pg-pt-detail':'รายละเอียดผู้ป่วย',
         'pg-scan-pt':'สแกนผู้ป่วย','pg-admin-med':'สแกนยา','pg-witness':'พยาน/IDC',
@@ -13336,8 +13375,15 @@
         if (prepHardwareReady && prepHardwarePages.includes(targetId) && typeof renderPrepHardwareFromDashboard === 'function') {
             renderPrepHardwareFromDashboard(targetId);
         }
-        if (wardDataReady && targetId === 'pg-backoffice' && typeof renderBackofficeDynamic === 'function') renderBackofficeDynamic();
         return true;
+    }
+
+    function openBackofficePage() {
+        try {
+            sessionStorage.setItem('mcWard', currentWardName || DEFAULT_DEMO_WARD);
+            sessionStorage.setItem('mcFrontPage', getActivePageId() || 'pg-dashboard');
+        } catch (e) {}
+        window.location.href = 'backoffice.html';
     }
 
     function goAppBack(fallbackPage) {
@@ -13373,6 +13419,10 @@
     // On load: restore page + login state from URL hash (survive refresh)
     (function() {
         const hash = window.location.hash.replace('#','');
+        if (hash === 'pg-backoffice') {
+            window.location.replace('backoffice.html');
+            return;
+        }
         // Restore login state
         var savedWard = sessionStorage.getItem('mcWard') || currentWardName;
         if (savedWard) {
@@ -14989,6 +15039,26 @@
     };
     const cassetteModeLocks = {};
     const cassetteModeCompleted = {};
+    const CASSETTE_LOCK_STORE = 'mcCassetteModeLocks';
+    const CASSETTE_COMPLETED_STORE = 'mcCassetteModeCompleted';
+
+    function persistCassetteModeState() {
+        try {
+            sessionStorage.setItem(CASSETTE_LOCK_STORE, JSON.stringify(cassetteModeLocks));
+            sessionStorage.setItem(CASSETTE_COMPLETED_STORE, JSON.stringify(cassetteModeCompleted));
+        } catch (e) {}
+    }
+
+    function loadCassetteModeState() {
+        try {
+            const locks = JSON.parse(sessionStorage.getItem(CASSETTE_LOCK_STORE) || '{}') || {};
+            const completed = JSON.parse(sessionStorage.getItem(CASSETTE_COMPLETED_STORE) || '{}') || {};
+            Object.assign(cassetteModeLocks, locks);
+            Object.assign(cassetteModeCompleted, completed);
+        } catch (e) {}
+    }
+
+    loadCassetteModeState();
 
     // Map page IDs to their element IDs
     const hwPageMap = {
@@ -15239,6 +15309,7 @@
             drugNames: latestDrugNames.length ? latestDrugNames : (Array.isArray(latestMeta.drugNames) && latestMeta.drugNames.length ? latestMeta.drugNames : getLockDrugNames(lock)),
             completedAt: new Date().toISOString()
         });
+        persistCassetteModeState();
         if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
     }
 
@@ -15339,6 +15410,7 @@
             if (status && !slot.classList.contains('occupied')) status.textContent = 'พร้อมเติมยา';
         });
         closeDashboardDetailModals();
+        persistCassetteModeState();
         if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
     }
 
@@ -15437,6 +15509,7 @@
             cassetteItems: cassetteItems,
             drugNames: drugNames
         });
+        persistCassetteModeState();
         if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
     }
 
@@ -16963,6 +17036,7 @@
             const key = ptdCassetteKey(drawerNum, cassNum);
             cassetteModeLocks[key] = { mode: 'patient', drawer: drawerNum, cassette: cassNum, ward: currentWardName || DEFAULT_DEMO_WARD };
         });
+        persistCassetteModeState();
         if (typeof renderDashboardCassettePanel === 'function') renderDashboardCassettePanel();
         // Reset scan state
         document.getElementById('scanResult').style.display = 'none';
@@ -19239,133 +19313,6 @@
         };
     }
 
-    function getBackofficeRoleText() {
-        const map = { nurse:'พยาบาล', pharma:'เภสัชกร', doctor:'แพทย์', super:'หัวหน้าเวร' };
-        return map[currentRole] || 'ผู้ใช้งาน';
-    }
-
-    function backofficeIconSvg(type) {
-        const icons = {
-            users:'<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',
-            wards:'<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>',
-            drug:'<path d="M10.5 20.5l10-10a4.95 4.95 0 00-7-7l-10 10a4.95 4.95 0 007 7z"/><path d="M8.5 8.5l7 7"/>',
-            cassette:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h4"/><path d="M13 12h4"/><path d="M7 16h10"/>',
-            reports:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
-            integration:'<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>'
-        };
-        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">' + (icons[type] || icons.reports) + '</svg>';
-    }
-
-    function renderBackofficeDynamic() {
-        const page = document.getElementById('pg-backoffice');
-        if (!page) return;
-        const info = getCurrentWardInfo();
-        const state = getDashboardCassetteState();
-        const metrics = getDashboardMetrics();
-        const wardCount = Object.keys(wardInfo || {}).length;
-        const cartCount = (typeof cartList !== 'undefined' && cartList.length) ? cartList.length : wardCount;
-        const drugMasterCount = new Set(Object.values(patientData).flatMap(function(pt) {
-            return (pt.drugs || []).map(function(drug) { return normalizeIbfDrugName(drug.name || ''); });
-        }).filter(Boolean)).size;
-        const canEdit = currentRole === 'super';
-        const wardName = currentWardName || DEFAULT_DEMO_WARD;
-        const cartName = (state.cart && state.cart.name) || (info && info.cart) || 'Med Cart A-1';
-
-        const heroSub = document.getElementById('boHeroSub');
-        if (heroSub) heroSub.textContent = 'จัดการข้อมูลตั้งต้นของ ' + wardName + ' · ' + (info.desc || 'Ward ปัจจุบัน') + ' และรถเข็นยาที่กำลังใช้งาน';
-        const roleBadge = document.getElementById('boRoleBadge');
-        if (roleBadge) roleBadge.textContent = getBackofficeRoleText() + (canEdit ? ' · แก้ไขได้' : ' · ดูอย่างเดียว');
-        const wardBadge = document.getElementById('boWardBadge');
-        if (wardBadge) wardBadge.textContent = wardName;
-        const cartScope = document.getElementById('boCartScope');
-        if (cartScope) cartScope.textContent = cartName + ' · ' + wardName;
-        const accessNote = document.getElementById('boAccessNote');
-        if (accessNote) accessNote.textContent = canEdit
-            ? 'สิทธิ์หัวหน้าเวรสามารถเปิดตั้งค่าสิทธิ์และจำลองการจัดการข้อมูลหลังบ้านได้'
-            : 'Role นี้เข้าดูโครงสร้างระบบหลังบ้านเพื่อ Demo ได้ แต่เมนูตั้งค่าบางส่วนถูกล็อกไว้';
-        const modeChip = document.getElementById('boModeChip');
-        if (modeChip) modeChip.textContent = canEdit ? 'Admin mode' : 'Read-only demo';
-
-        const stats = [
-            { val: wardCount, label:'Ward', sub:'ตั้งค่าพื้นที่ใช้งาน', color:'#0D9488' },
-            { val: cartCount, label:'Med Cart', sub:'รถเข็นในระบบ', color:'#2563EB' },
-            { val: 3, label:'Roles', sub:'Nurse / Pharma / Supervisor', color:'#7C3AED' },
-            { val: state.total, label:'Cassette', sub: state.drawers + ' Drawer · ' + state.perDrawer + ' ช่อง/Drawer', color:'#E11D48' },
-            { val: drugMasterCount, label:'Drug Master', sub:'รายการยาที่พบใน Ward', color:'#D97706' },
-            { val: metrics.total, label:'MAR Items', sub: metrics.pending + ' รายการรอจ่าย', color:'#0F766E' }
-        ];
-        const statGrid = document.getElementById('boStatGrid');
-        if (statGrid) {
-            statGrid.innerHTML = stats.map(function(item) {
-                return '<div class="bo-stat" style="--bo-accent:' + item.color + ';">'
-                    + '<div class="bo-stat-num">' + escHtml(item.val) + '</div>'
-                    + '<div class="bo-stat-label">' + escHtml(item.label) + '</div>'
-                    + '<div class="bo-stat-sub">' + escHtml(item.sub) + '</div>'
-                    + '</div>';
-            }).join('');
-        }
-
-        const modules = [
-            { id:'users', type:'users', title:'ผู้ใช้งานและสิทธิ์', desc:'จัดการ role, permission และสิทธิ์การเข้าถึงเมนู Demo', color:'#7C3AED', color2:'#A78BFA', bg:'#F5F3FF', border:'#DDD6FE', locked:!canEdit },
-            { id:'wards', type:'wards', title:'Ward & Med Cart', desc:'กำหนด Ward, รถเข็น, Drawer และ Cassette ของพื้นที่ใช้งาน', color:'#0D9488', color2:'#14B8A6', bg:'#F0FDFA', border:'#99F6E4', locked:false },
-            { id:'drug-master', type:'drug', title:'Medication Master', desc:'ตั้งค่ารายการยา High Alert และคู่ Drug Interaction', color:'#2563EB', color2:'#60A5FA', bg:'#EFF6FF', border:'#BFDBFE', locked:!canEdit },
-            { id:'cassette', type:'cassette', title:'Cassette Template', desc:'ดูโครงสร้างมาตรฐาน 6 Drawer / 36 Cassette และสถานะใช้งาน', color:'#E11D48', color2:'#FB7185', bg:'#FFF1F2', border:'#FECDD3', locked:false },
-            { id:'reports', type:'reports', title:'รายงานและ Audit Log', desc:'ดู activity, MAR summary และสถานะการจัด/จ่ายยา', color:'#D97706', color2:'#F59E0B', bg:'#FFFBEB', border:'#FDE68A', locked:false },
-            { id:'integration', type:'integration', title:'HIS / MAR Sync', desc:'จำลองการเชื่อมต่อคำสั่งยาและข้อมูลผู้ป่วยจากระบบโรงพยาบาล', color:'#475569', color2:'#94A3B8', bg:'#F8FAFC', border:'#CBD5E1', locked:!canEdit }
-        ];
-        const moduleGrid = document.getElementById('boModuleGrid');
-        if (moduleGrid) {
-            moduleGrid.innerHTML = modules.map(function(mod) {
-                return '<button class="bo-module' + (mod.locked ? ' locked' : '') + '" onclick="openBackofficeModule(\'' + escHtml(mod.id) + '\')"'
-                    + ' style="--bo-color:' + mod.color + ';--bo-color2:' + mod.color2 + ';--bo-bg:' + mod.bg + ';--bo-border:' + mod.border + ';">'
-                    + '<div class="bo-module-top"><div class="bo-module-icon">' + backofficeIconSvg(mod.type) + '</div><span class="bo-chip" style="--bo-color:' + mod.color + ';--bo-border:' + mod.border + ';">' + (mod.locked ? 'Locked' : 'Open') + '</span></div>'
-                    + '<div><div class="bo-module-title">' + escHtml(mod.title) + '</div><div class="bo-module-desc">' + escHtml(mod.desc) + '</div></div>'
-                    + '<div class="bo-module-foot"><span style="font-size:10px;color:#94A3B8;font-weight:800;">' + escHtml(canEdit || !mod.locked ? 'พร้อมใช้งาน' : 'ต้องใช้สิทธิ์หัวหน้าเวร') + '</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + mod.color + '" stroke-width="2.4"><path d="M5 12h14"/><path d="M13 5l7 7-7 7"/></svg></div>'
-                    + '</button>';
-            }).join('');
-        }
-
-        const logs = [
-            { title:'Ward scope', sub: wardName + ' · ' + (info.desc || 'ไม่ระบุรายละเอียด'), color:'#0D9488', bg:'#F0FDFA' },
-            { title:'Cart profile', sub: cartName + ' · ' + state.drawers + ' Drawer / ' + state.total + ' Cassette', color:'#2563EB', bg:'#EFF6FF' },
-            { title:'Cassette usage', sub: state.usedCassettes + '/' + state.total + ' ช่องใช้งานอยู่ · ' + state.completed + ' ช่องเติมยาเรียบร้อยแล้ว', color:'#E11D48', bg:'#FFF1F2' },
-            { title:'MAR workload', sub: metrics.done + '/' + metrics.total + ' จ่ายแล้ว · ' + metrics.highAlert + ' High Alert · ' + metrics.prn + ' PRN', color:'#D97706', bg:'#FFFBEB' }
-        ];
-        const timeline = document.getElementById('boTimeline');
-        if (timeline) {
-            timeline.innerHTML = logs.map(function(log) {
-                return '<div class="bo-log" style="--bo-color:' + log.color + ';--bo-bg:' + log.bg + ';">'
-                    + '<div class="bo-log-dot"></div><div><div class="bo-log-title">' + escHtml(log.title) + '</div><div class="bo-log-sub">' + escHtml(log.sub) + '</div></div>'
-                    + '</div>';
-            }).join('');
-        }
-    }
-
-    function openBackofficeModule(moduleId) {
-        const labels = {
-            users:'ผู้ใช้งานและสิทธิ์',
-            wards:'Ward & Med Cart',
-            'drug-master':'Medication Master',
-            cassette:'Cassette Template',
-            reports:'รายงานและ Audit Log',
-            integration:'HIS / MAR Sync'
-        };
-        const restricted = ['users','drug-master','integration'];
-        if (restricted.includes(moduleId) && currentRole !== 'super') {
-            showToast('Role นี้ดูระบบหลังบ้านได้ แต่ไม่มีสิทธิ์แก้ไขเมนูนี้');
-            setTimeout(function(){ showToast(''); }, 2200);
-            return;
-        }
-        if (moduleId === 'users') {
-            openPermPanel();
-            showToast('เปิดตั้งค่าสิทธิ์จากระบบหลังบ้าน');
-            setTimeout(function(){ showToast(''); }, 1800);
-            return;
-        }
-        showToast('เปิดเมนูระบบหลังบ้าน: ' + (labels[moduleId] || 'Demo'));
-        setTimeout(function(){ showToast(''); }, 1800);
-    }
-
     function renderDashboardCassetteUsageCard(state) {
         state = state || getDashboardCassetteState();
         const statCassette = document.getElementById('dashStatCassette');
@@ -20916,7 +20863,6 @@
         renderPrepScheduleDetail();
         renderDashboardDynamic();
         renderAssessmentListDynamic();
-        if (getActivePageId && getActivePageId() === 'pg-backoffice' && typeof renderBackofficeDynamic === 'function') renderBackofficeDynamic();
     }
 
     function applyWardSelection(wardName, options) {
@@ -21088,12 +21034,162 @@
         }
     ];
 
+    const CART_FULL_RUNTIME_MIN = 8 * 60;
+
+    function formatBatteryRuntime(minutes) {
+        minutes = Math.max(Math.round(minutes || 0), 0);
+        const hrs = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        if (hrs <= 0 && mins <= 0) return 'ควรชาร์จทันที';
+        if (hrs <= 0) return mins + ' นาที';
+        if (mins === 0) return hrs + ' ชม.';
+        return hrs + ' ชม. ' + mins + ' นาที';
+    }
+
+    function batteryRuntimeText(cart) {
+        const battery = Math.max(Math.min(parseInt(cart && cart.battery, 10) || 0, 100), 0);
+        if (battery <= 0) return 'ควรชาร์จทันที';
+        return 'ใช้งานได้ประมาณ ' + formatBatteryRuntime((battery / 100) * CART_FULL_RUNTIME_MIN);
+    }
+
+    function batteryStatusNote(cart) {
+        const note = (cart && cart.battNote) || 'ใช้งานปกติ';
+        return note + ' · ' + batteryRuntimeText(cart);
+    }
+
+    function cartEnvAvg(rows, key) {
+        if (!rows || !rows.length) return 0;
+        return rows.reduce(function(sum, row) { return sum + (parseFloat(row[key]) || 0); }, 0) / rows.length;
+    }
+
+    function cartEnvRange(rows, key, formatter) {
+        const vals = (rows || []).map(function(row) { return parseFloat(row[key]) || 0; });
+        if (!vals.length) return '—';
+        const min = Math.min.apply(null, vals);
+        const max = Math.max.apply(null, vals);
+        return formatter(min) + '-' + formatter(max);
+    }
+
+    function formatCartTemp(value) {
+        return (parseFloat(value) || 0).toFixed(1) + '°C';
+    }
+
+    function formatCartHumidity(value) {
+        return Math.round(parseFloat(value) || 0) + '% RH';
+    }
+
+    function setCartEnvTableExpanded(scope, expanded) {
+        const wrap = document.getElementById(scope === 'drawer' ? 'drawerEnvTableWrap' : 'cartEnvTableWrap');
+        const btn = document.getElementById(scope === 'drawer' ? 'drawerEnvToggle' : 'cartEnvToggle');
+        if (wrap) wrap.classList.toggle('is-collapsed', !expanded);
+        if (btn) {
+            btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+            const label = btn.querySelector('span');
+            if (label) label.textContent = expanded ? 'ซ่อนรายละเอียด' : 'แสดงรายละเอียด';
+        }
+    }
+
+    function toggleCartEnvTable(scope) {
+        const wrap = document.getElementById(scope === 'drawer' ? 'drawerEnvTableWrap' : 'cartEnvTableWrap');
+        const nextExpanded = wrap ? wrap.classList.contains('is-collapsed') : true;
+        setCartEnvTableExpanded(scope, nextExpanded);
+    }
+
+    function getCartEnvironmentProfile(cart) {
+        cart = cart || cartList[0] || {};
+        const drawerCount = Math.max(parseInt(cart.drawers, 10) || STANDARD_CART_DRAWERS, 1);
+        const cassetteTotal = Math.max(parseInt(cart.cassettes, 10) || STANDARD_CART_CASSETTES, drawerCount);
+        const perDrawer = Math.max(Math.ceil(cassetteTotal / drawerCount), 1);
+        const seed = String(cart.id || 'A-1').split('').reduce(function(sum, ch) { return sum + ch.charCodeAt(0); }, 0);
+        const needsCheck = cart.status === 'maintenance' || cart.connection === 'Offline';
+        const baseTemp = needsCheck ? 26.7 : 23.6 + ((seed % 5) * 0.15);
+        const baseHum = needsCheck ? 58 : 45 + (seed % 6);
+        const drawers = Array.from({ length: drawerCount }, function(_, idx) {
+            const drawerNo = idx + 1;
+            const temp = baseTemp + (((drawerNo % 3) - 1) * 0.35) + (needsCheck && drawerNo >= drawerCount - 1 ? 1.2 : 0);
+            const hum = baseHum + (((drawerNo % 4) - 1) * 1.3) + (needsCheck && drawerNo >= drawerCount - 1 ? 4 : 0);
+            const cassetteTemp = temp + 0.25 + ((drawerNo % 2) * 0.15);
+            const cassetteHum = hum + 1.2 + ((drawerNo % 3) * 0.5);
+            const warn = temp > 26 || hum > 60 || cassetteTemp > 26.5 || cassetteHum > 62;
+            return {
+                drawer: drawerNo,
+                cassettes: Math.min(perDrawer, Math.max(cassetteTotal - (idx * perDrawer), 0)),
+                temp: temp,
+                hum: hum,
+                cassetteTemp: cassetteTemp,
+                cassetteHum: cassetteHum,
+                warn: warn
+            };
+        });
+        const warnCount = drawers.filter(function(row) { return row.warn; }).length;
+        return {
+            status: warnCount ? 'warn' : 'ok',
+            statusText: warnCount ? 'ควรตรวจสอบ' : 'ปกติ',
+            drawerAvgTemp: cartEnvAvg(drawers, 'temp'),
+            drawerAvgHum: cartEnvAvg(drawers, 'hum'),
+            cassetteAvgTemp: cartEnvAvg(drawers, 'cassetteTemp'),
+            cassetteAvgHum: cartEnvAvg(drawers, 'cassetteHum'),
+            cassetteTempRange: cartEnvRange(drawers, 'cassetteTemp', formatCartTemp),
+            cassetteHumRange: cartEnvRange(drawers, 'cassetteHum', formatCartHumidity),
+            drawers: drawers,
+            warnCount: warnCount
+        };
+    }
+
+    function renderCartEnvironment(cart) {
+        const profile = getCartEnvironmentProfile(cart);
+        const statusEl = document.getElementById('cartEnvStatus');
+        if (statusEl) {
+            statusEl.classList.toggle('warn', profile.status === 'warn');
+            statusEl.innerHTML = '<span class="dot"></span> ' + profile.statusText;
+        }
+        const updated = document.getElementById('cartEnvUpdated');
+        if (updated) updated.textContent = 'อัปเดตล่าสุด ' + ((cart && cart.lastUsed) || 'วันนี้');
+        const drawerTemp = document.getElementById('cartDrawerTemp');
+        if (drawerTemp) drawerTemp.textContent = formatCartTemp(profile.drawerAvgTemp);
+        const drawerHum = document.getElementById('cartDrawerHum');
+        if (drawerHum) drawerHum.textContent = 'ความชื้น ' + formatCartHumidity(profile.drawerAvgHum);
+        const cassTemp = document.getElementById('cartCassetteTemp');
+        if (cassTemp) cassTemp.textContent = formatCartTemp(profile.cassetteAvgTemp);
+        const cassHum = document.getElementById('cartCassetteHum');
+        if (cassHum) cassHum.textContent = 'ความชื้น ' + formatCartHumidity(profile.cassetteAvgHum) + ' · ' + ((cart && cart.cassettes) || STANDARD_CART_CASSETTES) + ' ช่อง';
+        const tableRows = profile.drawers.map(function(row) {
+            return '<tr class="' + (row.warn ? 'warn' : '') + '">'
+                + '<td><div class="drawer-name">D' + row.drawer + '</div><div class="metric-sub">' + row.cassettes + ' Cassette</div></td>'
+                + '<td><div class="metric-main">' + formatCartTemp(row.temp) + '</div></td>'
+                + '<td><div class="metric-main">' + formatCartHumidity(row.hum) + '</div></td>'
+                + '<td><div class="metric-main">' + formatCartTemp(row.cassetteTemp) + '</div></td>'
+                + '<td><div class="metric-main">' + formatCartHumidity(row.cassetteHum) + '</div></td>'
+                + '<td><span class="cart-env-status ' + (row.warn ? 'warn' : '') + '">' + (row.warn ? 'ตรวจสอบ' : 'ปกติ') + '</span></td>'
+                + '</tr>';
+        }).join('');
+        ['cartEnvTableBody','drawerEnvTableBody'].forEach(function(id) {
+            const body = document.getElementById(id);
+            if (body) body.innerHTML = tableRows;
+        });
+        const drawerEnvStatus = document.getElementById('drawerEnvStatus');
+        if (drawerEnvStatus) {
+            drawerEnvStatus.textContent = profile.statusText + (profile.warnCount ? ' · ' + profile.warnCount + ' Drawer' : '');
+            drawerEnvStatus.style.color = profile.status === 'warn' ? '#D97706' : 'var(--green)';
+        }
+        const drawerEnvDrawerAvg = document.getElementById('drawerEnvDrawerAvg');
+        if (drawerEnvDrawerAvg) drawerEnvDrawerAvg.textContent = formatCartTemp(profile.drawerAvgTemp) + ' · ' + formatCartHumidity(profile.drawerAvgHum);
+        const drawerEnvCassetteAvg = document.getElementById('drawerEnvCassetteAvg');
+        if (drawerEnvCassetteAvg) drawerEnvCassetteAvg.textContent = formatCartTemp(profile.cassetteAvgTemp) + ' · ' + formatCartHumidity(profile.cassetteAvgHum);
+        const drawerEnvCassetteRange = document.getElementById('drawerEnvCassetteRange');
+        if (drawerEnvCassetteRange) drawerEnvCassetteRange.textContent = profile.cassetteTempRange + ' · ' + profile.cassetteHumRange;
+        return profile;
+    }
+
     function renderCartListPage() {
         const grid = document.getElementById('cartListGrid');
         if (!grid) return;
         grid.innerHTML = cartList.map((c, i) => {
             const isMaint = c.status === 'maintenance';
             const battColor = c.battery > 60 ? '#0D9488' : c.battery > 25 ? '#D97706' : '#EF4444';
+            const runtimeText = batteryRuntimeText(c);
+            const env = getCartEnvironmentProfile(c);
+            const envColor = env.status === 'warn' ? '#D97706' : '#0D9488';
             const connColor = c.connection === 'Offline' ? '#94A3B8' : '#2563EB';
             const connDot = c.connection === 'Offline' ? '#CBD5E1' : '#22C55E';
             return `
@@ -21121,6 +21217,12 @@
                             <span style="font-size:11px;color:var(--text-3);font-weight:400;margin-left:4px;">${c.battNote}</span>
                         </div>
                         <div class="cl-batt-bar"><div class="cl-batt-fill" style="width:${c.battery}%;background:${battColor};"></div></div>
+                        <div class="cl-card-field-note">${runtimeText}</div>
+                    </div>
+                    <div>
+                        <div class="cl-card-field-label">Temp / Humidity</div>
+                        <div class="cl-card-field-val" style="color:${envColor};">${formatCartTemp(env.drawerAvgTemp)} · ${formatCartHumidity(env.drawerAvgHum)}</div>
+                        <div class="cl-card-field-note">Cassette ${formatCartTemp(env.cassetteAvgTemp)} · ${formatCartHumidity(env.cassetteAvgHum)}</div>
                     </div>
                     <div>
                         <div class="cl-card-field-label">Drawer / Cassette</div>
@@ -21173,7 +21275,8 @@
         document.getElementById('cartLastUser').textContent = c.lastUser;
         document.getElementById('cartBattFill').style.width = c.battery + '%';
         document.getElementById('cartBattVal').textContent = c.battery + '%';
-        document.getElementById('cartBattNote').textContent = c.battNote;
+        document.getElementById('cartBattNote').textContent = batteryStatusNote(c);
+        renderCartEnvironment(c);
         document.getElementById('cartDrawers').innerHTML = c.drawers + ' <span style="font-size:13px;color:var(--text-2);font-weight:400;">ลิ้นชัก</span>';
         document.getElementById('cartCassettes').innerHTML = c.cassettesReady + ' <span style="font-size:13px;color:var(--text-2);font-weight:400;">/ ' + c.cassettes + ' ช่อง</span>';
         document.getElementById('cartConnection').textContent = c.connection;
@@ -21199,7 +21302,7 @@
                 hwVals[1].textContent = c.cassettes + ' ช่อง';
                 hwVals[2].textContent = c.cassettesReady + ' ช่อง';
                 hwVals[2].style.color = c.cassettesReady === c.cassettes ? 'var(--green)' : '#D97706';
-                hwVals[3].textContent = c.battery + '% (' + c.battNote + ')';
+                hwVals[3].textContent = c.battery + '% (' + batteryStatusNote(c) + ')';
                 hwVals[4].textContent = c.connection + ' (' + c.signal.split('·')[0].trim() + ')';
                 hwVals[5].textContent = c.ip;
                 hwVals[6].textContent = c.mac;
@@ -21211,6 +21314,7 @@
 
     // Initialize cart list on load
     renderCartListPage();
+    renderCartEnvironment(cartList[0]);
 </script>
 
 <!-- ── Reset Demo Floating Button ── -->
