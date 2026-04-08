@@ -1117,6 +1117,42 @@
             wmDirty[wardId].color = color;
             wmRender();
         }
+        function wmAddWard() {
+            var nextId = 'ww' + (Math.max(...WM_WARDS.map(function(w){ return parseInt(w.id.slice(2),10)||0; })) + 1);
+            var newWard = {
+                id: nextId,
+                name: 'Ward ใหม่',
+                dept: 'Department',
+                floor: '3',
+                bedsTotal: 20,
+                bedsOcc: 0,
+                patients: 0,
+                status: 'active',
+                color: WM_COLORS[WM_WARDS.length % WM_COLORS.length],
+                cartId: null
+            };
+            WM_WARDS.push(newWard);
+            wmSelectedWard = nextId;
+            wmDirty[nextId] = {};
+            wmRender();
+        }
+        function wmAddCart() {
+            var nextId = 'wc' + (Math.max(...WM_CARTS.map(function(c){ return parseInt(c.id.slice(2),10)||0; })) + 1);
+            var newCart = {
+                id: nextId,
+                name: 'Med Cart ใหม่',
+                code: 'NEW-' + nextId.slice(2),
+                wardId: wmSelectedWard,
+                drawers: 6,
+                cassettes: 36,
+                status: 'active',
+                lastSync: 'เดี๋ยวนี้'
+            };
+            WM_CARTS.push(newCart);
+            wmSelectedCart = nextId;
+            wmDirty[nextId] = {};
+            wmRender();
+        }
 
         function wmStatusLabel(s) {
             return { active:'ใช้งาน', inactive:'ปิดใช้งาน', maintenance:'ซ่อมบำรุง' }[s] || s;
@@ -1148,7 +1184,7 @@
 
             var left = '<div class="wm-md-left">'
                 + '<div class="wm-left-head"><span class="wm-left-title">'+WM_WARDS.length+' Ward</span>'
-                + '<button class="wm-add-btn" title="เพิ่ม Ward">+</button></div>'
+                + '<button class="wm-add-btn" title="เพิ่ม Ward" onclick="wmAddWard()">+</button></div>'
                 + '<div class="wm-item-list">'+items+'</div>'
                 + '</div>';
 
@@ -1267,7 +1303,7 @@
 
             var left = '<div class="wm-md-left">'
                 + '<div class="wm-left-head"><span class="wm-left-title">'+WM_CARTS.length+' Med Cart</span>'
-                + '<button class="wm-add-btn" title="เพิ่ม Med Cart">+</button></div>'
+                + '<button class="wm-add-btn" title="เพิ่ม Med Cart" onclick="wmAddCart()">+</button></div>'
                 + '<div class="wm-item-list">'+items+'</div>'
                 + '</div>';
 
