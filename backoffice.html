@@ -153,7 +153,7 @@
             background:rgba(15,23,42,0.5); backdrop-filter:blur(10px); padding:20px;
         }
         .modal-card {
-            width:100%; max-width:780px; max-height:88vh; overflow:hidden;
+            width:100%; max-width:780px; height:88vh; max-height:88vh; overflow:hidden;
             display:flex; flex-direction:column;
             background:white; border-radius:24px; box-shadow:0 32px 80px rgba(0,0,0,0.28);
         }
@@ -214,7 +214,7 @@
         .modal-tab:hover:not(.active) { color:rgba(255,255,255,0.82); }
 
         /* Body */
-        .modal-body { flex:1; overflow:hidden; padding:0; min-height:0; }
+        .modal-body { flex:1; overflow:hidden; padding:0; min-height:1px; }
 
         /* ── ROLE PERMISSION MATRIX (Tab 1) ───── */
         .pm-matrix-wrap { overflow-x:auto; }
@@ -332,7 +332,7 @@
             transition:transform .15s, box-shadow .15s;
         }
         .wm-add-btn:hover { transform:scale(1.1); box-shadow:0 4px 12px rgba(13,148,136,0.3); }
-        .wm-item-list { flex:1; overflow-y:auto; }
+        .wm-item-list { flex:1; overflow-y:auto; min-height:0; }
         .wm-item {
             display:flex; align-items:center; gap:10px;
             padding:10px 14px; cursor:pointer; border-bottom:1px solid #F8FAFC;
