@@ -1329,6 +1329,7 @@
                     }).join('');
 
                 /* Drawer options */
+                var cassettesAuto = cdrawers * 6;
                 var drawerOptions = [4,6,8].map(function(n){
                     return '<option value="'+n+'"'+(cdrawers==n?' selected':'')+'>'+n+' Drawer ('+n*6+' Cassette)</option>';
                 }).join('');
@@ -1353,7 +1354,7 @@
                     /* Stats */
                     + '<div class="wm-stat-row">'
                     + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cdrawers+'</div><div class="wm-stat-lbl">Drawer</div></div>'
-                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+(cdrawers*6)+'</div><div class="wm-stat-lbl">Cassette ทั้งหมด</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cassettesAuto+'</div><div class="wm-stat-lbl">Cassette ทั้งหมด</div></div>'
                     + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+(cstatus==='active'?'#10B981':cstatus==='maintenance'?'#F59E0B':'#94A3B8')+';">'+wmStatusLabel(cstatus)+'</div><div class="wm-stat-lbl">สถานะ</div></div>'
                     + '</div>'
 
@@ -1365,7 +1366,8 @@
                     + '<div class="wm-field"><div class="wm-label">ชื่อรถเข็น</div><input class="wm-input" value="'+escHtml(cname)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].name=this.value; document.querySelector(\'.wm-form-hero-name\').textContent=this.value;"></div>'
                     + '<div class="wm-field"><div class="wm-label">รหัสรถเข็น</div><input class="wm-input" value="'+escHtml(ccode)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].code=this.value;"></div>'
                     + '<div class="wm-field full"><div class="wm-label">Ward ที่เชื่อมต่อ</div><select class="wm-select">'+wardOptions+'</select></div>'
-                    + '<div class="wm-field full"><div class="wm-label">จำนวน Drawer</div><select class="wm-select" onchange="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].drawers=+this.value; wmRender();">'+drawerOptions+'</select></div>'
+                    + '<div class="wm-field"><div class="wm-label">จำนวน Drawer</div><select class="wm-select" onchange="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].drawers=+this.value; wmDirty[\''+cart.id+'\'].cassettes=+this.value*6; wmRender();">'+drawerOptions+'</select></div>'
+                    + '<div class="wm-field"><div class="wm-label">Cassette ทั้งหมด</div><input class="wm-input" type="number" value="'+cassettesAuto+'" readonly style="background:#F8FAFC;cursor:default;"></div>'
                     + '</div>'
 
                     /* Status */
@@ -1374,7 +1376,7 @@
 
                     /* Drawer map */
                     + '<div class="wm-section-head" style="margin-top:16px;">แผนผัง Drawer</div>'
-                    + wmRenderDrawerMap(cdrawers, cartColor)
+                    + wmRenderDrawerMap(cdrawers, cartColor, cassettesAuto)
 
                     /* Danger zone */
                     + '<div class="wm-divider"></div>'
@@ -1388,11 +1390,12 @@
             return '<div class="wm-md-layout">'+left+right+'</div>';
         }
 
-        function wmRenderDrawerMap(drawerCount, color) {
+        function wmRenderDrawerMap(drawerCount, color, totalCassettes) {
+            var cassPerDrawer = totalCassettes ? Math.floor(totalCassettes / drawerCount) : 6;
             var rows = '';
             for (var d = 1; d <= drawerCount; d++) {
                 var cassettes = '';
-                for (var c = 1; c <= 6; c++) {
+                for (var c = 1; c <= cassPerDrawer; c++) {
                     cassettes += '<div style="width:28px;height:28px;border-radius:6px;background:white;border:1.5px solid #E2E8F0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#94A3B8;">'+c+'</div>';
                 }
                 rows += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
