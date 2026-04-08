@@ -103,7 +103,18 @@
 
         .bo-content { flex:1; display:flex; flex-direction:column; overflow-y:auto; background:var(--bg); }
         .bo-body { padding:28px; flex:1; }
-        .bo-inner { max-width:1200px; margin:0 auto; display:flex; flex-direction:column; gap:20px; width:100%; }
+        .bo-inner { max-width:1000px; margin:0 auto; display:flex; flex-direction:column; gap:20px; width:100%; }
+
+        /* ── Welcome Bar ── */
+        .bo-welcome {
+            display:flex; align-items:center; justify-content:space-between; gap:16px;
+            background:var(--white); border:1px solid var(--border-light); border-radius:14px;
+            padding:20px 24px; box-shadow:0 1px 3px rgba(0,0,0,0.04);
+        }
+        .bo-welcome-title { font-size:20px; font-weight:800; color:var(--text-1); letter-spacing:-.02em; }
+        .bo-welcome-sub { font-size:13px; color:var(--text-2); margin-top:4px; line-height:1.5; }
+        .bo-welcome-sub strong { color:var(--green); font-weight:800; }
+        .bo-welcome-right { display:flex; align-items:center; gap:8px; flex-shrink:0; }
         .bo-hero {
             display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:18px;
             background:var(--white); border:1px solid var(--border-light);
@@ -595,15 +606,15 @@
 
         @media (max-width: 980px) {
             .topbar { height:auto; padding:14px 18px; align-items:flex-start; flex-direction:column; }
-            .top-scope { justify-content:flex-start; }
             .top-actions { width:100%; justify-content:space-between; }
-            .bo-hero, .bo-grid { grid-template-columns:1fr; }
+            .bo-sidebar { display:none; }
             .bo-stat-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+            .bo-welcome { flex-direction:column; text-align:center; }
         }
         @media (max-width: 640px) {
             .bo-body { padding:16px; }
-            .bo-stat-grid, .bo-mod-grid { grid-template-columns:1fr; }
-            .bo-title { font-size:24px; }
+            .bo-stat-grid { grid-template-columns:1fr 1fr; }
+            .bo-welcome-title { font-size:18px; }
             .time-card { display:none; }
             .wm-md-layout { flex-direction:column; }
             .wm-md-left { width:100%; height:260px; border-right:none; border-bottom:1.5px solid #F1F5F9; }
@@ -621,14 +632,9 @@
                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 4h16v6H4z"/><path d="M4 14h7v6H4z"/><path d="M15 14h5v6h-5z"/></svg>
             </div>
             <div>
-                <div class="brand-title">ระบบหลังบ้าน</div>
-                <div class="brand-sub">Backoffice Control · Med Cart</div>
+                <div class="brand-title">Med Cart Backoffice</div>
+                <div class="brand-sub" id="topWard">Ward 3A</div>
             </div>
-        </div>
-        <div class="top-scope">
-            <span class="scope-chip" id="topRole">หัวหน้าเวร</span>
-            <span class="scope-chip" id="topWard">Ward 3A</span>
-            <span class="scope-chip" id="topCart">Med Cart A-1</span>
         </div>
         <div class="top-actions">
             <div class="time-card"><div class="time" id="clock">--:--</div><div class="date" id="dateStr">--</div></div>
@@ -638,22 +644,14 @@
             </button>
         </div>
     </header>
+    <!-- Hidden refs for JS -->
+    <span id="topRole" style="display:none;">หัวหน้าเวร</span>
+    <span id="topCart" style="display:none;">Med Cart A-1</span>
 
     <div class="bo-layout">
         <!-- ── SIDEBAR ── -->
         <aside class="bo-sidebar">
-            <div class="bo-sidebar-header">
-                <div class="bo-brand-compact">
-                    <div class="bo-brand-compact-icon">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-                    </div>
-                    <div>
-                        <div style="font-size:13px;font-weight:850;color:var(--text-1);">Backoffice</div>
-                        <div style="font-size:9px;color:var(--text-3);font-weight:700;">Med Cart Control</div>
-                    </div>
-                </div>
-            </div>
-            <nav class="bo-sidebar-nav">
+            <nav class="bo-sidebar-nav" style="padding-top:8px;">
                 <div class="bo-nav-item active" onclick="boNavTo('home',this)">
                     <div class="bo-nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
                     หน้าแรก
@@ -697,50 +695,44 @@
         <div class="bo-content">
             <main class="bo-body">
                 <div class="bo-inner">
-                    <section class="bo-hero">
-                        <div style="position:relative;z-index:1;">
-                            <div class="bo-kicker">Backoffice Control</div>
-                            <div class="bo-title">ระบบหลังบ้าน</div>
-                            <div class="bo-sub" id="boHeroSub">จัดการข้อมูลตั้งต้น สิทธิ์การใช้งาน รถเข็นยา และรายงานของ Ward ปัจจุบัน</div>
-                            <div class="chip-row">
-                                <span class="bo-chip" id="boRoleBadge">หัวหน้าเวร</span>
-                                <span class="bo-chip" id="boWardBadge">Ward 3A</span>
-                            </div>
+
+                    <!-- Welcome bar — compact, no duplication -->
+                    <section class="bo-welcome">
+                        <div class="bo-welcome-left">
+                            <h1 class="bo-welcome-title">สวัสดี, <span id="boWelcomeName">หัวหน้าเวร</span></h1>
+                            <p class="bo-welcome-sub" id="boHeroSub">ภาพรวมระบบหลังบ้านของ <strong id="boWelcomeWard">Ward 3A</strong> — เลือกเมนูทางซ้ายเพื่อจัดการ</p>
                         </div>
-                        <aside class="bo-hero-card">
-                            <div class="label">Current Scope</div>
-                            <div class="value" id="boCartScope">Med Cart A-1</div>
-                            <div class="note" id="boAccessNote">เลือกเมนูเพื่อเข้าสู่ระบบหลังบ้านแบบ Demo</div>
-                        </aside>
+                        <div class="bo-welcome-right">
+                            <span class="bo-chip" id="boModeChip" style="background:#F0FDFA;border-color:#CCFBF1;color:#0F766E;">Supervisor mode</span>
+                        </div>
                     </section>
 
+                    <!-- Stats -->
                     <section class="bo-stat-grid" id="boStatGrid"></section>
 
-                    <section class="bo-grid">
-                        <div class="bo-panel">
-                            <div class="bo-panel-head">
-                                <div>
-                                    <div class="bo-panel-title">เมนูระบบหลังบ้าน</div>
-                                    <div class="bo-panel-sub">แยกไฟล์จากหน้าบ้านแล้ว เปิดทำงานเป็น Backoffice HTML</div>
-                                </div>
-                                <span class="bo-chip" id="boModeChip">Supervisor mode</span>
+                    <!-- Activity log — full width -->
+                    <section class="bo-panel">
+                        <div class="bo-panel-head">
+                            <div>
+                                <div class="bo-panel-title">System Activity</div>
+                                <div class="bo-panel-sub">สถานะล่าสุดของ Ward/Cart ปัจจุบัน</div>
                             </div>
-                            <div class="bo-mod-grid" id="boModuleGrid"></div>
                         </div>
-
-                        <aside class="bo-panel">
-                            <div class="bo-panel-head">
-                                <div>
-                                    <div class="bo-panel-title">System Activity</div>
-                                    <div class="bo-panel-sub">สถานะล่าสุดของ Ward/Cart ปัจจุบัน</div>
-                                </div>
-                            </div>
-                            <div class="bo-timeline" id="boTimeline"></div>
-                        </aside>
+                        <div class="bo-timeline" id="boTimeline"></div>
                     </section>
+
                 </div>
             </main>
         </div>
+    </div>
+
+    <!-- Hidden elements to preserve JS references -->
+    <div style="display:none;">
+        <span id="boRoleBadge"></span>
+        <span id="boWardBadge"></span>
+        <span id="boCartScope"></span>
+        <span id="boAccessNote"></span>
+        <div id="boModuleGrid"></div>
     </div>
 
     <div class="modal-backdrop" id="permModal" onclick="if(event.target===this) closePermModal()">
