@@ -14,21 +14,22 @@
             --text-2:#64748B;
             --text-3:#94A3B8;
             --border:#E2E8F0;
+            --border-light:#F1F5F9;
             --bg:#F8FAFC;
+            --white:#FFFFFF;
+            --surface:#FFFFFF;
+            --surface-2:#F8FAFC;
         }
         body {
             min-height: 100vh;
             font-family: 'Prompt','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
             color: var(--text-1);
-            background:
-                radial-gradient(circle at 10% 8%, rgba(13,148,136,0.16), transparent 30%),
-                radial-gradient(circle at 88% 4%, rgba(37,99,235,0.14), transparent 32%),
-                linear-gradient(160deg,#F8FAFC 0%,#EEF6F4 48%,#F8FAFC 100%);
+            background: var(--bg);
             overflow-x: hidden;
         }
         button { font-family: inherit; }
         .topbar {
-            height: 68px;
+            height: 56px;
             position: sticky;
             top: 0;
             z-index: 50;
@@ -37,10 +38,8 @@
             justify-content: space-between;
             gap: 18px;
             padding: 0 28px;
-            background: rgba(255,255,255,0.9);
-            border-bottom: 1px solid rgba(226,232,240,0.8);
-            backdrop-filter: blur(20px) saturate(160%);
-            box-shadow: 0 1px 0 rgba(15,23,42,0.03), 0 10px 28px rgba(15,23,42,0.05);
+            background: var(--white);
+            border-bottom: 1px solid var(--border-light);
         }
         .brand { display:flex; align-items:center; gap:12px; min-width:0; }
         .brand-icon {
@@ -67,28 +66,57 @@
         .time { font-family:'Inter',sans-serif; font-weight:800; font-size:15px; line-height:1; }
         .date { font-size:9px; color:var(--text-3); margin-top:4px; white-space:nowrap; }
         .btn {
-            border:1px solid var(--border); border-radius:14px; padding:10px 14px;
+            border:1px solid var(--border); border-radius:10px; padding:10px 14px;
             background:white; color:var(--text-2); font-size:12px; font-weight:850;
             cursor:pointer; display:inline-flex; align-items:center; gap:8px;
             transition:transform .16s, box-shadow .16s, border-color .16s, background .16s;
         }
-        .btn:hover { transform:translateY(-1px); box-shadow:0 10px 24px rgba(15,23,42,0.08); border-color:#CBD5E1; }
-        .btn.primary { border-color:#99F6E4; color:#0F766E; background:linear-gradient(135deg,#F0FDFA,#ECFDF5); }
-        .bo-body { padding: 28px; }
-        .bo-inner { max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:18px; }
+        .btn:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(15,23,42,0.08); border-color:#CBD5E1; }
+        .btn.primary { background: var(--green); color:white; border-color:var(--green); box-shadow:0 2px 8px rgba(13,148,136,0.25); }
+        .btn.primary:hover { box-shadow:0 4px 16px rgba(13,148,136,0.35); }
+
+        /* ── SIDEBAR LAYOUT ── */
+        body { display:flex; flex-direction:column; }
+        .bo-layout { display:flex; flex:1; min-height:calc(100vh - 56px); }
+        .bo-sidebar {
+            width:220px; flex-shrink:0; background:var(--white);
+            border-right:1px solid var(--border-light);
+            padding:20px 0; display:flex; flex-direction:column;
+            overflow-y:auto;
+        }
+        .bo-sidebar-header { padding:0 16px 20px; border-bottom:1px solid var(--border-light); margin-bottom:16px; }
+        .bo-brand-compact { display:flex; align-items:center; gap:10px; }
+        .bo-brand-compact-icon { width:32px; height:32px; border-radius:10px; background:linear-gradient(135deg,var(--green-dark),#14B8A6); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:14px; }
+        .bo-sidebar-nav { flex:1; display:flex; flex-direction:column; gap:2px; padding:0 8px; }
+        .bo-nav-item {
+            display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer;
+            border-radius:10px; font-size:13px; font-weight:700; color:var(--text-2);
+            transition:all .15s; position:relative;
+        }
+        .bo-nav-item:hover { background:var(--bg); color:var(--text-1); }
+        .bo-nav-item.active { background:linear-gradient(135deg,#F0FDFA,#ECFDF5); color:var(--green); }
+        .bo-nav-item.active::before { content:''; position:absolute; left:0; width:3px; height:100%; background:var(--green); border-radius:0 3px 3px 0; }
+        .bo-nav-icon { width:20px; height:20px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .bo-sidebar-bottom { padding:16px 12px 0; border-top:1px solid var(--border-light); margin-top:auto; }
+        .bo-sidebar-context { font-size:11px; font-weight:850; color:var(--text-3); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; padding:0 6px; }
+        .bo-context-chip { display:flex; align-items:center; gap:8px; background:var(--bg); border:1px solid var(--border-light); border-radius:8px; padding:8px 10px; font-size:12px; color:var(--text-1); font-weight:700; }
+
+        .bo-content { flex:1; display:flex; flex-direction:column; overflow-y:auto; background:var(--bg); }
+        .bo-body { padding:28px; flex:1; }
+        .bo-inner { max-width:1200px; margin:0 auto; display:flex; flex-direction:column; gap:20px; width:100%; }
         .bo-hero {
             display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:18px;
-            background:linear-gradient(135deg,#0F766E,#0D9488 55%,#14B8A6);
-            border-radius:30px; padding:26px; color:white; position:relative; overflow:hidden;
-            box-shadow:0 22px 58px rgba(13,148,136,0.22);
+            background:var(--white); border:1px solid var(--border-light);
+            border-radius:16px; padding:24px; position:relative; overflow:hidden;
+            box-shadow:0 1px 3px rgba(0,0,0,0.04);
         }
-        .bo-hero::after {
-            content:''; position:absolute; width:260px; height:260px; border-radius:50%;
-            background:rgba(255,255,255,0.09); right:-84px; top:-112px;
+        .bo-hero::before {
+            content:''; position:absolute; left:0; top:0; width:4px; height:100%;
+            background:var(--green); border-radius:16px 0 0 16px;
         }
-        .bo-kicker { font-size:10px; font-weight:950; letter-spacing:.18em; text-transform:uppercase; opacity:.68; }
-        .bo-title { font-size:30px; font-weight:950; letter-spacing:-.06em; margin-top:6px; }
-        .bo-sub { font-size:13px; line-height:1.7; opacity:.78; max-width:650px; margin-top:8px; }
+        .bo-kicker { font-size:10px; font-weight:900; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3); }
+        .bo-title { font-size:24px; font-weight:900; letter-spacing:-.02em; margin-top:6px; color:var(--text-1); }
+        .bo-sub { font-size:13px; line-height:1.7; color:var(--text-2); max-width:650px; margin-top:8px; }
         .chip-row { display:flex; gap:8px; flex-wrap:wrap; margin-top:16px; }
         .bo-chip {
             font-size:9.5px; font-weight:900; border-radius:999px; padding:5px 10px;
@@ -103,37 +131,38 @@
         .bo-hero-card .label { font-size:10px; font-weight:850; opacity:.7; text-transform:uppercase; letter-spacing:.12em; }
         .bo-hero-card .value { font-size:20px; font-weight:950; margin-top:6px; }
         .bo-hero-card .note { font-size:12px; line-height:1.6; opacity:.75; margin-top:10px; }
-        .bo-stat-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:12px; }
+        .bo-stat-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
         .bo-stat {
-            background:white; border:1px solid #E2E8F0; border-radius:20px; padding:16px;
-            box-shadow:0 8px 24px rgba(15,23,42,0.05); min-height:104px; position:relative; overflow:hidden;
+            background:var(--white); border:1px solid var(--border-light); border-radius:14px; padding:16px;
+            box-shadow:0 1px 3px rgba(0,0,0,0.04); min-height:100px; position:relative; overflow:hidden;
         }
-        .bo-stat::before { content:''; position:absolute; inset:0 auto 0 0; width:4px; background:var(--bo-accent,#0D9488); }
-        .bo-stat-num { font-size:28px; font-weight:950; color:var(--bo-accent,#0D9488); line-height:1; }
-        .bo-stat-label { font-size:11px; color:#334155; font-weight:850; margin-top:10px; }
-        .bo-stat-sub { font-size:9.5px; color:#94A3B8; font-weight:650; margin-top:4px; line-height:1.35; }
-        .bo-grid { display:grid; grid-template-columns:1.3fr .7fr; gap:18px; align-items:start; }
-        .bo-panel { background:white; border:1px solid #E2E8F0; border-radius:26px; padding:18px; box-shadow:0 10px 30px rgba(15,23,42,0.06); }
-        .bo-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px; }
-        .bo-panel-title { font-size:15px; font-weight:950; color:#0F172A; }
-        .bo-panel-sub { font-size:11px; color:#94A3B8; font-weight:700; margin-top:2px; }
+        .bo-stat::before { content:''; position:absolute; inset:0 auto 0 0; width:3px; background:var(--bo-accent,#0D9488); border-radius:0 2px 2px 0; }
+        .bo-stat-num { font-size:26px; font-weight:900; color:var(--bo-accent,#0D9488); line-height:1; }
+        .bo-stat-label { font-size:11px; color:var(--text-2); font-weight:800; margin-top:8px; }
+        .bo-stat-sub { font-size:10px; color:var(--text-3); font-weight:600; margin-top:4px; line-height:1.4; }
+        .bo-grid { display:grid; grid-template-columns:1fr 300px; gap:20px; align-items:start; }
+        .bo-panel { background:var(--white); border:1px solid var(--border-light); border-radius:14px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+        .bo-panel-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+        .bo-panel-title { font-size:14px; font-weight:900; color:var(--text-1); }
+        .bo-panel-sub { font-size:11px; color:var(--text-3); font-weight:700; margin-top:3px; }
         .bo-mod-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
         .bo-module {
-            border:1.5px solid var(--bo-border,#E2E8F0); background:linear-gradient(135deg,var(--bo-bg,#F8FAFC),#fff);
-            border-radius:20px; padding:16px; min-height:154px; display:flex; flex-direction:column; gap:12px;
-            cursor:pointer; transition:transform .16s, box-shadow .16s, border-color .16s; text-align:left;
+            border:1.5px solid var(--bo-border,#E2E8F0); background:var(--white);
+            border-radius:14px; padding:16px; min-height:120px; display:flex; flex-direction:column; gap:12px;
+            cursor:pointer; transition:transform .15s, box-shadow .15s, border-color .15s; text-align:left;
         }
-        .bo-module:hover { transform:translateY(-2px); box-shadow:0 14px 34px rgba(15,23,42,0.08); border-color:var(--bo-color,#0D9488); }
-        .bo-module.locked { opacity:.62; }
+        .bo-module:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(15,23,42,0.08); border-color:var(--bo-color,#0D9488); }
+        .bo-module.locked { opacity:0.6; cursor:not-allowed; }
         .bo-module-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
         .bo-module-icon {
-            width:42px; height:42px; border-radius:15px; display:flex; align-items:center; justify-content:center;
-            color:white; background:linear-gradient(135deg,var(--bo-color,#0D9488),var(--bo-color2,#14B8A6));
-            box-shadow:0 8px 18px rgba(13,148,136,0.18);
+            width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+            color:white; background:var(--bo-color,#0D9488);
+            box-shadow:0 4px 12px rgba(13,148,136,0.2);
+            flex-shrink:0;
         }
-        .bo-module-title { font-size:14px; font-weight:950; color:#0F172A; }
-        .bo-module-desc { font-size:11px; color:#64748B; line-height:1.55; font-weight:650; }
-        .bo-module-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+        .bo-module-title { font-size:13px; font-weight:900; color:var(--text-1); }
+        .bo-module-desc { font-size:11px; color:var(--text-2); line-height:1.5; font-weight:600; }
+        .bo-module-foot { margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:10px; }
         .bo-timeline { display:flex; flex-direction:column; gap:10px; }
         .bo-log { display:flex; align-items:flex-start; gap:10px; padding:12px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px; }
         .bo-log-dot { width:10px; height:10px; border-radius:50%; background:var(--bo-color,#0D9488); margin-top:5px; flex-shrink:0; box-shadow:0 0 0 4px var(--bo-bg,#F0FDFA); }
@@ -161,16 +190,16 @@
         /* Header */
         .modal-head {
             position:relative; overflow:hidden;
-            background:linear-gradient(135deg,#4C1D95 0%,#7C3AED 55%,#8B5CF6 100%);
-            color:white; flex-shrink:0;
+            background:var(--white); color:var(--text-1); flex-shrink:0;
+            border-bottom:2px solid var(--green);
         }
         .modal-head::before {
             content:''; position:absolute; width:300px; height:300px; border-radius:50%;
-            background:rgba(255,255,255,0.07); top:-120px; right:-60px; pointer-events:none;
+            background:transparent; top:-120px; right:-60px; pointer-events:none;
         }
         .modal-head::after {
             content:''; position:absolute; width:160px; height:160px; border-radius:50%;
-            background:rgba(255,255,255,0.05); bottom:-60px; left:60px; pointer-events:none;
+            background:transparent; bottom:-60px; left:60px; pointer-events:none;
         }
         .modal-head-top {
             position:relative; z-index:1;
@@ -180,38 +209,38 @@
         .modal-head-left { display:flex; align-items:center; gap:14px; }
         .modal-head-icon {
             width:46px; height:46px; border-radius:14px; flex-shrink:0;
-            background:rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:center;
+            background:var(--bg); display:flex; align-items:center; justify-content:center; color:var(--green);
         }
-        .modal-title { font-size:19px; font-weight:900; letter-spacing:-.3px; }
-        .modal-sub { font-size:12px; opacity:.7; margin-top:3px; }
+        .modal-title { font-size:19px; font-weight:900; letter-spacing:-.3px; color:var(--text-1); }
+        .modal-sub { font-size:12px; color:var(--text-2); margin-top:3px; }
         .modal-chips { display:flex; gap:8px; margin-top:9px; }
         .modal-chip {
-            background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.25);
-            border-radius:999px; padding:4px 11px; font-size:11px; font-weight:700;
+            background:var(--bg); border:1px solid var(--border-light);
+            border-radius:999px; padding:4px 11px; font-size:11px; font-weight:700; color:var(--text-2);
         }
-        .modal-chip strong { font-weight:900; margin-right:2px; }
+        .modal-chip strong { font-weight:900; margin-right:2px; color:var(--text-1); }
         .modal-close {
-            width:34px; height:34px; border:1px solid rgba(255,255,255,0.28); border-radius:10px;
-            background:rgba(255,255,255,0.12); color:white; cursor:pointer;
+            width:34px; height:34px; border:1px solid var(--border); border-radius:10px;
+            background:white; color:var(--text-2); cursor:pointer;
             display:flex; align-items:center; justify-content:center; flex-shrink:0;
-            transition:background .15s;
+            transition:background .15s, color .15s;
         }
-        .modal-close:hover { background:rgba(255,255,255,0.24); }
+        .modal-close:hover { background:var(--bg); color:var(--text-1); }
 
         /* Tabs inside header */
         .modal-tabs {
             position:relative; z-index:1;
             display:flex; padding:0 24px;
-            border-top:1px solid rgba(255,255,255,0.14);
+            border-top:1px solid var(--border-light);
         }
         .modal-tab {
             padding:12px 18px; font-size:13px; font-weight:800; cursor:pointer;
-            border:none; background:transparent; color:rgba(255,255,255,0.55);
+            border:none; background:transparent; color:var(--text-2);
             font-family:'Prompt',sans-serif; border-bottom:3px solid transparent;
             transition:color .18s, border-color .18s;
         }
-        .modal-tab.active { color:white; border-bottom-color:white; }
-        .modal-tab:hover:not(.active) { color:rgba(255,255,255,0.82); }
+        .modal-tab.active { color:var(--green); border-bottom-color:var(--green); }
+        .modal-tab:hover:not(.active) { color:var(--text-1); }
 
         /* Body */
         .modal-body { flex:1; overflow:hidden; padding:0; min-height:1px; }
@@ -324,6 +353,29 @@
             display:flex; align-items:center; justify-content:space-between; flex-shrink:0;
         }
         .wm-left-title { font-size:11px; font-weight:900; color:#64748B; text-transform:uppercase; letter-spacing:.08em; }
+        .wm-left-tools {
+            padding:10px 12px; border-bottom:1px solid #F1F5F9; display:flex; flex-direction:column; gap:8px;
+            background:#FBFCFD; flex-shrink:0;
+        }
+        .wm-search { position:relative; }
+        .wm-search svg { position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#94A3B8; pointer-events:none; }
+        .wm-search input {
+            width:100%; border:1.5px solid #E2E8F0; border-radius:10px; padding:8px 30px 8px 32px;
+            font-family:'Prompt',sans-serif; font-size:11px; font-weight:650; color:#0F172A; outline:none;
+            background:white; transition:border-color .15s, box-shadow .15s;
+        }
+        .wm-search input:focus { border-color:#0D9488; box-shadow:0 0 0 3px rgba(13,148,136,0.08); }
+        .wm-search button {
+            position:absolute; right:8px; top:50%; transform:translateY(-50%); border:none; background:transparent;
+            color:#94A3B8; cursor:pointer; font-size:15px; line-height:1;
+        }
+        .wm-filter-row { display:flex; gap:5px; flex-wrap:wrap; }
+        .wm-filter-chip {
+            border:1.5px solid #E2E8F0; border-radius:999px; padding:4px 8px;
+            font-family:'Prompt',sans-serif; font-size:9.5px; font-weight:850; color:#64748B; background:white;
+            cursor:pointer; transition:all .12s;
+        }
+        .wm-filter-chip.active { border-color:#99F6E4; color:#0F766E; background:#F0FDFA; }
         .wm-add-btn {
             width:26px; height:26px; border-radius:8px;
             background:linear-gradient(135deg,#0D9488,#14B8A6);
@@ -405,12 +457,137 @@
             display:flex; align-items:center; gap:10px; padding:10px 12px;
             background:#F0FDF9; border:1.5px solid #99F6E4; border-radius:12px; margin-top:4px;
         }
-        .wm-cart-link-icon { width:30px; height:30px; border-radius:8px; background:#0D9488; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .wm-cart-link-icon { width:30px; height:30px; border-radius:8px; background:#0D9488; color:white; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
         .wm-divider { height:1px; background:#F1F5F9; margin:18px 0; }
         .wm-stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+        .wm-stat-row.four { grid-template-columns:repeat(4,1fr); }
+        .wm-stat-row.five { grid-template-columns:repeat(5,1fr); }
         .wm-stat-card { background:#F8FAFC; border:1px solid #F1F5F9; border-radius:10px; padding:10px 12px; }
         .wm-stat-val { font-size:20px; font-weight:900; color:#0F172A; line-height:1; }
         .wm-stat-lbl { font-size:10px; color:#94A3B8; font-weight:700; margin-top:4px; }
+        .wm-insight-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-bottom:14px; }
+        .wm-insight {
+            background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:10px 12px;
+            display:flex; align-items:flex-start; gap:9px;
+        }
+        .wm-insight-icon {
+            width:28px; height:28px; border-radius:9px; display:flex; align-items:center; justify-content:center;
+            flex-shrink:0; color:white; background:var(--wm-insight-color,#0D9488);
+        }
+        .wm-insight-title { font-size:11px; font-weight:900; color:#0F172A; }
+        .wm-insight-sub { font-size:10px; color:#64748B; line-height:1.45; margin-top:2px; font-weight:650; }
+        .wm-alert {
+            border:1.5px solid var(--wm-alert-border,#FDE68A); border-radius:12px;
+            background:var(--wm-alert-bg,#FFFBEB); padding:10px 12px; display:flex; gap:9px; align-items:flex-start;
+            margin-bottom:14px;
+        }
+        .wm-alert strong { font-size:11px; color:var(--wm-alert-text,#92400E); }
+        .wm-alert div { font-size:10px; color:#64748B; line-height:1.45; font-weight:650; }
+        .wm-assignment-list { display:flex; flex-direction:column; gap:7px; margin-top:8px; }
+        .wm-assignment {
+            display:flex; align-items:center; justify-content:space-between; gap:10px;
+            border:1px solid #E2E8F0; background:#F8FAFC; border-radius:10px; padding:9px 10px;
+        }
+        .wm-assignment-main { min-width:0; }
+        .wm-assignment-title { font-size:11px; font-weight:900; color:#0F172A; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .wm-assignment-sub { font-size:10px; color:#64748B; margin-top:1px; font-weight:650; }
+        .wm-assignment-pill {
+            border-radius:999px; padding:3px 8px; font-size:9.5px; font-weight:900;
+            background:#F0FDFA; color:#0F766E; border:1px solid #99F6E4; white-space:nowrap;
+        }
+        .wm-empty-inline { color:#94A3B8; font-size:11px; line-height:1.6; text-align:center; padding:14px; border:1px dashed #CBD5E1; border-radius:12px; background:#F8FAFC; }
+        .wm-drawer-map { background:#F8FAFC; border:1px solid #F1F5F9; border-radius:10px; padding:12px; }
+        .wm-drawer-row { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+        .wm-drawer-row:last-child { margin-bottom:0; }
+        .wm-drawer-label { width:28px; height:28px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:900; color:white; flex-shrink:0; }
+        .wm-drawer-label.disabled { background:#CBD5E1 !important; color:#64748B; }
+        .wm-cassette-row { display:flex; gap:5px; flex-wrap:wrap; }
+        .wm-cassette { width:28px; height:28px; border-radius:6px; background:white; border:1.5px solid #E2E8F0; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:#94A3B8; }
+        .wm-cassette.linked { border-color:#99F6E4; color:#0F766E; background:#F0FDFA; }
+        .wm-cassette.assigned { border-color:#93C5FD; color:#1D4ED8; background:#EFF6FF; }
+        .wm-cassette.in-progress { border-color:#FDE68A; color:#92400E; background:#FFFBEB; }
+        .wm-cassette.filled { border-color:#86EFAC; color:#15803D; background:#F0FDF4; }
+        .wm-cassette.disabled { border-color:#E2E8F0; color:#CBD5E1; background:#F1F5F9; }
+        .wm-cassette.disabled.blocked { border-color:#FCA5A5; color:#991B1B; background:#FEF2F2; }
+        .wm-cassette-note {
+            display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+            border:1px solid #E2E8F0; background:#F8FAFC; border-radius:10px; padding:9px 10px; margin-top:10px;
+        }
+        .wm-cassette-note-main { font-size:10px; color:#64748B; line-height:1.45; font-weight:700; }
+        .wm-cassette-legend { display:flex; gap:6px; flex-wrap:wrap; }
+        .wm-cassette-legend span {
+            display:inline-flex; align-items:center; gap:5px; border:1px solid #E2E8F0; background:white;
+            border-radius:999px; padding:3px 7px; font-size:9.5px; font-weight:850; color:#64748B;
+        }
+        .wm-cassette-legend i { width:8px; height:8px; border-radius:50%; display:inline-block; background:#CBD5E1; }
+        .report-wrap { height:100%; overflow:auto; padding:18px; background:#F8FAFC; }
+        .report-hero {
+            border-radius:18px; padding:18px; color:white;
+            background:linear-gradient(135deg,#0F766E 0%,#0D9488 55%,#14B8A6 100%);
+            display:grid; grid-template-columns:1.35fr .65fr; gap:16px; align-items:stretch;
+            box-shadow:0 4px 16px rgba(13,148,136,0.15);
+        }
+        .report-kicker { font-size:10px; font-weight:950; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,0.8); }
+        .report-title { font-size:24px; font-weight:950; letter-spacing:-.04em; margin-top:4px; color:white; }
+        .report-sub { font-size:12px; color:rgba(255,255,255,0.85); line-height:1.6; margin-top:6px; max-width:560px; font-weight:650; }
+        .report-hero-card { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:14px; padding:14px; }
+        .report-hero-card .label { font-size:10px; font-weight:900; color:rgba(255,255,255,0.8); text-transform:uppercase; letter-spacing:.12em; }
+        .report-hero-card .value { font-size:26px; font-weight:950; margin-top:6px; line-height:1; color:white; }
+        .report-hero-card .note { font-size:11px; color:rgba(255,255,255,0.85); margin-top:8px; line-height:1.5; font-weight:650; }
+        .report-toolbar { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin:14px 0; }
+        .report-chip-row { display:flex; gap:7px; flex-wrap:wrap; }
+        .report-chip {
+            border:1px solid var(--border); background:white; color:var(--text-2); border-radius:999px;
+            padding:5px 9px; font-size:10px; font-weight:850;
+        }
+        .report-chip.hot { border-color:#CCFBF1; color:#0F766E; background:#F0FDFA; }
+        .report-actions { display:flex; gap:8px; flex-wrap:wrap; }
+        .report-action-btn {
+            border:1.5px solid var(--border); color:var(--text-2); background:white; border-radius:8px;
+            font-family:'Prompt',sans-serif; font-size:10.5px; font-weight:900; padding:7px 10px; cursor:pointer;
+            transition:all .15s;
+        }
+        .report-action-btn:hover { border-color:var(--green); color:var(--green); }
+        .report-stat-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-bottom:12px; }
+        .report-stat-card {
+            background:white; border:1px solid #E2E8F0; border-radius:14px; padding:13px;
+            box-shadow:0 8px 24px rgba(15,23,42,0.05);
+        }
+        .report-stat-val { font-size:22px; font-weight:950; color:var(--report-color,#0D9488); line-height:1; }
+        .report-stat-label { font-size:10.5px; color:#334155; font-weight:900; margin-top:8px; }
+        .report-stat-note { font-size:9.5px; color:#94A3B8; font-weight:700; margin-top:3px; line-height:1.4; }
+        .report-layout { display:grid; grid-template-columns:1.15fr .85fr; gap:12px; align-items:start; }
+        .report-panel {
+            background:white; border:1px solid #E2E8F0; border-radius:16px; padding:14px;
+            box-shadow:0 8px 24px rgba(15,23,42,0.05);
+        }
+        .report-panel + .report-panel { margin-top:12px; }
+        .report-panel-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:12px; }
+        .report-panel-title { font-size:13px; font-weight:950; color:#0F172A; }
+        .report-panel-sub { font-size:10px; color:#94A3B8; font-weight:700; margin-top:2px; line-height:1.4; }
+        .report-status-pill {
+            border-radius:999px; padding:4px 8px; font-size:9.5px; font-weight:950; white-space:nowrap;
+            border:1px solid var(--report-pill-border,#CCFBF1); background:var(--report-pill-bg,#F0FDFA); color:var(--report-pill-color,#0F766E);
+        }
+        .report-progress { height:9px; border-radius:999px; background:#F1F5F9; overflow:hidden; margin:10px 0 12px; }
+        .report-progress span { display:block; height:100%; width:0; background:linear-gradient(90deg,#0D9488,#14B8A6); border-radius:999px; }
+        .report-table { display:flex; flex-direction:column; gap:8px; }
+        .report-row {
+            display:grid; grid-template-columns:1fr auto; gap:10px; align-items:center;
+            border:1px solid #F1F5F9; background:#F8FAFC; border-radius:12px; padding:10px;
+        }
+        .report-row-title { font-size:11px; font-weight:900; color:#0F172A; }
+        .report-row-sub { font-size:9.8px; color:#64748B; font-weight:650; margin-top:2px; line-height:1.45; }
+        .report-row-val { font-size:13px; font-weight:950; color:var(--report-row-color,#0D9488); white-space:nowrap; }
+        .report-log-list { display:flex; flex-direction:column; gap:8px; }
+        .report-log {
+            display:grid; grid-template-columns:auto 1fr auto; gap:10px; align-items:flex-start;
+            border:1px solid #F1F5F9; background:#F8FAFC; border-radius:12px; padding:10px;
+        }
+        .report-log-dot { width:10px; height:10px; border-radius:50%; margin-top:4px; background:var(--report-log-color,#0D9488); box-shadow:0 0 0 4px var(--report-log-bg,#F0FDFA); }
+        .report-log-title { font-size:11px; font-weight:900; color:#0F172A; }
+        .report-log-sub { font-size:9.8px; color:#64748B; font-weight:650; line-height:1.45; margin-top:2px; }
+        .report-log-time { font-size:9.5px; color:#94A3B8; font-weight:850; white-space:nowrap; }
         .wm-danger-zone { margin-top:4px; padding:12px; background:#FFF1F2; border:1px solid #FECDD3; border-radius:10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
         .wm-danger-text { font-size:11px; color:#BE123C; font-weight:700; }
         .wm-danger-btn { border:1.5px solid #FECDD3; background:white; color:#BE123C; border-radius:8px; padding:6px 12px; font-size:11px; font-weight:800; cursor:pointer; font-family:'Prompt',sans-serif; transition:all .15s; }
@@ -428,6 +605,12 @@
             .bo-stat-grid, .bo-mod-grid { grid-template-columns:1fr; }
             .bo-title { font-size:24px; }
             .time-card { display:none; }
+            .wm-md-layout { flex-direction:column; }
+            .wm-md-left { width:100%; height:260px; border-right:none; border-bottom:1.5px solid #F1F5F9; }
+            .wm-field-grid, .wm-insight-grid { grid-template-columns:1fr; }
+            .wm-stat-row, .wm-stat-row.four, .wm-stat-row.five { grid-template-columns:1fr; }
+            .wm-status-row { flex-direction:column; }
+            .report-hero, .report-layout, .report-stat-grid { grid-template-columns:1fr; }
         }
     </style>
 </head>
@@ -542,8 +725,8 @@
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/></svg>
                         </div>
                         <div>
-                            <div class="modal-title">Ward & Med Cart</div>
-                            <div class="modal-sub">จัดการข้อมูล Ward แผนก จำนวนเตียง และรถเข็นยาที่เชื่อมต่อ</div>
+                            <div class="modal-title">Ward & Med Cart Assignment</div>
+                            <div class="modal-sub">จัดการ Ward และ assign Med Cart เข้า Ward พร้อม Drawer / Cassette</div>
                             <div class="modal-chips" id="wmChips"></div>
                         </div>
                     </div>
@@ -567,6 +750,35 @@
         </div>
     </div>
 
+    <div class="modal-backdrop" id="reportModal" onclick="if(event.target===this) closeReportModal()">
+        <div class="modal-card" style="max-width:940px;" role="dialog" aria-modal="true" aria-labelledby="reportModalTitle">
+            <div class="modal-head" style="background:linear-gradient(135deg,#111827 0%,#1F2937 60%,#D97706 135%);">
+                <div class="modal-head-top">
+                    <div class="modal-head-left">
+                        <div class="modal-head-icon" style="background:rgba(217,119,6,.34);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                        </div>
+                        <div>
+                            <div id="reportModalTitle" class="modal-title">รายงานและ Audit Log</div>
+                            <div class="modal-sub">สรุป MAR, Cassette, Assignment และ activity ของ Ward ปัจจุบัน</div>
+                            <div class="modal-chips" id="reportChips"></div>
+                        </div>
+                    </div>
+                    <button class="modal-close" onclick="closeReportModal()" aria-label="ปิด">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body" id="reportModalBody"></div>
+            <div class="modal-foot">
+                <button class="btn" onclick="closeReportModal()">ปิด</button>
+                <button class="btn primary" style="border-color:#FDE68A;color:#92400E;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);" onclick="reportExportMock()">
+                    Export Report
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
@@ -575,6 +787,8 @@
         const STANDARD_CART_CASSETTES = 36;
         const CASSETTE_LOCK_STORE = 'mcCassetteModeLocks';
         const CASSETTE_COMPLETED_STORE = 'mcCassetteModeCompleted';
+        const CASSETTE_ASSIGNMENT_STORE = 'mcCassetteAssignments';
+        const CASSETTE_INVENTORY_STORE = 'mcCassetteInventory';
 
         const wardInfo = {
             'Ward 3A': { desc:'หอผู้ป่วยอายุรกรรม', floor:'ชั้น 3', beds:'24/30 เตียง', patients:'8 ผู้ป่วย', cart:'Med Cart A-1' },
@@ -622,47 +836,273 @@
 
         function getWardName() {
             const ward = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
-            return wardInfo[ward] ? ward : DEFAULT_DEMO_WARD;
+            return wardInfo[ward] ? ward : (Object.keys(wardInfo)[0] || DEFAULT_DEMO_WARD);
         }
 
         function getCurrentWardInfo() {
-            return wardInfo[getWardName()] || wardInfo[DEFAULT_DEMO_WARD];
+            return wardInfo[getWardName()] || wardInfo[DEFAULT_DEMO_WARD] || { desc:'ยังไม่ได้ตั้งค่า Ward', floor:'-', beds:'0/0 เตียง', patients:'0 ผู้ป่วย', cart:'ยังไม่ได้ assign Med Cart' };
         }
 
         function ptdCassetteKey(drawer, cassette) {
             return drawer + ':' + cassette;
         }
 
+        function wmStoreValues(key) {
+            const store = parseStore(key);
+            if (Array.isArray(store)) return store;
+            return Object.keys(store || {}).map(function(storeKey) {
+                const value = store[storeKey];
+                return (value && typeof value === 'object')
+                    ? Object.assign({ storeKey: storeKey }, value)
+                    : { storeKey: storeKey, value: value };
+            });
+        }
+
+        function wmCassetteModeLabel(mode) {
+            const labels = { patient:'ตามผู้ป่วย', medication:'ตามรายการยา', schedule:'ตามรอบเวลา' };
+            return labels[mode] || 'ทั่วไป';
+        }
+
+        function wmCassetteStatusLabel(status) {
+            const labels = {
+                assigned:'จองช่องแล้ว',
+                reserved:'จองช่องแล้ว',
+                in_progress:'กำลังจัดยา',
+                locked:'กำลังจัดยา',
+                filled:'มียาแล้ว',
+                inventory:'มียาแล้ว',
+                completed:'มียาแล้ว'
+            };
+            return labels[status] || 'ใช้งานอยู่';
+        }
+
+        function wmNormalizeCassetteStatus(status, fallback) {
+            const raw = String(status || fallback || 'assigned').toLowerCase();
+            if (['filled','completed','done','inventory','จัดแล้ว','เติมยาเรียบร้อยแล้ว'].indexOf(raw) >= 0) return 'filled';
+            if (['in_progress','progress','preparing','locked','รอจัด','กำลังจัด'].indexOf(raw) >= 0) return 'in_progress';
+            if (['reserved','assigned','lock','จอง'].indexOf(raw) >= 0) return raw === 'reserved' ? 'reserved' : 'assigned';
+            if (['empty','ready','available','dispensed','cancelled','void'].indexOf(raw) >= 0) return raw;
+            return fallback || 'assigned';
+        }
+
+        function wmNormalizeCassetteItems(record) {
+            let rawItems = [];
+            if (Array.isArray(record.cassetteItems)) rawItems = record.cassetteItems;
+            else if (Array.isArray(record.items)) rawItems = record.items;
+            else if (Array.isArray(record.drugs)) rawItems = record.drugs;
+
+            const seen = {};
+            const items = rawItems.map(function(item) {
+                if (!item) return null;
+                const drugName = item.drugName || item.name || item.drug || '';
+                if (!drugName) return null;
+                return {
+                    drugName: drugName,
+                    patientName: item.patientName || item.patient || '',
+                    patientBed: item.patientBed || item.bed || '',
+                    dose: item.dose || item.qtyText || item.quantityText || '',
+                    qty: item.qty || item.quantity || item.count || '',
+                    lot: item.lot || '',
+                    exp: item.exp || item.expiry || '',
+                    status: item.status || '',
+                    done: !!(item.done || item.prepared || item.filled)
+                };
+            }).filter(Boolean);
+
+            const names = [];
+            if (Array.isArray(record.drugNames)) names.push.apply(names, record.drugNames);
+            if (record.drugName) names.push(record.drugName);
+            names.forEach(function(name) {
+                const key = String(name || '').trim().toLowerCase();
+                if (!key || seen[key]) return;
+                seen[key] = true;
+                if (!items.some(function(item){ return String(item.drugName || '').trim().toLowerCase() === key; })) {
+                    items.push({ drugName: name, patientName:'', patientBed:'', dose:'', qty:'', lot:'', exp:'', status:'', done:false });
+                }
+            });
+            return items;
+        }
+
+        function wmCassetteCountForDrawer(drawerNo, drawerTotal, cassetteTotal) {
+            drawerTotal = Math.max(1, wmAsInt(drawerTotal, 1));
+            cassetteTotal = Math.max(0, wmAsInt(cassetteTotal, 0));
+            const base = Math.floor(cassetteTotal / drawerTotal);
+            const extra = cassetteTotal % drawerTotal;
+            return base + (drawerNo <= extra ? 1 : 0);
+        }
+
+        function wmCassetteGlobalIndex(drawerNo, cassetteNo, drawerTotal, cassetteTotal) {
+            let index = 0;
+            for (let d = 1; d < drawerNo; d++) index += wmCassetteCountForDrawer(d, drawerTotal, cassetteTotal);
+            return index + cassetteNo;
+        }
+
+        function wmCassetteWithinCart(drawerNo, cassetteNo, drawerTotal, cassetteTotal) {
+            if (drawerNo < 1 || drawerNo > drawerTotal || cassetteNo < 1) return false;
+            if (cassetteNo > wmCassetteCountForDrawer(drawerNo, drawerTotal, cassetteTotal)) return false;
+            return wmCassetteGlobalIndex(drawerNo, cassetteNo, drawerTotal, cassetteTotal) <= cassetteTotal;
+        }
+
+        function wmCassetteSlotEnabled(drawerNo, cassetteNo, drawerTotal, cassetteTotal, enabledDrawers, enabledCassettes) {
+            if (!wmCassetteWithinCart(drawerNo, cassetteNo, drawerTotal, cassetteTotal)) return false;
+            return drawerNo <= enabledDrawers
+                && wmCassetteGlobalIndex(drawerNo, cassetteNo, drawerTotal, cassetteTotal) <= enabledCassettes;
+        }
+
+        function wmRecordMatchesCassetteScope(record, wardName, cart) {
+            const recordWard = record.ward || record.wardName || record.scopeWard || '';
+            if (recordWard && wardName && recordWard !== wardName) return false;
+            const recordCart = record.cart || record.cartName || record.medCart || record.medCartName || record.cartId || '';
+            if (recordCart && cart) {
+                const cartKeys = [cart.id, cart.name, wmCartName(cart), wmGetField(cart.id, 'code', cart.code)].map(String);
+                if (cartKeys.indexOf(String(recordCart)) < 0) return false;
+            }
+            return true;
+        }
+
+        function wmNormalizeCassetteRecord(record, source, fallbackStatus) {
+            if (!record) return null;
+            let drawer = wmAsInt(record.drawer || record.drawerNo || record.drawerNumber || record.d, 0);
+            let cassette = wmAsInt(record.cassette || record.cassetteNo || record.cassetteNumber || record.c, 0);
+            if ((!drawer || !cassette) && record.storeKey) {
+                const parts = String(record.storeKey).split(':');
+                drawer = wmAsInt(parts[0], drawer);
+                cassette = wmAsInt(parts[1], cassette);
+            }
+            if (!drawer || !cassette) return null;
+
+            const status = wmNormalizeCassetteStatus(record.status, fallbackStatus);
+            const items = wmNormalizeCassetteItems(record);
+            const recordQty = parseFloat(record.qty || record.quantity || record.count || 0);
+            const itemDone = items.some(function(item){ return !!item.done; });
+            const hasMedication = source === 'inventory'
+                || fallbackStatus === 'filled'
+                || ['filled','inventory','completed'].indexOf(status) >= 0
+                || (Number.isFinite(recordQty) && recordQty > 0)
+                || itemDone
+                || (source === 'completed' && items.length > 0);
+            const inactive = ['empty','ready','available','dispensed','cancelled','void'].indexOf(status) >= 0;
+            return {
+                key: ptdCassetteKey(drawer, cassette),
+                drawer: drawer,
+                cassette: cassette,
+                ward: record.ward || record.wardName || '',
+                cart: record.cart || record.cartName || record.medCart || record.cartId || '',
+                mode: record.mode || record.type || '',
+                status: status,
+                source: source,
+                patientName: record.patientName || record.patient || '',
+                patientBed: record.patientBed || record.bed || '',
+                items: items,
+                drugNames: items.map(function(item){ return item.drugName; }).filter(Boolean),
+                hasMedication: hasMedication,
+                inUse: hasMedication || !inactive,
+                time: record.completedAt || record.filledAt || record.assignedAt || record.createdAt || ''
+            };
+        }
+
+        function wmCassetteRecordPriority(record) {
+            if (!record) return 0;
+            if (record.hasMedication) return 4;
+            if (record.status === 'in_progress' || record.status === 'locked') return 3;
+            if (record.status === 'assigned' || record.status === 'reserved') return 2;
+            return 1;
+        }
+
+        function wmMergeCassetteRecords(existing, incoming) {
+            if (!existing) return incoming;
+            const preferred = wmCassetteRecordPriority(incoming) >= wmCassetteRecordPriority(existing) ? incoming : existing;
+            const other = preferred === incoming ? existing : incoming;
+            const byDrug = {};
+            (other.items || []).concat(preferred.items || []).forEach(function(item) {
+                const key = [item.drugName || '', item.patientBed || '', item.dose || ''].join('|').toLowerCase();
+                if (!key.trim()) return;
+                byDrug[key] = Object.assign({}, byDrug[key] || {}, item);
+            });
+            return Object.assign({}, other, preferred, {
+                items: Object.values(byDrug),
+                drugNames: Object.values(byDrug).map(function(item){ return item.drugName; }).filter(Boolean),
+                hasMedication: existing.hasMedication || incoming.hasMedication,
+                inUse: existing.inUse || incoming.inUse
+            });
+        }
+
+        function wmScopedCassetteRecords(wardName, cart) {
+            const sources = [
+                { key: CASSETTE_LOCK_STORE, source: 'lock', status: 'in_progress' },
+                { key: CASSETTE_ASSIGNMENT_STORE, source: 'assignment', status: 'assigned' },
+                { key: CASSETTE_COMPLETED_STORE, source: 'completed', status: 'filled' },
+                { key: CASSETTE_INVENTORY_STORE, source: 'inventory', status: 'filled' }
+            ];
+            const records = [];
+            sources.forEach(function(src) {
+                wmStoreValues(src.key).forEach(function(record) {
+                    if (!wmRecordMatchesCassetteScope(record, wardName, cart)) return;
+                    const normalized = wmNormalizeCassetteRecord(record, src.source, src.status);
+                    if (normalized) records.push(normalized);
+                });
+            });
+            return records;
+        }
+
+        function wmBuildCassetteStateForCart(cart, wardName) {
+            const drawerTotal = cart ? wmCartTotalDrawers(cart) : STANDARD_CART_DRAWERS;
+            const cassetteTotal = cart ? wmCartTotalCassettes(cart) : STANDARD_CART_CASSETTES;
+            const drawerEnabled = cart ? wmCartEnabledDrawers(cart) : STANDARD_CART_DRAWERS;
+            const cassetteEnabled = cart ? wmCartEnabledCassettes(cart) : STANDARD_CART_CASSETTES;
+            const cassetteMap = {};
+            wmScopedCassetteRecords(wardName, cart).forEach(function(record) {
+                if (!wmCassetteWithinCart(record.drawer, record.cassette, drawerTotal, cassetteTotal)) return;
+                record.enabled = wmCassetteSlotEnabled(record.drawer, record.cassette, drawerTotal, cassetteTotal, drawerEnabled, cassetteEnabled);
+                cassetteMap[record.key] = wmMergeCassetteRecords(cassetteMap[record.key], record);
+            });
+            const cassetteRecords = Object.values(cassetteMap);
+            const usedDrawerMap = {};
+            const byMode = { patient:0, medication:0, schedule:0, other:0 };
+            let filledCassettes = 0;
+            let assignmentCassettes = 0;
+            let inProgressCassettes = 0;
+            let disabledWithMedication = 0;
+            cassetteRecords.forEach(function(record) {
+                if (record.inUse || record.hasMedication) usedDrawerMap[record.drawer] = true;
+                if (record.hasMedication) filledCassettes += 1;
+                else if (record.status === 'in_progress' || record.status === 'locked') inProgressCassettes += 1;
+                else if (record.inUse) assignmentCassettes += 1;
+                if ((record.inUse || record.hasMedication) && !record.enabled) disabledWithMedication += 1;
+                if (byMode[record.mode] !== undefined) byMode[record.mode] += 1;
+                else byMode.other += 1;
+            });
+            const usedEnabled = cassetteRecords.filter(function(record){ return record.enabled && (record.inUse || record.hasMedication); }).length;
+            return {
+                cart: cart || null,
+                drawers: drawerTotal,
+                total: cassetteTotal,
+                enabledDrawers: drawerEnabled,
+                enabledCassettes: cassetteEnabled,
+                perDrawer: drawerTotal ? Math.round((cassetteTotal / drawerTotal) * 10) / 10 : 0,
+                usedCassettes: cassetteRecords.filter(function(record){ return record.inUse || record.hasMedication; }).length,
+                usedDrawers: Object.keys(usedDrawerMap).length,
+                completed: filledCassettes,
+                filledCassettes: filledCassettes,
+                assignmentCassettes: assignmentCassettes,
+                inProgressCassettes: inProgressCassettes,
+                disabledWithMedication: disabledWithMedication,
+                available: Math.max(cassetteEnabled - usedEnabled, 0),
+                locks: cassetteRecords.filter(function(record){ return record.source === 'lock' || record.source === 'assignment'; }),
+                completedLocks: cassetteRecords.filter(function(record){ return record.hasMedication; }),
+                cassetteRecords: cassetteRecords,
+                cassetteMap: cassetteMap,
+                byMode: byMode
+            };
+        }
+
         function getCassetteState() {
             const wardName = getWardName();
-            const locks = Object.values(parseStore(CASSETTE_LOCK_STORE)).filter(function(lock) {
-                return !lock.ward || lock.ward === wardName;
-            });
-            const completed = Object.values(parseStore(CASSETTE_COMPLETED_STORE)).filter(function(lock) {
-                return !lock.ward || lock.ward === wardName;
-            });
-            const unique = {};
-            locks.concat(completed).forEach(function(lock) {
-                const drawer = parseInt(lock.drawer, 10) || 0;
-                const cassette = parseInt(lock.cassette, 10) || 0;
-                if (!drawer || !cassette) return;
-                unique[ptdCassetteKey(drawer, cassette)] = lock;
-            });
-            const usedLocks = Object.values(unique);
-            const usedDrawerMap = {};
-            usedLocks.forEach(function(lock) {
-                if (lock.drawer) usedDrawerMap[lock.drawer] = true;
-            });
-            return {
-                drawers: STANDARD_CART_DRAWERS,
-                total: STANDARD_CART_CASSETTES,
-                perDrawer: STANDARD_CART_CASSETTES / STANDARD_CART_DRAWERS,
-                usedCassettes: usedLocks.length,
-                usedDrawers: Object.keys(usedDrawerMap).length,
-                completed: completed.length,
-                locks: locks,
-                completedLocks: completed
-            };
+            const info = getCurrentWardInfo();
+            const cart = typeof WM_CARTS !== 'undefined'
+                ? WM_CARTS.find(function(c){ return c.name === info.cart || wmCartName(c) === info.cart; })
+                : null;
+            return wmBuildCassetteStateForCart(cart, wardName);
         }
 
         function getDashboardMetrics() {
@@ -706,10 +1146,10 @@
             document.getElementById('topRole').textContent = roleText;
             document.getElementById('topWard').textContent = wardName;
             document.getElementById('topCart').textContent = cartName;
-            document.getElementById('boHeroSub').textContent = 'จัดการข้อมูลตั้งต้นของ ' + wardName + ' · ' + info.desc + ' และรถเข็นยาที่กำลังใช้งาน';
+            document.getElementById('boHeroSub').textContent = 'จัดการข้อมูลตั้งต้นของ ' + wardName + ' · ' + info.desc + ' และ Med Cart ที่ assign เข้า Ward นี้';
             document.getElementById('boRoleBadge').textContent = roleText + (canEdit ? ' · แก้ไขได้' : ' · ดูอย่างเดียว');
             document.getElementById('boWardBadge').textContent = wardName;
-            document.getElementById('boCartScope').textContent = cartName + ' · ' + wardName;
+            document.getElementById('boCartScope').textContent = cartName + ' assigned to ' + wardName;
             document.getElementById('boAccessNote').textContent = canEdit
                 ? 'สิทธิ์หัวหน้าเวรสามารถเปิดตั้งค่าสิทธิ์และจำลองการจัดการข้อมูลหลังบ้านได้'
                 : 'Role นี้เข้าดูโครงสร้างระบบหลังบ้านเพื่อ Demo ได้ แต่เมนูตั้งค่าบางส่วนถูกล็อกไว้';
@@ -719,7 +1159,7 @@
                 { val: wardCount, label:'Ward', sub:'ตั้งค่าพื้นที่ใช้งาน', color:'#0D9488' },
                 { val: wardCount, label:'Med Cart', sub:'รถเข็นในระบบ', color:'#2563EB' },
                 { val: 3, label:'Roles', sub:'Nurse / Pharma / Supervisor', color:'#7C3AED' },
-                { val: state.total, label:'Cassette', sub: state.drawers + ' Drawer · ' + state.perDrawer + ' ช่อง/Drawer', color:'#E11D48' },
+                { val: state.enabledCassettes + '/' + state.total, label:'Cassette', sub: state.enabledDrawers + '/' + state.drawers + ' Drawer เปิดใช้ · เฉลี่ย ' + state.perDrawer + ' ช่อง/Drawer', color:'#E11D48' },
                 { val: metrics.drugMaster, label:'Drug Master', sub:'รายการยาที่พบใน Ward', color:'#D97706' },
                 { val: metrics.total, label:'MAR Items', sub: metrics.pending + ' รายการรอจ่าย', color:'#0F766E' }
             ];
@@ -733,9 +1173,9 @@
 
             const modules = [
                 { id:'users', type:'users', title:'ผู้ใช้งานและสิทธิ์', desc:'จัดการ role, permission และสิทธิ์การเข้าถึงเมนู Demo', color:'#7C3AED', color2:'#A78BFA', bg:'#F5F3FF', border:'#DDD6FE', locked:!canEdit },
-                { id:'wards', type:'wards', title:'Ward & Med Cart', desc:'กำหนด Ward, รถเข็น, Drawer และ Cassette ของพื้นที่ใช้งาน', color:'#0D9488', color2:'#14B8A6', bg:'#F0FDFA', border:'#99F6E4', locked:false },
+                { id:'wards', type:'wards', title:'Ward & Med Cart', desc:'กำหนด Ward และ assign Med Cart เข้า Ward พร้อม Drawer / Cassette', color:'#0D9488', color2:'#14B8A6', bg:'#F0FDFA', border:'#99F6E4', locked:false },
                 { id:'drug-master', type:'drug', title:'Medication Master', desc:'ตั้งค่ารายการยา High Alert และคู่ Drug Interaction', color:'#2563EB', color2:'#60A5FA', bg:'#EFF6FF', border:'#BFDBFE', locked:!canEdit },
-                { id:'cassette', type:'cassette', title:'Cassette Template', desc:'ดูโครงสร้างมาตรฐาน 6 Drawer / 36 Cassette และสถานะใช้งาน', color:'#E11D48', color2:'#FB7185', bg:'#FFF1F2', border:'#FECDD3', locked:false },
+                { id:'cassette', type:'cassette', title:'Cassette Template', desc:'ดูจำนวน Drawer / Cassette ทั้งหมด พร้อมจำนวนที่เปิดใช้และปิดใช้ของรถเข็น', color:'#E11D48', color2:'#FB7185', bg:'#FFF1F2', border:'#FECDD3', locked:false },
                 { id:'reports', type:'reports', title:'รายงานและ Audit Log', desc:'ดู activity, MAR summary และสถานะการจัด/จ่ายยา', color:'#D97706', color2:'#F59E0B', bg:'#FFFBEB', border:'#FDE68A', locked:false },
                 { id:'integration', type:'integration', title:'HIS / MAR Sync', desc:'จำลองการเชื่อมต่อคำสั่งยาและข้อมูลผู้ป่วยจากระบบโรงพยาบาล', color:'#475569', color2:'#94A3B8', bg:'#F8FAFC', border:'#CBD5E1', locked:!canEdit }
             ];
@@ -750,8 +1190,8 @@
 
             const logs = [
                 { title:'Ward scope', sub: wardName + ' · ' + info.desc, color:'#0D9488', bg:'#F0FDFA' },
-                { title:'Cart profile', sub: cartName + ' · ' + state.drawers + ' Drawer / ' + state.total + ' Cassette', color:'#2563EB', bg:'#EFF6FF' },
-                { title:'Cassette usage', sub: state.usedCassettes + '/' + state.total + ' ช่องใช้งานอยู่ · ' + state.completed + ' ช่องเติมยาเรียบร้อยแล้ว', color:'#E11D48', bg:'#FFF1F2' },
+                { title:'Cart profile', sub: cartName + ' · เปิดใช้ ' + state.enabledDrawers + '/' + state.drawers + ' Drawer · ' + state.enabledCassettes + '/' + state.total + ' Cassette', color:'#2563EB', bg:'#EFF6FF' },
+                { title:'Cassette usage', sub: state.usedCassettes + '/' + state.enabledCassettes + ' ช่องถูกใช้งาน · ปิดใช้ ' + Math.max(state.total - state.enabledCassettes, 0) + ' ช่อง · เติมแล้ว ' + state.completed, color:'#E11D48', bg:'#FFF1F2' },
                 { title:'MAR workload', sub: metrics.done + '/' + metrics.total + ' จ่ายแล้ว · ' + metrics.highAlert + ' High Alert · ' + metrics.prn + ' PRN', color:'#D97706', bg:'#FFFBEB' }
             ];
             document.getElementById('boTimeline').innerHTML = logs.map(function(log) {
@@ -790,7 +1230,225 @@
                 openWardModal();
                 return;
             }
+            if (moduleId === 'reports') {
+                openReportModal();
+                return;
+            }
             showToast('เปิดเมนูระบบหลังบ้าน: ' + (labels[moduleId] || 'Demo'));
+            setTimeout(function(){ showToast(''); }, 1800);
+        }
+
+        function reportPct(done, total) {
+            total = Math.max(parseInt(total, 10) || 0, 0);
+            done = Math.max(parseInt(done, 10) || 0, 0);
+            return total ? Math.min(100, Math.round(done / total * 100)) : 0;
+        }
+
+        function reportTime(offsetMinutes) {
+            const date = new Date(Date.now() - ((offsetMinutes || 0) * 60000));
+            return date.toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' });
+        }
+
+        function reportScope() {
+            const wardName = getWardName();
+            const info = getCurrentWardInfo();
+            const metrics = getDashboardMetrics();
+            const cassette = getCassetteState();
+            const cart = typeof WM_CARTS !== 'undefined'
+                ? WM_CARTS.find(function(c){ return info.cart && (c.name === info.cart || wmCartName(c) === info.cart); })
+                : null;
+            const cartName = cart ? wmCartName(cart) : (info.cart || 'ยังไม่ได้ assign Med Cart');
+            const summary = typeof wmSummary === 'function'
+                ? wmSummary()
+                : { activeWards:0, activeCarts:0, wardsWithoutCart:[], cartsWithoutWard:[], maintenanceCarts:[] };
+            return { wardName: wardName, info: info, metrics: metrics, cassette: cassette, cart: cart, cartName: cartName, summary: summary };
+        }
+
+        function reportStatCard(value, label, note, color) {
+            return '<div class="report-stat-card" style="--report-color:'+escHtml(color || '#D97706')+';">'
+                + '<div class="report-stat-val">'+escHtml(value)+'</div>'
+                + '<div class="report-stat-label">'+escHtml(label)+'</div>'
+                + '<div class="report-stat-note">'+escHtml(note)+'</div>'
+                + '</div>';
+        }
+
+        function reportDataRow(title, sub, value, color) {
+            return '<div class="report-row" style="--report-row-color:'+escHtml(color || '#D97706')+';">'
+                + '<div><div class="report-row-title">'+escHtml(title)+'</div><div class="report-row-sub">'+escHtml(sub)+'</div></div>'
+                + '<div class="report-row-val">'+escHtml(value)+'</div>'
+                + '</div>';
+        }
+
+        function reportSeverityTheme(type) {
+            const map = {
+                good:    { color:'#0D9488', bg:'#CCFBF1' },
+                info:    { color:'#2563EB', bg:'#DBEAFE' },
+                warn:    { color:'#D97706', bg:'#FEF3C7' },
+                danger:  { color:'#DC2626', bg:'#FEE2E2' },
+                neutral: { color:'#64748B', bg:'#F1F5F9' }
+            };
+            return map[type] || map.neutral;
+        }
+
+        function reportAuditLogRow(log) {
+            const theme = reportSeverityTheme(log.type);
+            return '<div class="report-log" style="--report-log-color:'+theme.color+';--report-log-bg:'+theme.bg+';">'
+                + '<div class="report-log-dot"></div>'
+                + '<div><div class="report-log-title">'+escHtml(log.title)+'</div><div class="report-log-sub">'+escHtml(log.sub)+'</div></div>'
+                + '<div class="report-log-time">'+escHtml(log.time)+'</div>'
+                + '</div>';
+        }
+
+        function reportAuditRows(scope) {
+            const rows = [
+                {
+                    title: 'Report generated',
+                    sub: scope.wardName + ' · ' + scope.cartName + ' · ' + getRoleText(),
+                    type: 'info',
+                    time: reportTime(0)
+                },
+                {
+                    title: 'Med Cart assignment checked',
+                    sub: scope.cart ? scope.cartName + ' assigned to ' + scope.wardName : 'ยังไม่มี Med Cart assigned เข้า ' + scope.wardName,
+                    type: scope.cart ? 'good' : 'danger',
+                    time: reportTime(4)
+                },
+                {
+                    title: 'Cassette template verified',
+                    sub: scope.cassette.enabledDrawers + '/' + scope.cassette.drawers + ' Drawer เปิดใช้ · ' + scope.cassette.enabledCassettes + '/' + scope.cassette.total + ' Cassette เปิดใช้',
+                    type: scope.cassette.disabledWithMedication ? 'danger' : 'good',
+                    time: reportTime(7)
+                },
+                {
+                    title: 'MAR workload recalculated',
+                    sub: scope.metrics.done + '/' + scope.metrics.total + ' จ่ายแล้ว · ' + scope.metrics.pending + ' รายการรอจ่าย',
+                    type: scope.metrics.pending ? 'warn' : 'good',
+                    time: reportTime(11)
+                },
+                {
+                    title: 'High Alert queue reviewed',
+                    sub: scope.metrics.highAlert + ' High Alert · ' + scope.metrics.prn + ' PRN ใน Ward scope',
+                    type: scope.metrics.highAlert ? 'warn' : 'good',
+                    time: reportTime(18)
+                },
+                {
+                    title: 'Access scope confirmed',
+                    sub: getRoleText() + ' · ' + (getRole() === 'super' ? 'แก้ไขรายงานได้' : 'ดูรายงานได้ตามสิทธิ์ Demo'),
+                    type: getRole() === 'super' ? 'good' : 'neutral',
+                    time: reportTime(26)
+                }
+            ];
+            if (scope.cassette.disabledWithMedication) {
+                rows.unshift({
+                    title: 'Cassette conflict detected',
+                    sub: scope.cassette.disabledWithMedication + ' ช่องปิดใช้แต่ยังมีงาน/ยา ต้องตรวจ template ก่อนเริ่มจัดยา',
+                    type: 'danger',
+                    time: reportTime(1)
+                });
+            }
+            if (scope.summary.cartsWithoutWard.length) {
+                rows.push({
+                    title: 'Unassigned Med Cart detected',
+                    sub: scope.summary.cartsWithoutWard.map(wmCartName).slice(0, 3).join(', '),
+                    type: 'warn',
+                    time: reportTime(33)
+                });
+            }
+            return rows;
+        }
+
+        function renderReportModal() {
+            const body = document.getElementById('reportModalBody');
+            if (!body) return;
+            const scope = reportScope();
+            const metrics = scope.metrics;
+            const cassette = scope.cassette;
+            const completion = reportPct(metrics.done, metrics.total);
+            const cassetteUsePct = reportPct(cassette.usedCassettes, cassette.enabledCassettes);
+            const readyLabel = cassette.disabledWithMedication ? 'ต้องตรวจสอบ' : 'พร้อมใช้งาน';
+            const readyTheme = cassette.disabledWithMedication
+                ? { bg:'#FEE2E2', border:'#FCA5A5', color:'#991B1B' }
+                : { bg:'#CCFBF1', border:'#5EEAD4', color:'#0F766E' };
+            const auditRows = reportAuditRows(scope);
+            const chips = document.getElementById('reportChips');
+            if (chips) {
+                chips.innerHTML = '<span class="modal-chip"><strong>'+escHtml(scope.wardName)+'</strong> Ward</span>'
+                    + '<span class="modal-chip"><strong>'+escHtml(scope.cartName)+'</strong></span>'
+                    + '<span class="modal-chip"><strong>'+auditRows.length+'</strong> Audit events</span>';
+            }
+
+            body.innerHTML = '<div class="report-wrap">'
+                + '<section class="report-hero">'
+                + '<div><div class="report-kicker">Medication Control Report</div>'
+                + '<div class="report-title">รายงานประจำ Ward และ Audit Log</div>'
+                + '<div class="report-sub">'+escHtml(scope.wardName + ' · ' + scope.info.desc + ' · ' + scope.cartName + ' · generated ' + reportTime(0))+'</div></div>'
+                + '<div class="report-hero-card"><div class="label">MAR Completion</div><div class="value">'+completion+'%</div><div class="note">'+escHtml(metrics.done + '/' + metrics.total + ' รายการจ่ายแล้ว · ' + metrics.pending + ' รายการรอจ่าย')+'</div></div>'
+                + '</section>'
+                + '<div class="report-toolbar">'
+                + '<div class="report-chip-row">'
+                + '<span class="report-chip hot">วันนี้</span>'
+                + '<span class="report-chip">'+escHtml(scope.wardName)+'</span>'
+                + '<span class="report-chip">'+escHtml(scope.cartName)+'</span>'
+                + '<span class="report-chip">'+escHtml(readyLabel)+'</span>'
+                + '</div>'
+                + '<div class="report-actions">'
+                + '<button class="report-action-btn" onclick="reportExportMock()">Export CSV</button>'
+                + '<button class="report-action-btn" onclick="reportPrintMock()">Print</button>'
+                + '</div>'
+                + '</div>'
+                + '<div class="report-stat-grid">'
+                + reportStatCard(metrics.total, 'MAR Items', metrics.pending + ' pending · ' + metrics.done + ' done', '#0F766E')
+                + reportStatCard(metrics.highAlert, 'High Alert', metrics.prn + ' PRN ในรอบนี้', '#D97706')
+                + reportStatCard(cassette.usedCassettes + '/' + cassette.enabledCassettes, 'Cassette Used', cassette.available + ' ช่องพร้อมใช้', '#2563EB')
+                + reportStatCard(cassette.disabledWithMedication, 'Template Conflict', 'ช่องปิดใช้แต่ยังมีงาน/ยา', cassette.disabledWithMedication ? '#DC2626' : '#0D9488')
+                + '</div>'
+                + '<div class="report-layout">'
+                + '<div>'
+                + '<section class="report-panel">'
+                + '<div class="report-panel-head"><div><div class="report-panel-title">MAR Summary</div><div class="report-panel-sub">ภาพรวมงานจ่ายยาและภาระงานของ Ward scope</div></div><span class="report-status-pill" style="--report-pill-bg:#CCFBF1;--report-pill-border:#5EEAD4;--report-pill-color:#0F766E;">'+completion+'%</span></div>'
+                + '<div class="report-progress"><span style="width:'+completion+'%;"></span></div>'
+                + '<div class="report-table">'
+                + reportDataRow('Routine MAR', 'รายการจ่ายยาตามรอบปกติ', metrics.done + '/' + metrics.total, '#0F766E')
+                + reportDataRow('Pending MAR', 'รายการที่ยังรอจ่ายใน Ward นี้', metrics.pending + ' รายการ', metrics.pending ? '#D97706' : '#0D9488')
+                + reportDataRow('High Alert / PRN', 'รายการที่ต้องตรวจซ้ำก่อนจ่าย', metrics.highAlert + ' / ' + metrics.prn, '#D97706')
+                + reportDataRow('Drug Master Coverage', 'รายการยาใน scope นี้ที่พบใน master', metrics.drugMaster + ' รายการ', '#2563EB')
+                + '</div></section>'
+                + '<section class="report-panel">'
+                + '<div class="report-panel-head"><div><div class="report-panel-title">Cassette & Template Audit</div><div class="report-panel-sub">ตรวจว่า template ที่เปิดใช้ตรงกับช่องที่มีงาน/ยาอยู่จริง</div></div><span class="report-status-pill" style="--report-pill-bg:'+readyTheme.bg+';--report-pill-border:'+readyTheme.border+';--report-pill-color:'+readyTheme.color+';">'+escHtml(readyLabel)+'</span></div>'
+                + '<div class="report-progress"><span style="width:'+cassetteUsePct+'%;background:linear-gradient(90deg,#2563EB,#60A5FA);"></span></div>'
+                + '<div class="report-table">'
+                + reportDataRow('Drawer เปิดใช้', cassette.enabledDrawers + '/' + cassette.drawers + ' Drawer', Math.max(cassette.drawers - cassette.enabledDrawers, 0) + ' ปิดใช้', '#2563EB')
+                + reportDataRow('Cassette เปิดใช้', cassette.enabledCassettes + '/' + cassette.total + ' Cassette', Math.max(cassette.total - cassette.enabledCassettes, 0) + ' ปิดใช้', '#2563EB')
+                + reportDataRow('Cassette ที่มียา', 'inventory / completed จากการยืนยันเติมยา', cassette.filledCassettes + ' ช่อง', '#0D9488')
+                + reportDataRow('Conflict', 'ช่องปิดใช้แต่ยังมี assignment หรือยา', cassette.disabledWithMedication + ' ช่อง', cassette.disabledWithMedication ? '#DC2626' : '#0D9488')
+                + '</div></section>'
+                + '</div>'
+                + '<section class="report-panel">'
+                + '<div class="report-panel-head"><div><div class="report-panel-title">Audit Log</div><div class="report-panel-sub">activity ล่าสุดจาก Ward, Med Cart, MAR และ Cassette</div></div><span class="report-status-pill">'+auditRows.length+' events</span></div>'
+                + '<div class="report-log-list">'+auditRows.map(reportAuditLogRow).join('')+'</div>'
+                + '</section>'
+                + '</div>'
+                + '</div>';
+        }
+
+        function openReportModal() {
+            renderReportModal();
+            const modal = document.getElementById('reportModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeReportModal() {
+            const modal = document.getElementById('reportModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function reportExportMock() {
+            showToast('Export รายงานและ Audit Log สำหรับ Ward scope ปัจจุบันแล้ว');
+            setTimeout(function(){ showToast(''); }, 1800);
+        }
+
+        function reportPrintMock() {
+            showToast('เตรียมหน้า Print preview สำหรับรายงานนี้แล้ว');
             setTimeout(function(){ showToast(''); }, 1800);
         }
 
@@ -1084,24 +1742,123 @@
         var wmSelectedWard = WM_WARDS[0].id;
         var wmSelectedCart = WM_CARTS[0].id;
         var wmDirty = {};  /* track edited field values { wardId: {field:val} } */
+        var wmSearch = '';
+        var wmStatusFilter = 'all';
 
+        function wmHasDirty(itemId, field) {
+            return !!(wmDirty[itemId] && Object.prototype.hasOwnProperty.call(wmDirty[itemId], field));
+        }
         function wmGetField(itemId, field, defaultVal) {
             return wmDirty[itemId] && wmDirty[itemId][field] !== undefined
                 ? wmDirty[itemId][field]
                 : defaultVal;
         }
-        function wmSetField(itemId, field, val) {
+        function wmRemember(itemId, field, val) {
             if (!wmDirty[itemId]) wmDirty[itemId] = {};
             wmDirty[itemId][field] = val;
+        }
+        function wmAsInt(value, fallback) {
+            var parsed = parseInt(value, 10);
+            return Number.isFinite(parsed) ? parsed : fallback;
+        }
+        function wmGetNumber(itemId, field, defaultVal) {
+            return wmAsInt(wmGetField(itemId, field, defaultVal), defaultVal);
+        }
+        function wmClampNumber(value, min, max) {
+            var parsed = Math.max(min, wmAsInt(value, min));
+            return max === undefined ? parsed : Math.min(parsed, max);
+        }
+        function wmSetNumber(itemId, field, val) {
+            wmRemember(itemId, field, Math.max(0, wmAsInt(val, 0)));
             wmRender();
-            /* re-focus the changed input */
-            var el = document.querySelector('[data-wm-field="'+field+'"]');
-            if (el && el !== document.activeElement) { /* keep focus */ }
+        }
+        function wmFindWard(id) {
+            return WM_WARDS.find(function(w){ return w.id === id; }) || null;
+        }
+        function wmFindCart(id) {
+            return WM_CARTS.find(function(c){ return c.id === id; }) || null;
+        }
+        function wmWardName(ward) {
+            return wmGetField(ward.id, 'name', ward.name) || '—';
+        }
+        function wmCartName(cart) {
+            return wmGetField(cart.id, 'name', cart.name) || '—';
+        }
+        function wmWardStatus(ward) {
+            return wmGetField(ward.id, 'status', ward.status) || 'inactive';
+        }
+        function wmCartStatus(cart) {
+            return wmGetField(cart.id, 'status', cart.status) || 'inactive';
+        }
+        function wmCartTotalDrawers(cart) {
+            return wmClampNumber(wmGetField(cart.id, 'drawers', cart.drawers), 1, 24);
+        }
+        function wmCartTotalCassettes(cart) {
+            return wmClampNumber(wmGetField(cart.id, 'cassettes', cart.cassettes || wmCartTotalDrawers(cart) * 6), 0, 240);
+        }
+        function wmCartEnabledDrawers(cart) {
+            var fallback = cart.drawersEnabled !== undefined ? cart.drawersEnabled : (wmCartStatus(cart) === 'active' ? wmCartTotalDrawers(cart) : 0);
+            return wmClampNumber(wmGetField(cart.id, 'drawersEnabled', fallback), 0, wmCartTotalDrawers(cart));
+        }
+        function wmCassetteCapacityForEnabledDrawers(drawerTotal, cassetteTotal, drawerEnabled) {
+            drawerTotal = wmClampNumber(drawerTotal, 1, 24);
+            cassetteTotal = wmClampNumber(cassetteTotal, 0, 240);
+            drawerEnabled = wmClampNumber(drawerEnabled, 0, drawerTotal);
+            var baseCassetteCount = Math.floor(cassetteTotal / drawerTotal);
+            var extraCassettes = cassetteTotal % drawerTotal;
+            var capacity = 0;
+            for (var d = 1; d <= drawerEnabled; d++) {
+                capacity += baseCassetteCount + (d <= extraCassettes ? 1 : 0);
+            }
+            return capacity;
+        }
+        function wmCartEnabledCassettes(cart) {
+            var fallback = cart.cassettesEnabled !== undefined ? cart.cassettesEnabled : (wmCartStatus(cart) === 'active' ? wmCartTotalCassettes(cart) : 0);
+            var maxEnabled = wmCassetteCapacityForEnabledDrawers(wmCartTotalDrawers(cart), wmCartTotalCassettes(cart), wmCartEnabledDrawers(cart));
+            return wmClampNumber(wmGetField(cart.id, 'cassettesEnabled', fallback), 0, maxEnabled);
+        }
+        function wmSetCartCapacity(cartId, field, value) {
+            var cart = wmFindCart(cartId);
+            if (!cart) return;
+            if (field === 'drawers') {
+                var drawerTotal = wmClampNumber(value, 1, 24);
+                wmRemember(cartId, 'drawers', drawerTotal);
+                wmRemember(cartId, 'drawersEnabled', Math.min(wmCartEnabledDrawers(cart), drawerTotal));
+                wmRemember(cartId, 'cassettesEnabled', wmCartEnabledCassettes(cart));
+            } else if (field === 'cassettes') {
+                var cassetteTotal = wmClampNumber(value, 0, 240);
+                wmRemember(cartId, 'cassettes', cassetteTotal);
+                wmRemember(cartId, 'cassettesEnabled', wmCartEnabledCassettes(cart));
+            } else if (field === 'drawersEnabled') {
+                wmRemember(cartId, 'drawersEnabled', wmClampNumber(value, 0, wmCartTotalDrawers(cart)));
+                wmRemember(cartId, 'cassettesEnabled', wmCartEnabledCassettes(cart));
+            } else if (field === 'cassettesEnabled') {
+                var maxEnabled = wmCassetteCapacityForEnabledDrawers(wmCartTotalDrawers(cart), wmCartTotalCassettes(cart), wmCartEnabledDrawers(cart));
+                wmRemember(cartId, 'cassettesEnabled', wmClampNumber(value, 0, maxEnabled));
+            }
+            wmRender();
+        }
+        function wmCartWardId(cart) {
+            return wmHasDirty(cart.id, 'wardId') ? (wmDirty[cart.id].wardId || '') : (cart.wardId || '');
+        }
+        function wmWardCartId(ward) {
+            if (wmHasDirty(ward.id, 'cartId')) return wmDirty[ward.id].cartId || '';
+            if (ward.cartId) return ward.cartId;
+            var derived = WM_CARTS.find(function(c){ return wmCartWardId(c) === ward.id; });
+            return derived ? derived.id : '';
+        }
+        function wmGetCartForWard(ward) {
+            return wmFindCart(wmWardCartId(ward));
+        }
+        function wmGetWardForCart(cart) {
+            return wmFindWard(wmCartWardId(cart));
         }
         function wmSelectWard(id) { wmSelectedWard = id; wmRender(); }
         function wmSelectCart(id) { wmSelectedCart = id; wmRender(); }
         function wmSetTab(tab) {
             wmTab = tab;
+            wmSearch = '';
+            wmStatusFilter = 'all';
             document.querySelectorAll('[data-wm-tab]').forEach(function(el){
                 el.classList.toggle('active', el.dataset.wmTab === tab);
             });
@@ -1113,8 +1870,55 @@
             wmRender();
         }
         function wmSetColor(wardId, color) {
-            if (!wmDirty[wardId]) wmDirty[wardId] = {};
-            wmDirty[wardId].color = color;
+            wmRemember(wardId, 'color', color);
+            wmRender();
+        }
+        function wmSetListSearch(value) {
+            wmSearch = value;
+            wmRender();
+            var input = document.getElementById('wmSearchInput');
+            if (input) {
+                input.focus();
+                input.setSelectionRange(value.length, value.length);
+            }
+        }
+        function wmSetStatusFilter(status) {
+            wmStatusFilter = status || 'all';
+            wmRender();
+        }
+        function wmSetWardCart(wardId, cartId) {
+            WM_CARTS.forEach(function(c) {
+                if (wmCartWardId(c) === wardId || (cartId && c.id === cartId)) {
+                    wmRemember(c.id, 'wardId', c.id === cartId && cartId ? wardId : null);
+                }
+            });
+            WM_WARDS.forEach(function(w) {
+                if (w.id !== wardId && cartId && wmWardCartId(w) === cartId) wmRemember(w.id, 'cartId', null);
+            });
+            wmRemember(wardId, 'cartId', cartId || null);
+            if (cartId) {
+                wmRemember(cartId, 'wardId', wardId);
+                wmSelectedCart = cartId;
+            }
+            wmRender();
+        }
+        function wmSetCartWard(cartId, wardId) {
+            var cart = wmFindCart(cartId);
+            var oldWardId = cart ? wmCartWardId(cart) : '';
+            if (oldWardId && oldWardId !== wardId) wmRemember(oldWardId, 'cartId', null);
+            WM_CARTS.forEach(function(c) {
+                if (c.id !== cartId && wardId && wmCartWardId(c) === wardId) wmRemember(c.id, 'wardId', null);
+            });
+            WM_WARDS.forEach(function(w) {
+                if (wmWardCartId(w) === cartId || (wardId && w.id === wardId)) {
+                    wmRemember(w.id, 'cartId', wardId && w.id === wardId ? cartId : null);
+                }
+            });
+            wmRemember(cartId, 'wardId', wardId || null);
+            if (wardId) {
+                wmRemember(wardId, 'cartId', cartId);
+                wmSelectedWard = wardId;
+            }
             wmRender();
         }
         function wmAddWard() {
@@ -1145,13 +1949,50 @@
                 wardId: wmSelectedWard,
                 drawers: 6,
                 cassettes: 36,
+                drawersEnabled: 6,
+                cassettesEnabled: 36,
                 status: 'active',
                 lastSync: 'เดี๋ยวนี้'
             };
             WM_CARTS.push(newCart);
             wmSelectedCart = nextId;
             wmDirty[nextId] = {};
+            if (wmSelectedWard) wmSetCartWard(nextId, wmSelectedWard);
+            else wmRender();
+        }
+        function wmDeleteWard(wardId) {
+            var ward = wmFindWard(wardId);
+            if (!ward) return;
+            if (!confirm('ลบ ' + wmWardName(ward) + ' ออกจากระบบหลังบ้าน?')) return;
+            WM_CARTS.forEach(function(c) {
+                if (wmCartWardId(c) === wardId) {
+                    c.wardId = null;
+                    if (wmDirty[c.id]) wmDirty[c.id].wardId = null;
+                }
+            });
+            WM_WARDS = WM_WARDS.filter(function(w){ return w.id !== wardId; });
+            delete wmDirty[wardId];
+            wmSelectedWard = WM_WARDS[0] ? WM_WARDS[0].id : null;
             wmRender();
+            showToast('ลบ Ward แล้ว อย่าลืมกดบันทึกเพื่อยืนยันข้อมูลจำลอง');
+            setTimeout(function(){ showToast(''); }, 2200);
+        }
+        function wmDeleteCart(cartId) {
+            var cart = wmFindCart(cartId);
+            if (!cart) return;
+            if (!confirm('ลบ ' + wmCartName(cart) + ' ออกจากระบบหลังบ้าน?')) return;
+            WM_WARDS.forEach(function(w) {
+                if (wmWardCartId(w) === cartId) {
+                    w.cartId = null;
+                    if (wmDirty[w.id]) wmDirty[w.id].cartId = null;
+                }
+            });
+            WM_CARTS = WM_CARTS.filter(function(c){ return c.id !== cartId; });
+            delete wmDirty[cartId];
+            wmSelectedCart = WM_CARTS[0] ? WM_CARTS[0].id : null;
+            wmRender();
+            showToast('ลบ Med Cart แล้ว อย่าลืมกดบันทึกเพื่อยืนยันข้อมูลจำลอง');
+            setTimeout(function(){ showToast(''); }, 2200);
         }
 
         function wmStatusLabel(s) {
@@ -1160,18 +2001,198 @@
         function wmStatusDot(s) {
             return '<span class="wm-status-dot '+(s||'inactive')+'"></span>';
         }
+        function wmSearchMatches(values) {
+            var q = wmSearch.trim().toLowerCase();
+            if (!q) return true;
+            return values.join(' ').toLowerCase().indexOf(q) >= 0;
+        }
+        function wmStatusMatches(status) {
+            return wmStatusFilter === 'all' || status === wmStatusFilter;
+        }
+        function wmRenderListTools(kind, total, visible) {
+            var placeholder = kind === 'ward' ? 'ค้นหา Ward / แผนก / ชั้น' : 'ค้นหา Med Cart / รหัส / Ward';
+            var chips = [
+                ['all','ทั้งหมด'],
+                ['active','ใช้งาน'],
+                ['maintenance','ซ่อมบำรุง'],
+                ['inactive','ปิดใช้งาน']
+            ].map(function(pair) {
+                return '<button class="wm-filter-chip'+(wmStatusFilter===pair[0]?' active':'')+'" onclick="wmSetStatusFilter(\''+pair[0]+'\')">'+escHtml(pair[1])+'</button>';
+            }).join('');
+            return '<div class="wm-left-tools">'
+                + '<div class="wm-search">'
+                + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>'
+                + '<input id="wmSearchInput" type="text" value="'+escHtml(wmSearch)+'" placeholder="'+placeholder+'" oninput="wmSetListSearch(this.value)">'
+                + (wmSearch ? '<button onclick="wmSetListSearch(\'\')" aria-label="ล้างการค้นหา">×</button>' : '')
+                + '</div>'
+                + '<div class="wm-filter-row">'+chips+'</div>'
+                + '<div style="font-size:10px;color:#94A3B8;font-weight:750;">แสดง '+visible+'/'+total+' รายการ</div>'
+                + '</div>';
+        }
+        function wmSummary() {
+            var activeWards = WM_WARDS.filter(function(w){ return wmWardStatus(w)==='active'; });
+            var activeCarts = WM_CARTS.filter(function(c){ return wmCartStatus(c)==='active'; });
+            var wardsWithoutCart = activeWards.filter(function(w){ return !wmGetCartForWard(w); });
+            var cartsWithoutWard = activeCarts.filter(function(c){ return !wmGetWardForCart(c); });
+            var maintenanceCarts = WM_CARTS.filter(function(c){ return wmCartStatus(c)==='maintenance'; });
+            return {
+                activeWards: activeWards.length,
+                activeCarts: activeCarts.length,
+                wardsWithoutCart: wardsWithoutCart,
+                cartsWithoutWard: cartsWithoutWard,
+                maintenanceCarts: maintenanceCarts
+            };
+        }
+        function wmIcon(name) {
+            var icons = {
+                ward:'<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/>',
+                cart:'<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/>',
+                alert:'<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+                sync:'<path d="M21 12a9 9 0 11-2.64-6.36"/><path d="M21 3v6h-6"/>',
+                bed:'<path d="M3 7v11"/><path d="M21 10v8"/><path d="M3 14h18"/><path d="M7 14V9h7a4 4 0 014 4v1"/>'
+            };
+            return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+(icons[name]||icons.ward)+'</svg>';
+        }
+        function wmRenderAlert(title, text, type) {
+            var palette = type === 'danger'
+                ? ['#FEE2E2','#FCA5A5','#991B1B','#DC2626']
+                : ['#FFFBEB','#FDE68A','#92400E','#F59E0B'];
+            return '<div class="wm-alert" style="--wm-alert-bg:'+palette[0]+';--wm-alert-border:'+palette[1]+';--wm-alert-text:'+palette[2]+';">'
+                + '<div style="width:28px;height:28px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:'+palette[3]+';color:white;flex-shrink:0;">'+wmIcon('alert')+'</div>'
+                + '<div><strong>'+escHtml(title)+'</strong><div>'+escHtml(text)+'</div></div>'
+                + '</div>';
+        }
+        function wmRenderInsight(icon, color, title, sub) {
+            return '<div class="wm-insight" style="--wm-insight-color:'+color+';">'
+                + '<div class="wm-insight-icon">'+wmIcon(icon)+'</div>'
+                + '<div><div class="wm-insight-title">'+escHtml(title)+'</div><div class="wm-insight-sub">'+escHtml(sub)+'</div></div>'
+                + '</div>';
+        }
+        function wmRenderAssignmentOverview() {
+            var summary = wmSummary();
+            var rows = [];
+            if (summary.wardsWithoutCart.length) {
+                rows.push({
+                    title: 'Ward ที่ยังไม่มี Med Cart assigned',
+                    sub: summary.wardsWithoutCart.map(wmWardName).slice(0, 4).join(', '),
+                    pill: summary.wardsWithoutCart.length + ' Ward'
+                });
+            }
+            if (summary.cartsWithoutWard.length) {
+                rows.push({
+                    title: 'Med Cart ที่ยังไม่ได้ assign เข้า Ward',
+                    sub: summary.cartsWithoutWard.map(wmCartName).slice(0, 4).join(', '),
+                    pill: summary.cartsWithoutWard.length + ' คัน'
+                });
+            }
+            if (summary.maintenanceCarts.length) {
+                rows.push({
+                    title: 'รถเข็นที่อยู่ระหว่างซ่อมบำรุง',
+                    sub: summary.maintenanceCarts.map(wmCartName).slice(0, 4).join(', '),
+                    pill: summary.maintenanceCarts.length + ' คัน'
+                });
+            }
+            if (!rows.length) {
+                rows.push({
+                    title: 'Assignment พร้อมใช้งาน',
+                    sub: 'Med Cart ที่ active ถูก assign เข้า Ward ครบ และไม่มีรถเข็นซ่อมบำรุงใน scope นี้',
+                    pill: 'OK'
+                });
+            }
+            return '<div class="wm-section-head" style="margin-top:16px;">Med Cart Assignment Check</div>'
+                + '<div class="wm-cassette-note" style="margin-top:8px;"><div class="wm-cassette-note-main">Source of truth: Med Cart ถูก assign เข้า Ward หนึ่งแห่งในเวลาปัจจุบัน และระบบจะ normalize ไม่ให้รถเข็นคันเดียวถูกใช้ซ้ำหลาย Ward</div></div>'
+                + '<div class="wm-assignment-list">'
+                + rows.map(function(row) {
+                    return '<div class="wm-assignment">'
+                        + '<div class="wm-assignment-main"><div class="wm-assignment-title">'+escHtml(row.title)+'</div>'
+                        + '<div class="wm-assignment-sub">'+escHtml(row.sub)+'</div></div>'
+                        + '<span class="wm-assignment-pill">'+escHtml(row.pill)+'</span>'
+                        + '</div>';
+                }).join('')
+                + '</div>';
+        }
+        function wmRenderCassetteStateOverview(state) {
+            state = state || { assignmentCassettes:0, inProgressCassettes:0, filledCassettes:0, disabledWithMedication:0, available:0 };
+            var rows = [
+                {
+                    title: 'ช่องที่จองไว้',
+                    sub: 'assignment จากรอบจัดยา/ผู้ป่วย/รายการยา ก่อนเริ่มเติมยา',
+                    pill: state.assignmentCassettes + ' ช่อง'
+                },
+                {
+                    title: 'ช่องที่กำลังจัดยา',
+                    sub: 'lock จาก flow จัดยา กำลังมีรายการยาเข้าคิวในช่องนี้',
+                    pill: state.inProgressCassettes + ' ช่อง'
+                },
+                {
+                    title: 'ช่องที่มียาแล้ว',
+                    sub: 'inventory / completed จากการยืนยันเติมยาแล้ว',
+                    pill: state.filledCassettes + ' ช่อง'
+                }
+            ];
+            if (state.disabledWithMedication) {
+                rows.push({
+                    title: 'พบช่องปิดใช้แต่ยังมีงาน/ยา',
+                    sub: 'ควรย้าย assignment หรือเปิดใช้ช่องนั้นก่อนเริ่มจัดยา',
+                    pill: state.disabledWithMedication + ' ช่อง'
+                });
+            }
+            return '<div class="wm-cassette-note">'
+                + '<div class="wm-cassette-note-main">ระบบรู้สถานะจาก transaction: จองช่องตอนเริ่มจัดยา และยืนยันเป็นมียาเมื่อเติมยาเสร็จ ไม่ได้เดาจากจำนวน Cassette</div>'
+                + '<div class="wm-cassette-legend">'
+                + '<span><i style="background:#EFF6FF;border:1px solid #93C5FD;"></i>จองช่อง</span>'
+                + '<span><i style="background:#FFFBEB;border:1px solid #FDE68A;"></i>กำลังจัด</span>'
+                + '<span><i style="background:#F0FDF4;border:1px solid #86EFAC;"></i>มียาแล้ว</span>'
+                + '<span><i style="background:#F1F5F9;border:1px solid #CBD5E1;"></i>ปิดใช้</span>'
+                + '</div>'
+                + '</div>'
+                + '<div class="wm-assignment-list">'
+                + rows.map(function(row) {
+                    return '<div class="wm-assignment">'
+                        + '<div class="wm-assignment-main"><div class="wm-assignment-title">'+escHtml(row.title)+'</div>'
+                        + '<div class="wm-assignment-sub">'+escHtml(row.sub)+'</div></div>'
+                        + '<span class="wm-assignment-pill">'+escHtml(row.pill)+'</span>'
+                        + '</div>';
+                }).join('')
+                + '</div>';
+        }
+        function wmCartOptions(selectedCartId) {
+            return '<option value="">— ยังไม่ assign Med Cart —</option>'
+                + WM_CARTS.map(function(c){
+                    var ward = wmGetWardForCart(c);
+                    var label = wmCartName(c) + ' · ' + wmStatusLabel(wmCartStatus(c)) + (ward ? ' · assigned to ' + wmWardName(ward) : ' · available');
+                    return '<option value="'+c.id+'"'+(selectedCartId===c.id?' selected':'')+'>'+escHtml(label)+'</option>';
+                }).join('');
+        }
+        function wmWardOptions(selectedWardId) {
+            return '<option value="">— ยังไม่ assign เข้า Ward —</option>'
+                + WM_WARDS.map(function(w){
+                    var cart = wmGetCartForWard(w);
+                    var label = wmWardName(w) + ' · ' + wmGetField(w.id,'dept',w.dept) + (cart ? ' · assigned cart: ' + wmCartName(cart) : ' · no cart assigned');
+                    return '<option value="'+w.id+'"'+(selectedWardId===w.id?' selected':'')+'>'+escHtml(label)+'</option>';
+                }).join('');
+        }
 
         /* ── Ward Tab ── */
         function wmRenderWardTab() {
             /* Left list */
-            var items = WM_WARDS.map(function(w) {
+            var filtered = WM_WARDS.filter(function(w) {
+                var cart = wmGetCartForWard(w);
+                return wmStatusMatches(wmWardStatus(w)) && wmSearchMatches([
+                    wmWardName(w),
+                    wmGetField(w.id, 'dept', w.dept),
+                    wmGetField(w.id, 'floor', w.floor),
+                    cart ? wmCartName(cart) : ''
+                ]);
+            });
+            var items = filtered.length ? filtered.map(function(w) {
                 var name  = wmGetField(w.id, 'name',  w.name);
                 var dept  = wmGetField(w.id, 'dept',  w.dept);
                 var floor = wmGetField(w.id, 'floor', w.floor);
                 var color = wmGetField(w.id, 'color', w.color);
-                var status= wmGetField(w.id, 'status',w.status);
+                var status= wmWardStatus(w);
                 var sel = wmSelectedWard === w.id;
-                var cart = WM_CARTS.find(function(c){ return c.id === w.cartId; });
+                var cart = wmGetCartForWard(w);
                 return '<div class="wm-item'+(sel?' selected':'')+'" onclick="wmSelectWard(\''+w.id+'\')">'
                     + '<div class="wm-item-dot" style="background:'+escHtml(color)+';"></div>'
                     + '<div class="wm-item-info">'
@@ -1180,11 +2201,12 @@
                     + '</div>'
                     + wmStatusDot(status)
                     + '</div>';
-            }).join('');
+            }).join('') : '<div class="wm-empty-inline">ไม่พบ Ward ตามเงื่อนไขนี้</div>';
 
             var left = '<div class="wm-md-left">'
                 + '<div class="wm-left-head"><span class="wm-left-title">'+WM_WARDS.length+' Ward</span>'
                 + '<button class="wm-add-btn" title="เพิ่ม Ward" onclick="wmAddWard()">+</button></div>'
+                + wmRenderListTools('ward', WM_WARDS.length, filtered.length)
                 + '<div class="wm-item-list">'+items+'</div>'
                 + '</div>';
 
@@ -1199,12 +2221,23 @@
                 var name   = wmGetField(ward.id,'name',   ward.name);
                 var dept   = wmGetField(ward.id,'dept',   ward.dept);
                 var floor  = wmGetField(ward.id,'floor',  ward.floor);
-                var total  = wmGetField(ward.id,'bedsTotal',ward.bedsTotal);
+                var total  = wmGetNumber(ward.id,'bedsTotal',ward.bedsTotal);
+                var occ    = Math.min(wmGetNumber(ward.id,'bedsOcc',ward.bedsOcc), total);
+                var patients = wmGetNumber(ward.id,'patients',ward.patients);
                 var color  = wmGetField(ward.id,'color',  ward.color);
-                var status = wmGetField(ward.id,'status', ward.status);
-                var cart   = WM_CARTS.find(function(c){ return c.id === ward.cartId; });
-                var occPct = ward.bedsTotal > 0 ? Math.round(ward.bedsOcc/ward.bedsTotal*100) : 0;
+                var status = wmWardStatus(ward);
+                var cart   = wmGetCartForWard(ward);
+                var occPct = total > 0 ? Math.round(occ/total*100) : 0;
                 var occColor = occPct >= 95 ? '#EF4444' : occPct >= 80 ? '#F59E0B' : '#10B981';
+                var summary = wmSummary();
+                var alert = '';
+                if (!cart && status === 'active') {
+                    alert = wmRenderAlert('ยังไม่มี Med Cart assigned', 'Ward ที่เปิดใช้งานควรมี Med Cart อย่างน้อย 1 คันถูก assign เข้ามาก่อนนำไปใช้จริง', 'danger');
+                } else if (cart && wmCartStatus(cart) === 'maintenance') {
+                    alert = wmRenderAlert('รถเข็นอยู่ระหว่างซ่อมบำรุง', wmCartName(cart) + ' ยังไม่ควรถูก assign เป็นรถเข็นหลักของ Ward นี้', 'warning');
+                } else if (occPct >= 95) {
+                    alert = wmRenderAlert('Occupancy สูงมาก', 'ควรตรวจว่าจำนวนเตียงและผู้ป่วยตรงกับระบบ HIS ก่อนสรุป workload', 'warning');
+                }
 
                 /* Color picker */
                 var colorPicker = WM_COLORS.map(function(c) {
@@ -1219,12 +2252,16 @@
                 }).join('');
 
                 /* Cart select */
-                var cartOptions = '<option value="">— ไม่มีรถเข็น —</option>'
-                    + WM_CARTS.map(function(c){
-                        return '<option value="'+c.id+'"'+(ward.cartId===c.id?' selected':'')+'>'+escHtml(c.name)+'</option>';
-                    }).join('');
+                var cartOptions = wmCartOptions(cart ? cart.id : '');
 
                 right = '<div class="wm-md-right"><div class="wm-form-wrap">'
+                    + '<div class="wm-insight-grid">'
+                    + wmRenderInsight('bed', occColor, 'Occupancy ' + occPct + '%', occ + '/' + total + ' เตียง · ' + patients + ' ผู้ป่วย')
+                    + wmRenderInsight('cart', cart ? '#0D9488' : '#EF4444', cart ? wmCartName(cart) : 'ยังไม่มี Med Cart assigned', cart ? 'Assigned to ' + name + ' · ' + wmStatusLabel(wmCartStatus(cart)) + ' · เปิดใช้ ' + wmCartEnabledDrawers(cart) + '/' + wmCartTotalDrawers(cart) + ' Drawer · ' + wmCartEnabledCassettes(cart) + '/' + wmCartTotalCassettes(cart) + ' Cassette' : 'ควร assign รถเข็นก่อนเริ่มใช้งาน')
+                    + wmRenderInsight('ward', '#2563EB', summary.activeWards + ' Ward ใช้งานอยู่', summary.wardsWithoutCart.length + ' Ward ยังไม่มี Med Cart assigned')
+                    + wmRenderInsight('sync', '#7C3AED', summary.activeCarts + ' Med Cart Online', summary.maintenanceCarts.length + ' คันอยู่ระหว่างซ่อมบำรุง')
+                    + '</div>'
+                    + alert
                     /* Hero */
                     + '<div class="wm-form-hero">'
                     + '<div class="wm-form-avatar" style="background:'+escHtml(color)+';min-width:50px;">'+escHtml(name.slice(0,2))+'</div>'
@@ -1234,8 +2271,8 @@
 
                     /* Stats */
                     + '<div class="wm-stat-row">'
-                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+ward.bedsOcc+'/'+ward.bedsTotal+'</div><div class="wm-stat-lbl">เตียง (ครอง)</div></div>'
-                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+ward.patients+'</div><div class="wm-stat-lbl">ผู้ป่วยปัจจุบัน</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+occ+'/'+total+'</div><div class="wm-stat-lbl">เตียง (ครอง)</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(color)+';">'+patients+'</div><div class="wm-stat-lbl">ผู้ป่วยปัจจุบัน</div></div>'
                     + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(occColor)+';">'+occPct+'%</div><div class="wm-stat-lbl">Occupancy</div><div class="wm-occ-bar"><div class="wm-occ-fill" style="width:'+occPct+'%;background:'+escHtml(occColor)+'"></div></div></div>'
                     + '</div>'
 
@@ -1244,10 +2281,12 @@
                     /* Basic info */
                     + '<div class="wm-section-head">ข้อมูลทั่วไป</div>'
                     + '<div class="wm-field-grid">'
-                    + '<div class="wm-field full"><div class="wm-label">ชื่อ Ward</div><input class="wm-input" data-wm-field="name" value="'+escHtml(name)+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].name=this.value; document.querySelector(\'.wm-form-hero-name\').textContent=this.value || \'—\'; document.querySelector(\'.wm-form-avatar\').textContent=this.value.slice(0,2)||\'W\';"></div>'
-                    + '<div class="wm-field full"><div class="wm-label">แผนก / Department</div><input class="wm-input" data-wm-field="dept" value="'+escHtml(dept)+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].dept=this.value;"></div>'
-                    + '<div class="wm-field"><div class="wm-label">ชั้น</div><input class="wm-input" type="number" min="1" max="20" value="'+escHtml(String(floor))+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].floor=this.value;"></div>'
-                    + '<div class="wm-field"><div class="wm-label">จำนวนเตียงทั้งหมด</div><input class="wm-input" type="number" min="1" max="100" value="'+escHtml(String(total))+'" oninput="if(!wmDirty[\''+ward.id+'\'])wmDirty[\''+ward.id+'\']={}; wmDirty[\''+ward.id+'\'].bedsTotal=this.value;"></div>'
+                    + '<div class="wm-field full"><div class="wm-label">ชื่อ Ward</div><input class="wm-input" data-wm-field="name" value="'+escHtml(name)+'" oninput="wmRemember(\''+ward.id+'\',\'name\',this.value); document.querySelector(\'.wm-form-hero-name\').textContent=this.value || \'—\'; document.querySelector(\'.wm-form-avatar\').textContent=this.value.slice(0,2)||\'W\';"></div>'
+                    + '<div class="wm-field full"><div class="wm-label">แผนก / Department</div><input class="wm-input" data-wm-field="dept" value="'+escHtml(dept)+'" oninput="wmRemember(\''+ward.id+'\',\'dept\',this.value);"></div>'
+                    + '<div class="wm-field"><div class="wm-label">ชั้น</div><input class="wm-input" type="number" min="1" max="20" value="'+escHtml(String(floor))+'" onchange="wmRemember(\''+ward.id+'\',\'floor\',this.value); wmRender();"></div>'
+                    + '<div class="wm-field"><div class="wm-label">จำนวนเตียงทั้งหมด</div><input class="wm-input" type="number" min="1" max="100" value="'+escHtml(String(total))+'" onchange="wmSetNumber(\''+ward.id+'\',\'bedsTotal\',this.value);"></div>'
+                    + '<div class="wm-field"><div class="wm-label">เตียงที่ครองอยู่</div><input class="wm-input" type="number" min="0" max="'+escHtml(String(total))+'" value="'+escHtml(String(occ))+'" onchange="wmSetNumber(\''+ward.id+'\',\'bedsOcc\',this.value);"></div>'
+                    + '<div class="wm-field"><div class="wm-label">ผู้ป่วยปัจจุบัน</div><input class="wm-input" type="number" min="0" max="200" value="'+escHtml(String(patients))+'" onchange="wmSetNumber(\''+ward.id+'\',\'patients\',this.value);"></div>'
                     + '</div>'
 
                     /* Color */
@@ -1258,23 +2297,21 @@
                     + '<div class="wm-section-head" style="margin-top:16px;">สถานะ</div>'
                     + '<div class="wm-status-row">'+statusOpts+'</div>'
 
-                    /* Linked cart */
-                    + '<div class="wm-section-head" style="margin-top:16px;">รถเข็นยาที่เชื่อมต่อ</div>'
-                    + (cart
-                        ? '<div class="wm-cart-link">'
-                        + '<div class="wm-cart-link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg></div>'
-                        + '<div style="flex:1;"><div style="font-size:13px;font-weight:800;color:#0F172A;">'+escHtml(cart.name)+'</div>'
-                        + '<div style="font-size:11px;color:#64748B;margin-top:2px;">'+cart.drawers+' Drawer · '+cart.cassettes+' Cassette · ซิงค์ล่าสุด '+escHtml(cart.lastSync)+'</div></div>'
-                        + '<select class="wm-select" style="width:auto;font-size:11px;padding:6px 8px;">'+cartOptions+'</select>'
-                        + '</div>'
-                        : '<select class="wm-select">'+cartOptions+'</select>'
-                    )
+                    /* Assigned cart */
+                    + '<div class="wm-section-head" style="margin-top:16px;">Med Cart ที่ assigned เข้า Ward นี้</div>'
+                    + '<div class="wm-cart-link">'
+                    + '<div class="wm-cart-link-icon">'+wmIcon('cart')+'</div>'
+                    + '<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">'+escHtml(cart ? wmCartName(cart) : 'ยังไม่มี Med Cart assigned')+'</div>'
+                    + '<div style="font-size:11px;color:#64748B;margin-top:2px;">'+escHtml(cart ? 'Assigned to ' + name + ' · เปิดใช้ ' + wmCartEnabledDrawers(cart) + '/' + wmCartTotalDrawers(cart) + ' Drawer · ' + wmCartEnabledCassettes(cart) + '/' + wmCartTotalCassettes(cart) + ' Cassette · ซิงค์ล่าสุด ' + cart.lastSync : 'เลือก Med Cart ที่จะ assign เข้า Ward นี้')+'</div></div>'
+                    + '<select class="wm-select" style="width:min(100%,240px);font-size:11px;padding:6px 8px;" onchange="wmSetWardCart(\''+ward.id+'\',this.value)">'+cartOptions+'</select>'
+                    + '</div>'
+                    + wmRenderAssignmentOverview()
 
                     /* Danger zone */
                     + '<div class="wm-divider"></div>'
                     + '<div class="wm-danger-zone">'
-                    + '<div><div class="wm-danger-text">ลบ Ward นี้ออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิกการเชื่อมต่อรถเข็นยาและผู้ใช้ที่ผูกกับ Ward นี้</div></div>'
-                    + '<button class="wm-danger-btn">ลบ Ward</button>'
+                    + '<div><div class="wm-danger-text">ลบ Ward นี้ออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิก Med Cart assignment และผู้ใช้ที่อยู่ใน Ward นี้</div></div>'
+                    + '<button class="wm-danger-btn" onclick="wmDeleteWard(\''+ward.id+'\')">ลบ Ward</button>'
                     + '</div>'
                     + '</div></div>';
             }
@@ -1285,25 +2322,34 @@
         /* ── Cart Tab ── */
         function wmRenderCartTab() {
             /* Left list */
-            var items = WM_CARTS.map(function(c) {
+            var filtered = WM_CARTS.filter(function(c) {
+                var ward = wmGetWardForCart(c);
+                return wmStatusMatches(wmCartStatus(c)) && wmSearchMatches([
+                    wmCartName(c),
+                    wmGetField(c.id,'code',c.code),
+                    ward ? wmWardName(ward) : ''
+                ]);
+            });
+            var items = filtered.length ? filtered.map(function(c) {
                 var name   = wmGetField(c.id,'name',c.name);
-                var status = wmGetField(c.id,'status',c.status);
-                var ward   = WM_WARDS.find(function(w){ return w.id===c.wardId; });
+                var status = wmCartStatus(c);
+                var ward   = wmGetWardForCart(c);
                 var wardColor = ward ? wmGetField(ward.id,'color',ward.color) : '#94A3B8';
                 var sel = wmSelectedCart === c.id;
                 return '<div class="wm-item'+(sel?' selected':'')+'" onclick="wmSelectCart(\''+c.id+'\')">'
                     + '<div class="wm-item-dot" style="background:'+escHtml(wardColor)+';"></div>'
                     + '<div class="wm-item-info">'
                     + '<div class="wm-item-name">'+escHtml(name)+'</div>'
-                    + '<div class="wm-item-sub">'+(ward?escHtml(ward.name)+' · ':'')+c.drawers+'D / '+c.cassettes+'C</div>'
+                    + '<div class="wm-item-sub">'+(ward?'Assigned to '+escHtml(wmWardName(ward))+' · ':'ยังไม่ assign · ')+wmCartEnabledDrawers(c)+'/'+wmCartTotalDrawers(c)+'D · '+wmCartEnabledCassettes(c)+'/'+wmCartTotalCassettes(c)+'C</div>'
                     + '</div>'
                     + wmStatusDot(status)
                     + '</div>';
-            }).join('');
+            }).join('') : '<div class="wm-empty-inline">ไม่พบ Med Cart ตามเงื่อนไขนี้</div>';
 
             var left = '<div class="wm-md-left">'
                 + '<div class="wm-left-head"><span class="wm-left-title">'+WM_CARTS.length+' Med Cart</span>'
                 + '<button class="wm-add-btn" title="เพิ่ม Med Cart" onclick="wmAddCart()">+</button></div>'
+                + wmRenderListTools('cart', WM_CARTS.length, filtered.length)
                 + '<div class="wm-item-list">'+items+'</div>'
                 + '</div>';
 
@@ -1317,22 +2363,30 @@
             } else {
                 var cname   = wmGetField(cart.id,'name',   cart.name);
                 var ccode   = wmGetField(cart.id,'code',   cart.code);
-                var cstatus = wmGetField(cart.id,'status', cart.status);
-                var cdrawers= wmGetField(cart.id,'drawers',cart.drawers);
-                var ward    = WM_WARDS.find(function(w){ return w.id===cart.wardId; });
+                var cstatus = wmCartStatus(cart);
+                var drawerTotal = wmCartTotalDrawers(cart);
+                var drawerEnabled = wmCartEnabledDrawers(cart);
+                var drawerDisabled = Math.max(drawerTotal - drawerEnabled, 0);
+                var cassetteTotal = wmCartTotalCassettes(cart);
+                var cassetteEnabled = wmCartEnabledCassettes(cart);
+                var cassetteEnableMax = wmCassetteCapacityForEnabledDrawers(drawerTotal, cassetteTotal, drawerEnabled);
+                var cassetteDisabled = Math.max(cassetteTotal - cassetteEnabled, 0);
+                var ward    = wmGetWardForCart(cart);
                 var cartColor = ward ? wmGetField(ward.id,'color',ward.color) : '#0D9488';
+                var cassetteState = wmBuildCassetteStateForCart(cart, ward ? wmWardName(ward) : getWardName());
+                var alert = '';
+                if (!ward && cstatus === 'active') {
+                    alert = wmRenderAlert('Med Cart ยังไม่ได้ assign เข้า Ward', 'รถเข็นที่เปิดใช้งานควรถูก assign เข้า Ward เพื่อให้ scope และรายงานตรงกัน', 'danger');
+                } else if (cstatus === 'maintenance') {
+                    alert = wmRenderAlert('รถเข็นอยู่ระหว่างซ่อมบำรุง', 'ควรถอด assignment จาก Ward ที่ใช้งานจริง หรือ assign รถเข็นสำรองแทน', 'warning');
+                } else if (cstatus === 'active' && (!drawerEnabled || !cassetteEnabled)) {
+                    alert = wmRenderAlert('ยังไม่ได้เปิดใช้ Drawer / Cassette', 'รถเข็น active ควรมี Drawer และ Cassette เปิดใช้อย่างน้อย 1 รายการ', 'warning');
+                } else if (cassetteState.disabledWithMedication) {
+                    alert = wmRenderAlert('พบยา/งานใน Cassette ที่ปิดใช้', 'ควรตรวจ template cassette และย้าย assignment ก่อนเริ่มจัดยา เพื่อไม่ให้จัดยาเข้าช่องที่ปิดใช้งาน', 'danger');
+                }
 
                 /* Ward select */
-                var wardOptions = '<option value="">— ไม่ผูก Ward —</option>'
-                    + WM_WARDS.map(function(w){
-                        return '<option value="'+w.id+'"'+(cart.wardId===w.id?' selected':'')+'>'+escHtml(wmGetField(w.id,'name',w.name))+'</option>';
-                    }).join('');
-
-                /* Drawer options */
-                var cassettesAuto = cdrawers * 6;
-                var drawerOptions = [4,6,8].map(function(n){
-                    return '<option value="'+n+'"'+(cdrawers==n?' selected':'')+'>'+n+' Drawer ('+n*6+' Cassette)</option>';
-                }).join('');
+                var wardOptions = wmWardOptions(ward ? ward.id : '');
 
                 /* Status */
                 var statusOpts = ['active','maintenance','inactive'].map(function(s) {
@@ -1342,20 +2396,29 @@
                 }).join('');
 
                 right = '<div class="wm-md-right"><div class="wm-form-wrap">'
+                    + '<div class="wm-insight-grid">'
+                    + wmRenderInsight('cart', cartColor, drawerEnabled + '/' + drawerTotal + ' Drawer เปิดใช้', 'ปิดใช้ ' + drawerDisabled + ' Drawer')
+                    + wmRenderInsight('ward', ward ? '#0D9488' : '#EF4444', ward ? 'Assigned to ' + wmWardName(ward) : 'ยังไม่ assign เข้า Ward', ward ? wmGetField(ward.id,'dept',ward.dept) : 'ต้อง assign ก่อนนำไปใช้จริง')
+                    + wmRenderInsight('sync', cstatus==='active' ? '#10B981' : cstatus==='maintenance' ? '#F59E0B' : '#94A3B8', cassetteEnabled + '/' + cassetteTotal + ' Cassette เปิดใช้', 'ปิดใช้ ' + cassetteDisabled + ' Cassette · ซิงค์ล่าสุด ' + cart.lastSync)
+                    + wmRenderInsight('alert', cassetteState.disabledWithMedication ? '#EF4444' : '#2563EB', cassetteState.filledCassettes + ' ช่องมียา', cassetteState.inProgressCassettes + ' ช่องกำลังจัด · ' + cassetteState.assignmentCassettes + ' ช่องจองไว้')
+                    + '</div>'
+                    + alert
                     /* Hero */
                     + '<div class="wm-form-hero">'
                     + '<div class="wm-form-avatar" style="background:'+escHtml(cartColor)+';min-width:50px;font-size:14px;">'
                     + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 8h10"/><path d="M7 12h10"/></svg>'
                     + '</div>'
                     + '<div><div class="wm-form-hero-name">'+escHtml(cname)+'</div>'
-                    + '<div class="wm-form-hero-sub">รหัส: '+escHtml(ccode)+' · '+(ward?escHtml(ward.name)+' · ':'')+'ซิงค์ล่าสุด '+escHtml(cart.lastSync)+'</div></div>'
+                    + '<div class="wm-form-hero-sub">รหัส: '+escHtml(ccode)+' · '+(ward?'Assigned to '+escHtml(ward.name)+' · ':'ยังไม่ assign · ')+'ซิงค์ล่าสุด '+escHtml(cart.lastSync)+'</div></div>'
                     + '</div>'
 
                     /* Stats */
-                    + '<div class="wm-stat-row">'
-                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cdrawers+'</div><div class="wm-stat-lbl">Drawer</div></div>'
-                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cassettesAuto+'</div><div class="wm-stat-lbl">Cassette ทั้งหมด</div></div>'
-                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+(cstatus==='active'?'#10B981':cstatus==='maintenance'?'#F59E0B':'#94A3B8')+';">'+wmStatusLabel(cstatus)+'</div><div class="wm-stat-lbl">สถานะ</div></div>'
+                    + '<div class="wm-stat-row five">'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+drawerEnabled+'/'+drawerTotal+'</div><div class="wm-stat-lbl">Drawer เปิดใช้</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:#94A3B8;">'+drawerDisabled+'</div><div class="wm-stat-lbl">Drawer ปิดใช้</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+escHtml(cartColor)+';">'+cassetteEnabled+'/'+cassetteTotal+'</div><div class="wm-stat-lbl">Cassette เปิดใช้</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:#94A3B8;">'+cassetteDisabled+'</div><div class="wm-stat-lbl">Cassette ปิดใช้</div></div>'
+                    + '<div class="wm-stat-card"><div class="wm-stat-val" style="color:'+(cassetteState.disabledWithMedication?'#DC2626':cassetteState.filledCassettes?'#15803D':'#2563EB')+';">'+cassetteState.usedCassettes+'</div><div class="wm-stat-lbl">ช่องใช้งานจริง</div></div>'
                     + '</div>'
 
                     + '<div class="wm-divider"></div>'
@@ -1363,11 +2426,15 @@
                     /* Fields */
                     + '<div class="wm-section-head">ข้อมูลรถเข็นยา</div>'
                     + '<div class="wm-field-grid">'
-                    + '<div class="wm-field"><div class="wm-label">ชื่อรถเข็น</div><input class="wm-input" value="'+escHtml(cname)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].name=this.value; document.querySelector(\'.wm-form-hero-name\').textContent=this.value;"></div>'
-                    + '<div class="wm-field"><div class="wm-label">รหัสรถเข็น</div><input class="wm-input" value="'+escHtml(ccode)+'" oninput="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].code=this.value;"></div>'
-                    + '<div class="wm-field full"><div class="wm-label">Ward ที่เชื่อมต่อ</div><select class="wm-select">'+wardOptions+'</select></div>'
-                    + '<div class="wm-field"><div class="wm-label">จำนวน Drawer</div><select class="wm-select" onchange="if(!wmDirty[\''+cart.id+'\'])wmDirty[\''+cart.id+'\']={}; wmDirty[\''+cart.id+'\'].drawers=+this.value; wmDirty[\''+cart.id+'\'].cassettes=+this.value*6; wmRender();">'+drawerOptions+'</select></div>'
-                    + '<div class="wm-field"><div class="wm-label">Cassette ทั้งหมด</div><input class="wm-input" type="number" value="'+cassettesAuto+'" readonly style="background:#F8FAFC;cursor:default;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">ชื่อรถเข็น</div><input class="wm-input" value="'+escHtml(cname)+'" oninput="wmRemember(\''+cart.id+'\',\'name\',this.value); document.querySelector(\'.wm-form-hero-name\').textContent=this.value;"></div>'
+                    + '<div class="wm-field"><div class="wm-label">รหัสรถเข็น</div><input class="wm-input" value="'+escHtml(ccode)+'" oninput="wmRemember(\''+cart.id+'\',\'code\',this.value);"></div>'
+                    + '<div class="wm-field full"><div class="wm-label">Assign Med Cart เข้า Ward</div><select class="wm-select" onchange="wmSetCartWard(\''+cart.id+'\',this.value)">'+wardOptions+'</select></div>'
+                    + '<div class="wm-field"><div class="wm-label">Drawer ทั้งหมด</div><input class="wm-input" type="number" min="1" max="24" value="'+drawerTotal+'" onchange="wmSetCartCapacity(\''+cart.id+'\',\'drawers\',this.value);"></div>'
+                    + '<div class="wm-field"><div class="wm-label">Drawer เปิดใช้</div><input class="wm-input" type="number" min="0" max="'+drawerTotal+'" value="'+drawerEnabled+'" onchange="wmSetCartCapacity(\''+cart.id+'\',\'drawersEnabled\',this.value);"></div>'
+                    + '<div class="wm-field"><div class="wm-label">Drawer ปิดใช้</div><input class="wm-input" type="number" value="'+drawerDisabled+'" readonly></div>'
+                    + '<div class="wm-field"><div class="wm-label">Cassette ทั้งหมด</div><input class="wm-input" type="number" min="0" max="240" value="'+cassetteTotal+'" onchange="wmSetCartCapacity(\''+cart.id+'\',\'cassettes\',this.value);"></div>'
+                    + '<div class="wm-field"><div class="wm-label">Cassette เปิดใช้</div><input class="wm-input" type="number" min="0" max="'+cassetteEnableMax+'" value="'+cassetteEnabled+'" onchange="wmSetCartCapacity(\''+cart.id+'\',\'cassettesEnabled\',this.value);"></div>'
+                    + '<div class="wm-field"><div class="wm-label">Cassette ปิดใช้</div><input class="wm-input" type="number" value="'+cassetteDisabled+'" readonly></div>'
                     + '</div>'
 
                     /* Status */
@@ -1375,14 +2442,17 @@
                     + '<div class="wm-status-row">'+statusOpts+'</div>'
 
                     /* Drawer map */
-                    + '<div class="wm-section-head" style="margin-top:16px;">แผนผัง Drawer</div>'
-                    + wmRenderDrawerMap(cdrawers, cartColor, cassettesAuto)
+                    + '<div class="wm-section-head" style="margin-top:16px;">Cassette State</div>'
+                    + wmRenderCassetteStateOverview(cassetteState)
+                    + '<div class="wm-section-head" style="margin-top:16px;">แผนผัง Drawer / Cassette</div>'
+                    + wmRenderDrawerMap(drawerTotal, cartColor, cassetteTotal, cassetteState, drawerEnabled, cassetteEnabled)
+                    + wmRenderAssignmentOverview()
 
                     /* Danger zone */
                     + '<div class="wm-divider"></div>'
                     + '<div class="wm-danger-zone">'
-                    + '<div><div class="wm-danger-text">ลบรถเข็นออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิกการผูกกับ Ward และ Cassette ทั้งหมด</div></div>'
-                    + '<button class="wm-danger-btn">ลบรถเข็น</button>'
+                    + '<div><div class="wm-danger-text">ลบรถเข็นออกจากระบบ</div><div style="font-size:10px;color:#94A3B8;margin-top:2px;">การลบจะยกเลิก assignment กับ Ward และ Cassette ทั้งหมด</div></div>'
+                    + '<button class="wm-danger-btn" onclick="wmDeleteCart(\''+cart.id+'\')">ลบรถเข็น</button>'
                     + '</div>'
                     + '</div></div>';
             }
@@ -1390,20 +2460,90 @@
             return '<div class="wm-md-layout">'+left+right+'</div>';
         }
 
-        function wmRenderDrawerMap(drawerCount, color, totalCassettes) {
-            var cassPerDrawer = totalCassettes ? Math.floor(totalCassettes / drawerCount) : 6;
+        function wmRenderDrawerMap(drawerCount, color, totalCassettes, cassetteState, enabledDrawers, enabledCassettes) {
+            drawerCount = Math.max(1, wmAsInt(drawerCount, 1));
+            totalCassettes = Math.max(0, wmAsInt(totalCassettes, 0));
+            enabledDrawers = wmClampNumber(enabledDrawers, 0, drawerCount);
+            enabledCassettes = wmClampNumber(enabledCassettes, 0, totalCassettes);
+            var cassetteMap = cassetteState && cassetteState.cassetteMap ? cassetteState.cassetteMap : {};
             var rows = '';
+            var seq = 0;
             for (var d = 1; d <= drawerCount; d++) {
+                var drawerEnabled = d <= enabledDrawers;
+                var cassPerDrawer = wmCassetteCountForDrawer(d, drawerCount, totalCassettes);
                 var cassettes = '';
                 for (var c = 1; c <= cassPerDrawer; c++) {
-                    cassettes += '<div style="width:28px;height:28px;border-radius:6px;background:white;border:1.5px solid #E2E8F0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#94A3B8;">'+c+'</div>';
+                    seq += 1;
+                    var cassetteEnabled = drawerEnabled && seq <= enabledCassettes;
+                    var record = cassetteMap[ptdCassetteKey(d, c)];
+                    var cls = ['wm-cassette'];
+                    var detail = cassetteEnabled ? 'พร้อม assign' : 'ปิดใช้';
+                    if (record && (record.inUse || record.hasMedication)) {
+                        if (record.hasMedication) cls.push('filled');
+                        else if (record.status === 'in_progress' || record.status === 'locked') cls.push('in-progress');
+                        else cls.push('assigned');
+                        detail = wmCassetteStatusLabel(record.status)
+                            + (record.mode ? ' · ' + wmCassetteModeLabel(record.mode) : '')
+                            + (record.drugNames && record.drugNames.length ? ' · ' + record.drugNames.slice(0, 2).join(', ') : '');
+                    }
+                    if (!cassetteEnabled) cls.push('disabled');
+                    if (!cassetteEnabled && record && (record.inUse || record.hasMedication)) cls.push('blocked');
+                    cassettes += '<div class="'+cls.join(' ')+'" title="'+escHtml('Drawer ' + d + ' · Cassette ' + c + ' · ' + detail)+'">'+c+'</div>';
                 }
-                rows += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">'
-                    + '<div style="width:28px;height:28px;border-radius:7px;background:'+escHtml(color)+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:white;flex-shrink:0;">'+d+'</div>'
-                    + '<div style="display:flex;gap:5px;flex-wrap:wrap;">'+cassettes+'</div>'
+                rows += '<div class="wm-drawer-row">'
+                    + '<div class="wm-drawer-label'+(!drawerEnabled ? ' disabled' : '')+'" style="background:'+escHtml(color)+';">'+d+'</div>'
+                    + '<div class="wm-cassette-row">'+(cassettes || '<span style="font-size:10px;color:#CBD5E1;font-weight:750;">ไม่มี Cassette</span>')+'</div>'
                     + '</div>';
             }
-            return '<div style="background:#F8FAFC;border:1px solid #F1F5F9;border-radius:10px;padding:12px;">'+rows+'</div>';
+            return '<div class="wm-drawer-map">'+rows+'</div>';
+        }
+        function wmNormalizeRelationships() {
+            var desiredWardCart = {};
+            WM_WARDS.forEach(function(w) {
+                w.bedsTotal = Math.max(1, wmAsInt(w.bedsTotal, 1));
+                w.bedsOcc = Math.min(Math.max(0, wmAsInt(w.bedsOcc, 0)), w.bedsTotal);
+                w.patients = Math.max(0, wmAsInt(w.patients, 0));
+                w.cartId = w.cartId || null;
+                if (w.cartId) desiredWardCart[w.id] = w.cartId;
+            });
+            WM_CARTS.forEach(function(c) {
+                c.drawers = Math.max(1, wmAsInt(c.drawers, 6));
+                c.cassettes = Math.max(0, wmAsInt(c.cassettes, c.drawers * 6));
+                c.drawersEnabled = wmClampNumber(c.drawersEnabled !== undefined ? c.drawersEnabled : (c.status === 'active' ? c.drawers : 0), 0, c.drawers);
+                c.cassettesEnabled = wmClampNumber(
+                    c.cassettesEnabled !== undefined ? c.cassettesEnabled : (c.status === 'active' ? c.cassettes : 0),
+                    0,
+                    wmCassetteCapacityForEnabledDrawers(c.drawers, c.cassettes, c.drawersEnabled)
+                );
+                c.wardId = c.wardId || null;
+                if (c.wardId) desiredWardCart[c.wardId] = c.id;
+            });
+
+            WM_WARDS.forEach(function(w){ w.cartId = null; });
+            WM_CARTS.forEach(function(c){ c.wardId = null; });
+
+            var usedCarts = {};
+            Object.keys(desiredWardCart).forEach(function(wardId) {
+                var ward = wmFindWard(wardId);
+                var cart = wmFindCart(desiredWardCart[wardId]);
+                if (!ward || !cart || usedCarts[cart.id]) return;
+                ward.cartId = cart.id;
+                cart.wardId = ward.id;
+                usedCarts[cart.id] = true;
+            });
+        }
+        function wmSyncWardInfo() {
+            Object.keys(wardInfo).forEach(function(key){ delete wardInfo[key]; });
+            WM_WARDS.forEach(function(w) {
+                var cart = wmGetCartForWard(w);
+                wardInfo[w.name] = {
+                    desc: w.dept,
+                    floor: 'ชั้น ' + w.floor,
+                    beds: w.bedsOcc + '/' + w.bedsTotal + ' เตียง',
+                    patients: w.patients + ' ผู้ป่วย',
+                    cart: cart ? cart.name : 'ยังไม่ได้ assign Med Cart'
+                };
+            });
         }
 
         function wmRender() {
@@ -1415,15 +2555,18 @@
                 var activeCarts = WM_CARTS.filter(function(c){ return wmGetField(c.id,'status',c.status)==='active'; }).length;
                 chips.innerHTML = '<span class="modal-chip"><strong>'+WM_WARDS.length+'</strong> Ward</span>'
                     + '<span class="modal-chip"><strong>'+WM_CARTS.length+'</strong> Med Cart</span>'
-                    + '<span class="modal-chip"><strong>'+activeWards+'</strong> ใช้งานอยู่</span>';
+                    + '<span class="modal-chip"><strong>'+activeWards+'</strong> Ward ใช้งาน</span>'
+                    + '<span class="modal-chip"><strong>'+activeCarts+'</strong> Cart ใช้งาน</span>';
             }
             body.innerHTML = wmTab === 'ward' ? wmRenderWardTab() : wmRenderCartTab();
         }
 
         function openWardModal() {
             wmTab = 'ward';
-            wmSelectedWard = WM_WARDS[0].id;
-            wmSelectedCart = WM_CARTS[0].id;
+            wmSearch = '';
+            wmStatusFilter = 'all';
+            wmSelectedWard = WM_WARDS[0] ? WM_WARDS[0].id : null;
+            wmSelectedCart = WM_CARTS[0] ? WM_CARTS[0].id : null;
             document.querySelectorAll('[data-wm-tab]').forEach(function(el){
                 el.classList.toggle('active', el.dataset.wmTab === 'ward');
             });
@@ -1441,8 +2584,13 @@
             WM_CARTS.forEach(function(c) {
                 if (wmDirty[c.id]) Object.assign(c, wmDirty[c.id]);
             });
+            wmNormalizeRelationships();
+            wmSyncWardInfo();
+            var savedWard = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
+            if (!wardInfo[savedWard] && WM_WARDS.length) sessionStorage.setItem('mcWard', WM_WARDS[0].name);
             wmDirty = {};
             closeWardModal();
+            renderBackoffice();
             showToast('บันทึก Ward & Med Cart เรียบร้อยแล้ว');
             setTimeout(function(){ showToast(''); }, 2000);
         }
@@ -1457,6 +2605,7 @@
             if (event.key === 'Escape') {
                 closePermModal();
                 closeWardModal();
+                closeReportModal();
             }
         });
 
