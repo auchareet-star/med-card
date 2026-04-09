@@ -7243,23 +7243,58 @@
                 <div class="op-stat"><strong id="opPrnOrders">0</strong><span>PRN / STAT</span></div>
             </div>
 
-            <!-- ── Section 1: Physician Orders (from HIS) ── -->
+            <!-- ════════════════════════════════════════
+                 Section 1: แพทย์ → เภสัชกร (คำสั่งยาจากแพทย์)
+                 ════════════════════════════════════════ -->
             <section class="op-panel" style="margin-bottom:18px;">
                 <div class="op-panel-head">
                     <div>
                         <div class="op-panel-title">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
-                            รายการสั่งยาจากแพทย์
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
+                            แพทย์ → เภสัชกร
                         </div>
-                        <div class="op-panel-sub">Sync อัตโนมัติจากระบบ HIS/EMR — แพทย์สั่งยาผ่านระบบ แล้วรายการจะแสดงที่นี่</div>
+                        <div class="op-panel-sub">คำสั่งยาจาก HIS — เภสัชกรตรวจสอบ 5 Rights ก่อนจัดยาเข้า Cassette</div>
                     </div>
-                    <span class="op-badge" style="background:#F0FDFA;color:#0F766E;border-color:#99F6E4;">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-                        HIS Sync
-                    </span>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <span class="op-badge" style="background:#F0FDFA;color:#0F766E;border-color:#99F6E4;">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:-1px;margin-right:3px;"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                            HIS Sync
+                        </span>
+                        <!-- View toggle -->
+                        <div id="opDrPhViewToggle" style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
+                            <button type="button" class="op-view-btn" id="opDrPhViewDrug" onclick="opSetDrPhView('drug')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:#0D9488;color:white;">ตามยา</button>
+                            <button type="button" class="op-view-btn" id="opDrPhViewPatient" onclick="opSetDrPhView('patient')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:white;color:var(--text-2);">ตามผู้ป่วย</button>
+                        </div>
+                    </div>
                 </div>
                 <div id="opPhysicianOrders" class="op-queue-list">
                     <!-- Rendered dynamically from MedCartStore -->
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════
+                 Section 2: เภสัชกร → พยาบาล (ยาที่ตรวจแล้ว/จัดแล้ว)
+                 ════════════════════════════════════════ -->
+            <section class="op-panel" style="margin-bottom:18px;">
+                <div class="op-panel-head">
+                    <div>
+                        <div class="op-panel-title">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                            เภสัชกร → พยาบาล
+                        </div>
+                        <div class="op-panel-sub">ยาที่เภสัชตรวจ 5 Rights แล้ว — พร้อมส่งต่อพยาบาลจ่ายยาให้ผู้ป่วย</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <span id="opPhRnCount" class="op-badge" style="background:#F5F3FF;color:#6D28D9;border-color:#DDD6FE;">0 พร้อมจ่าย</span>
+                        <!-- View toggle -->
+                        <div id="opPhRnViewToggle" style="display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;">
+                            <button type="button" class="op-view-btn" id="opPhRnViewPatient" onclick="opSetPhRnView('patient')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:#7C3AED;color:white;">ตามผู้ป่วย</button>
+                            <button type="button" class="op-view-btn" id="opPhRnViewDrug" onclick="opSetPhRnView('drug')" style="padding:5px 10px;font-size:10px;font-weight:800;font-family:Prompt,sans-serif;border:none;cursor:pointer;background:white;color:var(--text-2);">ตามยา</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="opPharmaToNurseOrders" class="op-queue-list">
+                    <!-- Rendered dynamically -->
                 </div>
             </section>
 
@@ -14551,51 +14586,122 @@
     }
 
     // ── Render physician orders in Order Plan ──
+    // ── View state ──
+    var opDrPhView = 'drug'; // default for pharma section
+    var opPhRnView = 'patient'; // default for nurse section
+
+    function opSetDrPhView(view) {
+        opDrPhView = view;
+        document.getElementById('opDrPhViewDrug').style.background = view === 'drug' ? '#0D9488' : 'white';
+        document.getElementById('opDrPhViewDrug').style.color = view === 'drug' ? 'white' : 'var(--text-2)';
+        document.getElementById('opDrPhViewPatient').style.background = view === 'patient' ? '#0D9488' : 'white';
+        document.getElementById('opDrPhViewPatient').style.color = view === 'patient' ? 'white' : 'var(--text-2)';
+        renderPhysicianOrders();
+    }
+    function opSetPhRnView(view) {
+        opPhRnView = view;
+        document.getElementById('opPhRnViewPatient').style.background = view === 'patient' ? '#7C3AED' : 'white';
+        document.getElementById('opPhRnViewPatient').style.color = view === 'patient' ? 'white' : 'var(--text-2)';
+        document.getElementById('opPhRnViewDrug').style.background = view === 'drug' ? '#7C3AED' : 'white';
+        document.getElementById('opPhRnViewDrug').style.color = view === 'drug' ? 'white' : 'var(--text-2)';
+        renderPharmaToNurseOrders();
+    }
+
+    // Auto-set default view based on role
+    function opApplyRoleDefaults() {
+        if (typeof currentRole !== 'undefined') {
+            if (currentRole === 'pharma') { opDrPhView = 'drug'; opPhRnView = 'drug'; }
+            else if (currentRole === 'nurse') { opDrPhView = 'patient'; opPhRnView = 'patient'; }
+            else { opDrPhView = 'drug'; opPhRnView = 'patient'; }
+        }
+    }
+
+    // ── Render single order row ──
+    function opRenderOrderRow(o) {
+        var priorityTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
+            : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
+            : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>'
+            : '<span class="op-tag">Routine</span>';
+        var statusTag = o.status === 'dispensed' || o.status === 'assessed' ? '<span class="op-tag done">จ่ายยาแล้ว</span>'
+            : o.status === 'prepped' ? '<span class="op-tag done">จัดยาแล้ว</span>'
+            : o.status === 'scheduled' ? '<span class="op-tag">รอจัดยา</span>'
+            : '<span class="op-tag">รับคำสั่ง</span>';
+        var borderColor = o.priority === 'stat' ? '#EF4444' : o.highAlert ? '#D97706' : '#0D9488';
+        var ptName = MedCartStore.getPatientName(o.patient);
+        var ptBed = MedCartStore.getPatientBed(o.patient);
+        var isDone = o.status === 'dispensed' || o.status === 'assessed';
+        var navTarget = o.priority === 'stat' ? 'pg-stat' : o.priority === 'prn' ? 'pg-prn' : o.priority === 'high-alert' ? 'pg-highalert' : 'pg-routine';
+        var actionHtml = !isDone
+            ? '<button type="button" class="op-btn' + (o.priority === 'stat' ? ' primary' : '') + '" style="font-size:11px;padding:7px 12px;" onclick="nav(\'' + navTarget + '\')">ดำเนินการ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>'
+            : '<span style="font-size:10px;color:var(--text-3);">' + o.createdAt + '</span>';
+        var verifyHtml = o.verified ? (
+            (o.verified.doctor && o.verified.doctor.done ? '<span class="op-tag" style="background:#DBEAFE;color:#1D4ED8;border-color:#93C5FD;font-size:9px;">Dr ✓</span>' : '')
+            + (o.verified.pharma && o.verified.pharma.done ? '<span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#99F6E4;font-size:9px;">Ph ✓</span>' : '')
+            + (o.verified.nurse && o.verified.nurse.done ? '<span class="op-tag" style="background:#F5F3FF;color:#6D28D9;border-color:#DDD6FE;font-size:9px;">RN ✓</span>' : '')
+        ) : '';
+        return '<div class="op-order-row" style="border-left-color:' + borderColor + ';">'
+            + '<div class="op-order-main">'
+            + '<div class="op-order-name">' + escHtml(o.drug) + ' <span class="op-tag">' + escHtml(o.route) + '</span> ' + priorityTag + '</div>'
+            + '<div class="op-order-meta">' + escHtml(ptName) + ' · ห้อง ' + escHtml(ptBed) + ' · สั่งโดย <strong>' + escHtml(o.doctor) + '</strong></div>'
+            + '<div class="op-order-tags"><span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">' + escHtml(o.source) + '</span><span class="op-tag">' + escHtml(o.schedule) + (o.time && o.time !== 'STAT' && o.time !== 'PRN' ? ' ' + o.time : '') + '</span>' + statusTag + verifyHtml + '</div>'
+            + '</div>'
+            + '<div class="op-row-actions">' + actionHtml + '</div></div>';
+    }
+
+    // ── Group orders by patient ──
+    function opGroupByPatient(orders) {
+        var groups = {};
+        orders.forEach(function(o) {
+            if (!groups[o.patient]) groups[o.patient] = [];
+            groups[o.patient].push(o);
+        });
+        var html = '';
+        Object.keys(groups).forEach(function(key) {
+            var items = groups[key];
+            var ptName = MedCartStore.getPatientName(key);
+            var ptBed = MedCartStore.getPatientBed(key);
+            var doneCount = items.filter(function(o){ return o.status === 'dispensed' || o.status === 'assessed'; }).length;
+            html += '<div style="margin-bottom:14px;">'
+                + '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg);border-radius:10px;margin-bottom:6px;">'
+                + '<div style="width:32px;height:32px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;">' + escHtml(ptName.replace(/^(นาย|นางสาว|นาง|นส\.)\s*/,'').slice(0,2)) + '</div>'
+                + '<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--text-1);">' + escHtml(ptName) + '</div>'
+                + '<div style="font-size:11px;color:var(--text-3);">ห้อง ' + escHtml(ptBed) + ' · ' + items.length + ' รายการ · ' + doneCount + ' จ่ายแล้ว</div></div></div>'
+                + items.map(opRenderOrderRow).join('')
+                + '</div>';
+        });
+        return html;
+    }
+
+    // ── Dr → Ph: Physician Orders ──
     function renderPhysicianOrders() {
         var container = document.getElementById('opPhysicianOrders');
         if (!container) return;
+        // Dr→Ph shows orders not yet fully prepped (ordered + scheduled + prepped)
         var orders = MedCartStore.orders.filter(function(o){ return o.source === 'HIS'; });
-        if (!orders.length) {
-            container.innerHTML = '<div class="op-empty">ยังไม่มีคำสั่งยาจากแพทย์</div>';
-            return;
+        if (!orders.length) { container.innerHTML = '<div class="op-empty">ยังไม่มีคำสั่งยาจากแพทย์</div>'; return; }
+        if (opDrPhView === 'patient') {
+            container.innerHTML = opGroupByPatient(orders);
+        } else {
+            container.innerHTML = orders.map(opRenderOrderRow).join('');
         }
-        container.innerHTML = orders.map(function(o) {
-            var priorityTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
-                : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
-                : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>'
-                : '<span class="op-tag">Routine</span>';
-            var statusTag = o.status === 'dispensed' || o.status === 'assessed' ? '<span class="op-tag done">จ่ายยาแล้ว</span>'
-                : o.status === 'prepped' ? '<span class="op-tag done">จัดยาแล้ว</span>'
-                : o.status === 'scheduled' ? '<span class="op-tag">รอจัดยา</span>'
-                : '<span class="op-tag">รับคำสั่ง</span>';
-            var borderColor = o.priority === 'stat' ? '#EF4444' : o.highAlert ? '#D97706' : '#0D9488';
-            var ptName = MedCartStore.getPatientName(o.patient);
-            var ptBed = MedCartStore.getPatientBed(o.patient);
-            var isDone = o.status === 'dispensed' || o.status === 'assessed';
-            var isActionable = !isDone;
-            var navTarget = o.priority === 'stat' ? 'pg-stat' : o.priority === 'prn' ? 'pg-prn' : o.priority === 'high-alert' ? 'pg-highalert' : 'pg-routine';
-            var actionHtml = isActionable
-                ? '<button type="button" class="op-btn' + (o.priority === 'stat' ? ' primary' : '') + '" style="font-size:11px;padding:7px 12px;" onclick="nav(\'' + navTarget + '\')">ดำเนินการ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>'
-                : '<span style="font-size:10px;color:var(--text-3);">' + o.createdAt + '</span>';
-            return '<div class="op-order-row" style="border-left-color:' + borderColor + ';">'
-                + '<div class="op-order-main">'
-                + '<div class="op-order-name">' + escHtml(o.drug) + ' <span class="op-tag">' + escHtml(o.route) + '</span> ' + priorityTag + '</div>'
-                + '<div class="op-order-meta">' + escHtml(ptName) + ' · ห้อง ' + escHtml(ptBed) + ' · สั่งโดย <strong>' + escHtml(o.doctor) + '</strong></div>'
-                + '<div class="op-order-tags">'
-                + '<span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">' + escHtml(o.source) + ' Order</span>'
-                + '<span class="op-tag">' + escHtml(o.schedule) + (o.time && o.time !== 'STAT' && o.time !== 'PRN' ? ' ' + o.time : '') + '</span>'
-                + statusTag
-                // 5 Rights verification trail
-                + (o.verified ? (
-                    (o.verified.doctor && o.verified.doctor.done ? '<span class="op-tag" style="background:#DBEAFE;color:#1D4ED8;border-color:#93C5FD;font-size:9px;" title="แพทย์ตรวจ: เลือกยาตรงโรค, กำหนด dose/route/time">Dr ✓</span>' : '')
-                    + (o.verified.pharma && o.verified.pharma.done ? '<span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#99F6E4;font-size:9px;" title="เภสัชตรวจ: ยาตรงใบสั่ง, dose/interaction, HN/allergy">Ph ✓</span>' : '')
-                    + (o.verified.nurse && o.verified.nurse.done ? '<span class="op-tag" style="background:#F5F3FF;color:#6D28D9;border-color:#DDD6FE;font-size:9px;" title="พยาบาลตรวจ: label ยา, ชื่อ-HN, route/time">RN ✓</span>' : '')
-                ) : '')
-                + '</div>'
-                + '</div>'
-                + '<div class="op-row-actions">' + actionHtml + '</div>'
-                + '</div>';
-        }).join('');
+    }
+
+    // ── Ph → RN: Verified/Prepped Orders ready for nurse ──
+    function renderPharmaToNurseOrders() {
+        var container = document.getElementById('opPharmaToNurseOrders');
+        if (!container) return;
+        var countEl = document.getElementById('opPhRnCount');
+        // Ph→RN shows orders that pharma verified (prepped + dispensed)
+        var orders = MedCartStore.orders.filter(function(o) {
+            return o.verified && o.verified.pharma && o.verified.pharma.done;
+        });
+        if (countEl) countEl.textContent = orders.filter(function(o){ return o.status === 'prepped'; }).length + ' พร้อมจ่าย';
+        if (!orders.length) { container.innerHTML = '<div class="op-empty">ยังไม่มียาที่เภสัชตรวจแล้ว</div>'; return; }
+        if (opPhRnView === 'patient') {
+            container.innerHTML = opGroupByPatient(orders);
+        } else {
+            container.innerHTML = orders.map(opRenderOrderRow).join('');
+        }
     }
 
     // ── Sync Order Plan stats ──
@@ -14686,7 +14792,7 @@
 
     // Register listeners
     MedCartStore.onChange(syncDashboardFromStore);
-    MedCartStore.onChange(renderPhysicianOrders);
+    MedCartStore.onChange(function() { opApplyRoleDefaults(); renderPhysicianOrders(); renderPharmaToNurseOrders(); });
     MedCartStore.onChange(syncOrderPlanStats);
     MedCartStore.onChange(renderDashScheduleTimeline);
 
