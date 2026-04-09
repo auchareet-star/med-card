@@ -10350,9 +10350,9 @@
                     <div style="width:40px;height:40px;background:linear-gradient(135deg,#F0FDFA,#CCFBF1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid #99F6E4;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>
                     </div>
-                    <div>
+                    <div style="flex:1;">
                         <div style="font-size:14px;font-weight:800;color:var(--text-1);">สแกนยาทุกรายการ</div>
-                        <div style="font-size:11px;color:var(--text-3);margin-top:1px;">สแกนแต่ละรายการเพื่อตรวจสอบ 7 Rights ก่อนให้ยา</div>
+                        <div style="font-size:11px;color:var(--text-3);margin-top:1px;">สแกนไม่ครบสามารถยืนยันต่อได้ · <strong style="color:#DC2626;">ยกเว้น</strong> กรณี 5 Rights ไม่ผ่าน</div>
                     </div>
                 </div>
 
@@ -10421,9 +10421,14 @@
                                 <div class="mdc-name" style="font-size:15px;">Omeprazole 20 mg</div>
                                 <div class="mdc-sub">PO · 20 mg × 1 แคปซูล · รอบเช้า</div>
                             </div>
-                            <button class="mdc-btn" id="rdrug_2_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',2)">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
-                            </button>
+                            <div style="display:flex;gap:6px;">
+                                <button class="mdc-btn" id="rdrug_2_btn" style="background:linear-gradient(135deg,#0d9488,#14b8a6);border-radius:12px;padding:10px 18px;font-weight:700;" onclick="scanMultiDrug('r',2)">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:4px;"><path d="M2 7V2h5M17 2h5v5M22 17v5h-5M7 22H2v-5"/><line x1="7" y1="12" x2="17" y2="12"/></svg>สแกน
+                                </button>
+                                <button class="mdc-btn" style="background:linear-gradient(135deg,#DC2626,#EF4444);border-radius:12px;padding:10px 12px;font-weight:700;font-size:10px;" onclick="scanMultiDrug('r',2,true)">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" style="vertical-align:middle;margin-right:3px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Demo: ยาผิด
+                                </button>
+                            </div>
                         </div>
                         <div class="mdc-done-row" id="rdrug_2_done" style="display:none;">
                             <div class="mdc-rights">

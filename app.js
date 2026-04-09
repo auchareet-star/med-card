@@ -1656,7 +1656,7 @@
         ov:  'ovBtnConfirm'
     };
 
-    function scanMultiDrug(flow, idx) {
+    function scanMultiDrug(flow, idx, simulateFail) {
         const cardId = `${flow}drug_${idx}`;
         const btnId  = `${flow}drug_${idx}_btn`;
         const btn    = document.getElementById(btnId);
@@ -1670,7 +1670,26 @@
             const card = document.getElementById(cardId);
             if (!card) return;
 
-            // Mark done
+            if (simulateFail) {
+                // 5 Rights FAIL — wrong drug / wrong dose / expired
+                card.classList.add('fail');
+                card.dataset.rightsFail = 'true';
+                card.style.borderColor = '#FECACA';
+                card.style.background = '#FEF2F2';
+
+                const doneRow = document.getElementById(`${flow}drug_${idx}_done`);
+                if (doneRow) {
+                    doneRow.style.display = '';
+                    doneRow.innerHTML = '<div style="display:flex;align-items:center;gap:8px;color:#DC2626;font-weight:800;font-size:12px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#DC2626"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> 5 Rights ไม่ผ่าน — ยาไม่ตรงคำสั่งแพทย์</div>';
+                }
+
+                btn.style.display = 'none';
+                showToast('5 Rights ไม่ผ่าน — ยาไม่ตรงกับคำสั่งแพทย์');
+                checkMultiDrugDone(flow);
+                return;
+            }
+
+            // Normal pass
             card.classList.add('done');
             card.dataset.done = 'true';
 
@@ -1693,12 +1712,36 @@
     function checkMultiDrugDone(flow) {
         const cards = document.querySelectorAll(`.mdc[data-flow="${flow}"]`);
         if (!cards.length) return;
-        const allDone = [...cards].every(c => c.dataset.done === 'true');
-        if (!allDone) return;
+        const total = cards.length;
+        const doneCount = [...cards].filter(c => c.dataset.done === 'true').length;
+        const failedCount = [...cards].filter(c => c.dataset.rightsFail === 'true').length;
         const confirmId = multiDrugConfirmMap[flow];
-        if (confirmId) {
-            const btn = document.getElementById(confirmId);
-            if (btn) btn.disabled = false;
+        if (!confirmId) return;
+        const btn = document.getElementById(confirmId);
+        if (!btn) return;
+
+        // If any drug failed 5 Rights → block completely
+        if (failedCount > 0) {
+            btn.disabled = true;
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg> 5 Rights ไม่ผ่าน — ห้ามให้ยา';
+            btn.style.background = 'linear-gradient(135deg,#DC2626,#EF4444)';
+            return;
+        }
+
+        // At least 1 scanned → enable button (partial OK)
+        if (doneCount > 0) {
+            btn.disabled = false;
+            if (doneCount < total) {
+                // Partial — warn but allow
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13" stroke="white" stroke-width="2"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="white" stroke-width="2"/></svg> ยืนยันให้ยา (' + doneCount + '/' + total + ') — มียาที่ยังไม่ได้สแกน';
+                btn.style.background = 'linear-gradient(135deg,#D97706,#F59E0B)';
+            } else {
+                // All done
+                btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ยืนยันให้ยา (' + total + '/' + total + ')';
+                btn.style.background = 'linear-gradient(135deg,#0D9488,#14B8A6)';
+            }
+        } else {
+            btn.disabled = true;
         }
     }
 
