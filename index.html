@@ -22744,9 +22744,35 @@
 
     function checkMultiDrugDone(flow) {
         const cards = [...document.querySelectorAll(`.mdc[data-flow="${flow}"]`)].filter(c => c.style.display !== 'none');
-        if (cards.length && cards.every(c => c.dataset.done === 'true')) {
-            const btn = document.getElementById(multiDrugConfirmMap[flow]);
-            if (btn) btn.disabled = false;
+        if (!cards.length) return;
+        const total = cards.length;
+        const doneCount = cards.filter(c => c.dataset.done === 'true').length;
+        const failedCount = cards.filter(c => c.dataset.rightsFail === 'true').length;
+        const confirmId = multiDrugConfirmMap[flow];
+        if (!confirmId) return;
+        const btn = document.getElementById(confirmId);
+        if (!btn) return;
+
+        // If any drug failed 5 Rights → block completely
+        if (failedCount > 0) {
+            btn.disabled = true;
+            btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg> 5 Rights ไม่ผ่าน — ห้ามให้ยา';
+            btn.style.background = 'linear-gradient(135deg,#DC2626,#EF4444)';
+            return;
+        }
+
+        // At least 1 scanned → enable button (partial OK)
+        if (doneCount > 0) {
+            btn.disabled = false;
+            if (doneCount < total) {
+                btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> ยืนยันให้ยา (' + doneCount + '/' + total + ') — มียาที่ยังไม่ได้สแกน';
+                btn.style.background = 'linear-gradient(135deg,#D97706,#F59E0B)';
+            } else {
+                btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> ยืนยันให้ยา (' + total + '/' + total + ')';
+                btn.style.background = 'linear-gradient(135deg,#0D9488,#14B8A6)';
+            }
+        } else {
+            btn.disabled = true;
         }
     }
 
