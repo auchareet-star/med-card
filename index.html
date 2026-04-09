@@ -1972,7 +1972,7 @@
         ══════════════════════════════════════════════ */
         /* ── DASHBOARD ────────────────────────────── */
         .db-body { flex:1; width:100%; overflow-y:auto; }
-        .db-inner { max-width:1080px; margin:0 auto; padding:18px 28px 36px; }
+        .db-inner { max-width:1080px; margin:0 auto; padding:18px 28px 36px; display:flex; flex-direction:column; }
 
         /* Banner — refined premium */
         .db-banner {
@@ -2297,6 +2297,112 @@
         }
         .db-log-text { flex:1; font-size:12px; color:var(--text-1); line-height:1.5; }
         .db-log-time { font-size:11px; color:var(--text-3); flex-shrink:0; font-weight:500; }
+
+        /* ═══════════════════════════════════════
+           ROLE-BASED DASHBOARD LAYOUT (CSS-driven)
+           ═══════════════════════════════════════ */
+
+        /* ── Section base order (natural flow) ── */
+        #pg-dashboard .db-banner          { order:1; }
+        #pg-dashboard .db-stats           { order:2; }
+        #pg-dashboard #dashPermSection    { order:3; }
+        #pg-dashboard #dashPipelineBar    { order:4; }
+        #pg-dashboard #dashQuickLinks     { order:5; }
+        #pg-dashboard .db-actions         { order:6; }
+        #pg-dashboard #dashStatAssess     { order:7; }
+        #pg-dashboard #dashCassettePanel  { order:8; }
+        #pg-dashboard #dashRoleSection    { order:9; }
+        #pg-dashboard #dashBottomGrid     { order:10; }
+        #pg-dashboard #dashRoleBottom     { order:11; }
+
+        /* ────────────────────────────────────────
+           NURSE — จ่ายยา focus
+           Banner → Stats → QuickLinks(2col) →
+           STAT+Assess(2col) → จ่ายยา(hero) →
+           RoleSection(urgent+summary) → Activity(full)
+           ──────────────────────────────────────── */
+        #pg-dashboard[data-role="nurse"] .db-action[onclick*="goToPrepType"],
+        #pg-dashboard[data-role="nurse"] #dashCassettePanel,
+        #pg-dashboard[data-role="nurse"] #dashPipelineBar,
+        #pg-dashboard[data-role="nurse"] #dashSchedulePanel,
+        #pg-dashboard[data-role="nurse"] #dashTeamPanelSlot {
+            display:none !important;
+        }
+        /* Reorder: alerts before action hero */
+        #pg-dashboard[data-role="nurse"] #dashQuickLinks   { order:5; }
+        #pg-dashboard[data-role="nurse"] #dashStatAssess    { order:6; }
+        #pg-dashboard[data-role="nurse"] .db-actions        { order:7; }
+        #pg-dashboard[data-role="nurse"] #dashRoleSection   { order:8; }
+        #pg-dashboard[data-role="nurse"] #dashBottomGrid    { order:10; grid-template-columns:1fr; }
+
+        /* Single action card → full-width hero CTA */
+        #pg-dashboard[data-role="nurse"] .db-actions {
+            grid-template-columns:1fr;
+        }
+        #pg-dashboard[data-role="nurse"] .db-actions .db-action.primary {
+            background:linear-gradient(135deg,#FEF2F2 0%,#FEE2E2 50%,#FECDD3 100%);
+            border-color:#FECACA;
+            border-width:2px;
+        }
+
+        /* ────────────────────────────────────────
+           PHARMA — จัดยา + inventory focus
+           Banner → Stats → eMAR(1col) →
+           จัดยา(hero) → Cassette → RoleSection(report)
+           ──────────────────────────────────────── */
+        #pg-dashboard[data-role="pharma"] #dashNurseScheduleQuickLink,
+        #pg-dashboard[data-role="pharma"] .db-action[onclick*="pg-routine"],
+        #pg-dashboard[data-role="pharma"] #dashStatAssess,
+        #pg-dashboard[data-role="pharma"] #dashPipelineBar,
+        #pg-dashboard[data-role="pharma"] #dashBottomGrid {
+            display:none !important;
+        }
+        #pg-dashboard[data-role="pharma"] #dashQuickLinks {
+            grid-template-columns:1fr;
+        }
+        /* Single action card → full-width hero CTA */
+        #pg-dashboard[data-role="pharma"] .db-actions {
+            grid-template-columns:1fr;
+        }
+        #pg-dashboard[data-role="pharma"] .db-actions .db-action.secondary {
+            background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 50%,#FDE68A 100%);
+            border-color:#FDE68A;
+            border-width:2px;
+        }
+
+        /* ────────────────────────────────────────
+           SUPER — oversight + full pipeline
+           Banner → Pipeline → Stats → QuickLinks(2col) →
+           Actions(2col) → STAT+Assess → Cassette →
+           Bottom(Team+Activity 2col)
+           ──────────────────────────────────────── */
+        #pg-dashboard[data-role="super"] #dashPipelineBar {
+            display:flex !important;
+        }
+        #pg-dashboard[data-role="super"] #dashSchedulePanel {
+            display:none !important;
+        }
+        /* Pipeline promoted right after banner */
+        #pg-dashboard[data-role="super"] #dashPipelineBar  { order:2; }
+        #pg-dashboard[data-role="super"] .db-stats          { order:3; }
+        #pg-dashboard[data-role="super"] #dashQuickLinks    { order:4; }
+        #pg-dashboard[data-role="super"] .db-actions        { order:5; grid-template-columns:1fr 1fr; }
+        #pg-dashboard[data-role="super"] #dashStatAssess    { order:6; }
+        #pg-dashboard[data-role="super"] #dashCassettePanel { order:7; }
+        #pg-dashboard[data-role="super"] #dashRoleSection   { order:8; }
+        #pg-dashboard[data-role="super"] #dashBottomGrid    { order:9; grid-template-columns:1fr 1fr; }
+        #pg-dashboard[data-role="super"] #dashTeamPanelSlot {
+            display:block !important; order:1;
+        }
+        #pg-dashboard[data-role="super"] #dashActivityPanel { order:2; }
+
+        /* Pipeline emphasis for super */
+        #pg-dashboard[data-role="super"] #dashPipelineBar {
+            background:linear-gradient(135deg,rgba(91,33,182,.06),rgba(124,58,237,.04));
+            border:1.5px solid rgba(124,58,237,.15);
+            border-radius:14px; padding:14px 20px !important;
+            margin-bottom:16px;
+        }
 
         /* Logout button */
         .logout-btn {
@@ -5792,9 +5898,341 @@
             .rt-step-dot { width: 26px; height: 26px; font-size: 11px; }
         }
 
+        /* ── GLOBAL REDESIGN LAYER ─────────────────── */
+        body.redesign-v2 {
+            --green: #0D9488;
+            --green-dark: #0F766E;
+            --green-light: #CCFBF1;
+            --green-mid: #99F6E4;
+            --bg: #F8FAFC;
+            --surface: #FFFFFF;
+            --surface-2: #F8FAFC;
+            --text-1: #0F172A;
+            --text-2: #64748B;
+            --text-3: #94A3B8;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow: 0 10px 30px rgba(15,23,42,0.06), 0 2px 10px rgba(15,23,42,0.04);
+            --shadow-lg: 0 22px 48px rgba(15,23,42,0.09), 0 6px 18px rgba(15,23,42,0.05);
+            --r: 8px;
+            --r-sm: 8px;
+            background:
+                radial-gradient(circle at top left, rgba(13,148,136,0.09), transparent 28%),
+                radial-gradient(circle at top right, rgba(20,184,166,0.08), transparent 24%),
+                linear-gradient(180deg, #F8FAFC 0%, #F2F7F9 52%, #EEF6F6 100%);
+            position: relative;
+        }
+
+        body.redesign-v2::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(180deg, rgba(0,0,0,0.3), transparent 92%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        body.redesign-v2 .page {
+            background: transparent !important;
+            position: relative;
+        }
+
+        body.redesign-v2 #globalHeader {
+            background: rgba(255,255,255,0.92);
+            border-bottom: 1px solid rgba(226,232,240,0.5);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.03), 0 4px 16px rgba(0,0,0,0.03);
+            height: 66px;
+        }
+
+        body.redesign-v2 #globalFooter {
+            background: rgba(255,255,255,0.92);
+            border-top: 1px solid rgba(226,232,240,0.5);
+            box-shadow: 0 -1px 0 rgba(0,0,0,0.03), 0 -4px 12px rgba(0,0,0,0.02);
+        }
+
+        body.redesign-v2 .gh-title,
+        body.redesign-v2 .gh-user-name,
+        body.redesign-v2 .gh-time {
+            color: var(--text-1);
+        }
+
+        body.redesign-v2 .gh-subtitle,
+        body.redesign-v2 .gh-date,
+        body.redesign-v2 .gh-user-role {
+            color: var(--text-3);
+        }
+
+        body.redesign-v2 .gh-ward-chip,
+        body.redesign-v2 .gh-time-card,
+        body.redesign-v2 .gh-user-card,
+        body.redesign-v2 .gh-nav-actions {
+            background: rgba(248,250,252,0.8);
+            border-color: rgba(226,232,240,0.8);
+            box-shadow: none;
+        }
+
+        body.redesign-v2 .gh-ward-chip { color: var(--text-2); }
+
+        body.redesign-v2 .gh-nav-btn {
+            color: var(--text-2);
+            border-radius: 8px;
+        }
+
+        body.redesign-v2 .gh-nav-btn:hover {
+            color: var(--text-1);
+            background: white;
+            border-color: var(--border);
+            box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+        }
+
+        body.redesign-v2 .gh-nav-btn.dashboard {
+            color: #2563EB;
+            background: #EFF6FF;
+            border-color: #BFDBFE;
+        }
+
+        body.redesign-v2 .gh-icon-action.backend {
+            background: linear-gradient(135deg,#F0FDFA,#CCFBF1);
+            border-color: #99F6E4;
+            color: #0F766E;
+        }
+
+        body.redesign-v2 .gh-icon-action.logout {
+            background: linear-gradient(135deg,#FFF1F2,#FEE2E2);
+            border-color: #FECACA;
+            color: #DC2626;
+        }
+
+        body.redesign-v2 .role-body,
+        body.redesign-v2 .login-body,
+        body.redesign-v2 .db-body,
+        body.redesign-v2 .prep-body,
+        body.redesign-v2 .hw-body,
+        body.redesign-v2 .fill-body,
+        body.redesign-v2 .sum-body,
+        body.redesign-v2 .disp-body,
+        body.redesign-v2 .pd-body,
+        body.redesign-v2 .scan-pt-body,
+        body.redesign-v2 .wit-body,
+        body.redesign-v2 .omit-body,
+        body.redesign-v2 .rec-body,
+        body.redesign-v2 .ok-body,
+        body.redesign-v2 .hs-body,
+        body.redesign-v2 .rt-body,
+        body.redesign-v2 .pbp-body,
+        body.redesign-v2 .pdl-body,
+        body.redesign-v2 .pf-body,
+        body.redesign-v2 .pbm-body,
+        body.redesign-v2 .dfd-body,
+        body.redesign-v2 .ibf-body,
+        body.redesign-v2 .pbs-body,
+        body.redesign-v2 .trd-body,
+        body.redesign-v2 .trf-body,
+        body.redesign-v2 .op-body {
+            background: transparent !important;
+        }
+
+        body.redesign-v2 .main,
+        body.redesign-v2 .role-frame,
+        body.redesign-v2 .login-frame,
+        body.redesign-v2 .db-inner,
+        body.redesign-v2 .op-shell,
+        body.redesign-v2 .prep-body,
+        body.redesign-v2 .hw-body,
+        body.redesign-v2 .fill-body,
+        body.redesign-v2 .sum-body,
+        body.redesign-v2 .disp-body,
+        body.redesign-v2 .pd-body,
+        body.redesign-v2 .scan-pt-body,
+        body.redesign-v2 .wit-body,
+        body.redesign-v2 .rec-body,
+        body.redesign-v2 .rt-body,
+        body.redesign-v2 .pbp-body,
+        body.redesign-v2 .pdl-body,
+        body.redesign-v2 .pf-body,
+        body.redesign-v2 .pbm-body,
+        body.redesign-v2 .dfd-body,
+        body.redesign-v2 .ibf-body,
+        body.redesign-v2 .pbs-body,
+        body.redesign-v2 .trd-body,
+        body.redesign-v2 .trf-body {
+            position: relative;
+            z-index: 1;
+        }
+
+        body.redesign-v2 .card,
+        body.redesign-v2 .role-card,
+        body.redesign-v2 .login-card,
+        body.redesign-v2 .login-ctx,
+        body.redesign-v2 .db-stat,
+        body.redesign-v2 .db-action,
+        body.redesign-v2 .db-alert,
+        body.redesign-v2 .db-panel,
+        body.redesign-v2 .db-cassette-panel,
+        body.redesign-v2 .db-cassette-stat,
+        body.redesign-v2 .db-cassette-map-card,
+        body.redesign-v2 .op-topbar,
+        body.redesign-v2 .op-panel,
+        body.redesign-v2 .op-stat,
+        body.redesign-v2 .op-order-row,
+        body.redesign-v2 .op-patient-box,
+        body.redesign-v2 .op-check,
+        body.redesign-v2 .ns-round,
+        body.redesign-v2 .ns-item,
+        body.redesign-v2 .ns-side-item,
+        body.redesign-v2 .emar-row,
+        body.redesign-v2 .emar-selected-head,
+        body.redesign-v2 .emar-log-row,
+        body.redesign-v2 .pt-card,
+        body.redesign-v2 .pd-drug,
+        body.redesign-v2 .am-drug,
+        body.redesign-v2 .rt-stepper,
+        body.redesign-v2 .rt-routine-head,
+        body.redesign-v2 .rt-patient-card,
+        body.redesign-v2 .mdc {
+            background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,251,253,0.94)) !important;
+            border: 1px solid rgba(215,226,235,0.96) !important;
+            border-radius: 8px !important;
+            box-shadow: var(--shadow) !important;
+            backdrop-filter: blur(14px);
+        }
+
+        body.redesign-v2 .db-banner,
+        body.redesign-v2 .db-cassette-banner {
+            border-radius: 8px !important;
+            border: 1px solid rgba(13,148,136,0.14) !important;
+            background: linear-gradient(135deg,#0a5c55 0%,#0F766E 30%,#0D9488 65%,#0ea59a 100%) !important;
+            box-shadow: 0 24px 48px rgba(13,148,136,0.16) !important;
+        }
+
+        body.redesign-v2 .db-banner::before,
+        body.redesign-v2 .db-banner::after,
+        body.redesign-v2 .db-cassette-banner::before,
+        body.redesign-v2 .db-cassette-banner::after {
+            opacity: 0.6;
+        }
+
+        body.redesign-v2 .db-inner {
+            max-width: 1220px;
+            padding: 24px 24px 72px;
+        }
+
+        body.redesign-v2 .db-stats,
+        body.redesign-v2 .op-summary-grid {
+            gap: 12px;
+        }
+
+        body.redesign-v2 .db-bottom,
+        body.redesign-v2 .op-grid {
+            gap: 18px;
+        }
+
+        body.redesign-v2 .btn-primary,
+        body.redesign-v2 .role-btn,
+        body.redesign-v2 .op-btn.primary {
+            border-radius: 8px !important;
+            background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%) !important;
+            box-shadow: 0 10px 24px rgba(13,148,136,0.18) !important;
+            border: 1px solid rgba(13,148,136,0.1) !important;
+        }
+
+        body.redesign-v2 .btn-primary:hover,
+        body.redesign-v2 .role-btn:hover,
+        body.redesign-v2 .op-btn.primary:hover {
+            background: linear-gradient(135deg, #0F766E 0%, #0D9488 100%) !important;
+            box-shadow: 0 14px 28px rgba(13,148,136,0.22) !important;
+        }
+
+        body.redesign-v2 .btn-secondary,
+        body.redesign-v2 .op-btn:not(.primary):not(.danger),
+        body.redesign-v2 .ns-filter-btn,
+        body.redesign-v2 .prep-return-type-btn {
+            border-radius: 8px !important;
+            background: rgba(255,255,255,0.82) !important;
+            border: 1px solid rgba(215,226,235,0.96) !important;
+            color: #294558 !important;
+            box-shadow: none !important;
+        }
+
+        body.redesign-v2 .btn-secondary:hover,
+        body.redesign-v2 .op-btn:not(.primary):not(.danger):hover,
+        body.redesign-v2 .prep-return-type-btn:hover {
+            background: #F0FDFA !important;
+            border-color: rgba(13,148,136,0.32) !important;
+            color: #0F766E !important;
+        }
+
+        body.redesign-v2 .ns-filter-btn.active {
+            background: linear-gradient(135deg, #0D9488, #14B8A6) !important;
+            border-color: transparent !important;
+            color: #FFFFFF !important;
+        }
+
+        body.redesign-v2 .op-input,
+        body.redesign-v2 .op-select,
+        body.redesign-v2 .op-textarea,
+        body.redesign-v2 input,
+        body.redesign-v2 select,
+        body.redesign-v2 textarea {
+            border-radius: 8px;
+        }
+
+        body.redesign-v2 .toast {
+            border-radius: 8px;
+            background: rgba(12,26,43,0.92);
+            border: 1px solid rgba(13,148,136,0.16);
+            box-shadow: 0 18px 44px rgba(15,23,42,0.22);
+        }
+
+        body.redesign-v2 .status-pill,
+        body.redesign-v2 .op-tag,
+        body.redesign-v2 .db-action-badge,
+        body.redesign-v2 .db-tl-badge,
+        body.redesign-v2 .ns-round-time,
+        body.redesign-v2 .ns-round-count,
+        body.redesign-v2 .emar-status {
+            border-radius: 8px !important;
+        }
+
+        body.redesign-v2 .role-card,
+        body.redesign-v2 .db-action,
+        body.redesign-v2 .db-alert,
+        body.redesign-v2 .db-stat,
+        body.redesign-v2 .op-order-row,
+        body.redesign-v2 .ns-item,
+        body.redesign-v2 .emar-row {
+            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+
+        body.redesign-v2 .role-card:hover,
+        body.redesign-v2 .db-action:hover,
+        body.redesign-v2 .db-alert:hover,
+        body.redesign-v2 .db-stat:hover,
+        body.redesign-v2 .op-order-row:hover,
+        body.redesign-v2 .ns-item:hover,
+        body.redesign-v2 .emar-row:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg) !important;
+        }
+
+        @media (max-width: 768px) {
+            body.redesign-v2 #globalHeader { height: 60px; }
+            body.redesign-v2 #globalFooter { padding: 0 16px; }
+            body.redesign-v2 .db-inner,
+            body.redesign-v2 .op-body,
+            body.redesign-v2 .main {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+        }
+
 </style>
 </head>
-<body>
+<body class="redesign-v2">
 
 <!-- Page container -->
 
@@ -6865,7 +7303,7 @@
              ════════════════════════════════════════════ -->
 
         <!-- Pipeline step indicator (super only) — 3 steps -->
-        <div id="dashPipelineBar" style="display:none;align-items:center;gap:0;margin-bottom:16px;padding:0 4px;">
+        <div id="dashPipelineBar" style="align-items:center;gap:0;margin-bottom:16px;padding:0 4px;display:none;">
             <div style="display:flex;align-items:center;gap:6px;flex:1;">
                 <div style="width:26px;height:26px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;">1</div>
                 <span style="font-size:11px;font-weight:700;color:#1D4ED8;">ตารางยา</span>
@@ -6886,7 +7324,7 @@
         <div id="dashOrderPlanQuickLink" style="display:none;"><span id="dashOrderPlanCount">0</span></div>
 
         <!-- ── Quick Links (2-col: Nurse Schedule + eMAR) ── -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div id="dashQuickLinks" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
             <div id="dashNurseScheduleQuickLink" onclick="nav('pg-nurse-schedule')" style="
                 background:linear-gradient(135deg,#eff6ff,#ecfeff);
                 border:1.5px solid #bfdbfe;border-radius:12px;
@@ -6962,7 +7400,7 @@
         </div>
 
         <!-- ── STAT + Assessment (compact 2-col) ── -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div id="dashStatAssess" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
             <!-- STAT -->
             <div id="dashQuickAlerts" onclick="startStatTimer();nav('pg-stat');" style="
                 background:linear-gradient(135deg,#FEF2F2,#FEE2E2);
@@ -14910,29 +15348,37 @@
         const roleEl = document.querySelector('#pg-dashboard .hdr-user-role');
         if (roleEl) roleEl.textContent = roleText;
 
-        // ── Role-based visibility: HIDE elements instead of disabling ──
+        // ── Role-based layout: CSS-driven via data-role ──
         const dashEl = document.getElementById('pg-dashboard');
         const isNurse = role === 'nurse';
         const isPharma = role === 'pharma';
         const isSuper = role === 'super';
 
-        // Helper: show/hide element
-        function showEl(el, visible) { if (el) el.style.display = visible ? '' : 'none'; }
+        // Set data-role — CSS handles all section visibility & grid layout
+        dashEl.setAttribute('data-role', role);
 
-        // Pipeline step indicator
-        var pipeBar = document.getElementById('dashPipelineBar');
-        if (pipeBar) pipeBar.style.display = isSuper ? 'flex' : 'none';
+        // Remove leftover locks from prior role
+        dashEl.querySelectorAll('.lock-overlay, .lock-mini').forEach(function(el){ el.remove(); });
+        dashEl.querySelectorAll('[onclick]').forEach(function(c){ c.style.opacity=''; c.style.pointerEvents=''; c.style.filter=''; });
 
-        /* ══════════════════════════════════════
-           ROLE-BASED DASHBOARD LAYOUT
-           ══════════════════════════════════════ */
-
-        // Remove leftover locks
-        dashEl?.querySelectorAll('.lock-overlay, .lock-mini').forEach(function(el){ el.remove(); });
-        dashEl?.querySelectorAll('[onclick]').forEach(function(c){ c.style.opacity=''; c.style.pointerEvents=''; c.style.filter=''; });
+        // Clear any leftover inline display/grid styles (CSS rules take over)
+        ['dashPipelineBar','dashCassettePanel','dashQuickAlerts','dashAssessQuickLink',
+         'dashNurseScheduleQuickLink','dashSchedulePanel','dashActivityPanel',
+         'dashTeamPanelSlot','dashBottomGrid','dashStatAssess','dashPermSection','dashRoleBottom'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) { el.style.display = ''; el.style.order = ''; el.style.gridTemplateColumns = ''; }
+        });
+        var prepBtn = dashEl.querySelector('.db-action[onclick*="goToPrepType"]');
+        var dispenseBtn = dashEl.querySelector('.db-action[onclick*="pg-routine"]');
+        if (prepBtn) prepBtn.style.display = '';
+        if (dispenseBtn) dispenseBtn.style.display = '';
+        var actionsGrid = dashEl.querySelector('.db-actions');
+        if (actionsGrid) actionsGrid.style.gridTemplateColumns = '';
+        var qlContainer = document.getElementById('dashQuickLinks');
+        if (qlContainer) qlContainer.style.gridTemplateColumns = '';
 
         // ── Banner sub text per role ──
-        var bannerSub = dashEl?.querySelector('.db-banner-sub');
+        var bannerSub = dashEl.querySelector('.db-banner-sub');
         if (bannerSub && typeof MedCartStore !== 'undefined' && MedCartStore.orders.length) {
             var ss = MedCartStore.getDashStats();
             if (isNurse) bannerSub.innerHTML = 'รอจ่าย <strong style="color:#a7f3d0;">' + ss.pending + ' รายการ</strong> · STAT <strong style="color:#fca5a5;">' + ss.stat + '</strong> · จ่ายแล้ว <strong style="color:#a7f3d0;">' + ss.done + '/' + ss.totalMeds + '</strong>';
@@ -14941,8 +15387,8 @@
         }
 
         // ── Stats labels per role ──
-        var statDoneEl = dashEl?.querySelector('#dashStatDone')?.parentElement;
-        var statPendEl = dashEl?.querySelector('#dashStatPending')?.parentElement;
+        var statDoneEl = dashEl.querySelector('#dashStatDone')?.parentElement;
+        var statPendEl = dashEl.querySelector('#dashStatPending')?.parentElement;
         if (isPharma) {
             var lbl3 = statDoneEl?.querySelector('.db-stat-label'); if (lbl3) lbl3.textContent = 'จัดแล้ว';
             var lbl4 = statPendEl?.querySelector('.db-stat-label'); if (lbl4) lbl4.textContent = 'รอจัด';
@@ -14951,55 +15397,13 @@
             var lbl4 = statPendEl?.querySelector('.db-stat-label'); if (lbl4) lbl4.textContent = 'รอจ่าย';
         }
 
-        // ── Quick links ──
-        var qlContainer = document.getElementById('dashEmarQuickLink')?.parentElement;
-        showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
-        showEl(document.getElementById('dashEmarQuickLink'), true);
-        if (qlContainer) { qlContainer.style.display = ''; qlContainer.style.gridTemplateColumns = isPharma ? '1fr' : '1fr 1fr'; }
-
-        // ── Action cards ──
-        var prepBtn = dashEl?.querySelector('.db-action[onclick*="goToPrepType"]');
-        var dispenseBtn = dashEl?.querySelector('.db-action[onclick*="pg-routine"]');
-        showEl(prepBtn, !isNurse);
-        showEl(dispenseBtn, !isPharma);
-        var actionsGrid = dashEl?.querySelector('.db-actions');
-        if (actionsGrid) actionsGrid.style.gridTemplateColumns = isSuper ? '1fr 1fr' : '1fr';
-
-        // ── STAT + Assessment ── nurse + super only
-        var statAssessGrid = document.getElementById('dashQuickAlerts')?.parentElement;
-        showEl(document.getElementById('dashQuickAlerts'), !isPharma);
-        showEl(document.getElementById('dashAssessQuickLink'), !isPharma);
-        if (statAssessGrid && statAssessGrid.style) statAssessGrid.style.display = isPharma ? 'none' : '';
-
-        // ── Role-specific section ──
+        // ── Role-specific dynamic sections ──
         var sec = document.getElementById('dashRoleSection');
         if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
 
-        // ── Bottom panels ──
-        var schedulePanel = document.getElementById('dashSchedulePanel');
-        var activityPanel = document.getElementById('dashActivityPanel');
+        // Super: render team panel
         var teamPanelSlot = document.getElementById('dashTeamPanelSlot');
-        var bottomGrid = document.getElementById('dashBottomGrid');
-        // Nurse: activity only (schedule is in Nurse Schedule page)
-        // Pharma: hidden (has own report section above)
-        // Super: activity + team
-        showEl(schedulePanel, false); // removed — duplicate of Nurse Schedule Calendar
-        showEl(activityPanel, !isPharma);
-        showEl(bottomGrid, !isPharma);
-        if (activityPanel) activityPanel.style.order = isSuper ? '2' : '';
-        if (teamPanelSlot) {
-            teamPanelSlot.innerHTML = isSuper ? getRoleBottomHTML(role) : '';
-            teamPanelSlot.style.display = isSuper ? '' : 'none';
-            teamPanelSlot.style.order = isSuper ? '1' : '';
-        }
-        if (bottomGrid) bottomGrid.classList.toggle('super-head', isSuper);
-
-        // ── Cassette Monitor ── pharma + super only
-        showEl(document.getElementById('dashCassettePanel'), !isNurse);
-
-        // ── Perm panel ──
-        showEl(document.getElementById('dashPermSection'), false);
-        showEl(document.getElementById('dashRoleBottom'), false);
+        if (teamPanelSlot) teamPanelSlot.innerHTML = isSuper ? getRoleBottomHTML(role) : '';
 
         // Show user section in header
         document.body.classList.add('logged-in');
