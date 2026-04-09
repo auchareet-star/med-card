@@ -447,7 +447,7 @@
             +'</div>ประสิทธิภาพเวรนี้</div>'
             +'<div style="display:flex;flex-direction:column;gap:14px;">'
             +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">ตรงเวลา</span><span style="font-weight:700;color:var(--green);font-size:14px;">87%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,#0D9488,#14B8A6);border-radius:4px;"></div></div></div>'
-            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">7 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;font-size:14px;">100%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;"></div></div></div>'
+            +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">5 Rights ผ่าน</span><span style="font-weight:700;color:#3b82f6;font-size:14px;">100%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:4px;"></div></div></div>'
             +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Overdue rate</span><span style="font-weight:700;color:#f59e0b;font-size:14px;">13%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:13%;height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:4px;"></div></div></div>'
             +'<div><div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:6px;"><span style="color:var(--text-2);">Error rate</span><span style="font-weight:700;color:var(--green);font-size:14px;">0%</span></div><div style="width:100%;height:7px;background:#f1f5f9;border-radius:4px;overflow:hidden;"><div style="width:0%;height:100%;background:#ef4444;border-radius:4px;"></div></div></div>'
             +'</div></div>'
@@ -1051,7 +1051,7 @@
         document.getElementById('ovDrugResult').classList.add('show');
         ['ovRD','ovRDs','ovRR','ovRDc','ovRRs'].forEach(id=>{document.getElementById(id).className='rt-r pass';});
         document.getElementById('ovBtnConfirm').disabled=false;
-        showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน (ยกเว้น Time: Overdue)');setTimeout(()=>showToast(''),2000);
+        showToast('สแกนยาสำเร็จ — 5 Rights ผ่าน (ยกเว้น Time: Overdue)');setTimeout(()=>showToast(''),2000);
     }
 
     /* ── Omit flow (Page 23) ── */
@@ -1161,7 +1161,7 @@
         document.getElementById('haDrugResult').classList.add('show');
         ['haRD','haRDs','haRR','haRDc','haRRs'].forEach(id=>{document.getElementById(id).className='rt-r pass';});
         document.getElementById('haBtnWit').disabled=false;
-        showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน · ไปขั้นตอนพยาน');setTimeout(()=>showToast(''),2000);
+        showToast('สแกนยาสำเร็จ — 5 Rights ผ่าน · ไปขั้นตอนพยาน');setTimeout(()=>showToast(''),2000);
     }
 
     function haWitness(){
@@ -1243,7 +1243,7 @@
         document.getElementById('prnDrugResult').classList.add('show');
         ['prnRD','prnRDs','prnRR','prnRDc'].forEach(id => { document.getElementById(id).className='rt-r pass'; });
         document.getElementById('btnPrnConfirm').disabled=false;
-        showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน'); setTimeout(()=>showToast(''),1500);
+        showToast('สแกนยาสำเร็จ — 5 Rights ผ่าน'); setTimeout(()=>showToast(''),1500);
     }
 
     /* ── STAT flow (Page 20) ── */
@@ -1302,11 +1302,11 @@
 
     function stScanDrug() {
         document.getElementById('stDrugResult').classList.add('show');
-        ['stRD','stRDs','stRR','stRDc','stRRs'].forEach(id => {
+        ['stRD','stRDs','stRR'].forEach(id => {
             document.getElementById(id).className = 'rt-r pass';
         });
         document.getElementById('stBtnConfirm').disabled = false;
-        showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน'); setTimeout(()=>showToast(''),1500);
+        showToast('สแกนยาสำเร็จ — 5 Rights ผ่าน'); setTimeout(()=>showToast(''),1500);
     }
 
     // Timer for elapsed
@@ -1394,7 +1394,7 @@
         if (el.classList.contains('done')) return;
         document.querySelectorAll('#rtStep4 .rt-drug').forEach(d => d.classList.remove('active'));
         el.classList.add('active');
-        rtResetDrugScan(); // reset 7 Rights ทุกครั้งที่เปลี่ยนยา
+        rtResetDrugScan(); // reset 5 Rights ทุกครั้งที่เปลี่ยนยา
     }
 
     function rtScanDrug() {
@@ -1405,7 +1405,7 @@
             return;
         }
         document.getElementById('rtDrugScanResult').classList.add('show');
-        // ตั้ง 7 Rights เป็น pass ทั้งหมด
+        // ตั้ง 5 Rights เป็น pass ทั้งหมด
         ['rtRD','rtRDs','rtRR','rtRDc','rtRRs'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.className = 'rt-r pass';
@@ -1418,7 +1418,7 @@
         activeDrug.style.opacity = '0.5';
         activeDrug.style.pointerEvents = 'none';
         document.getElementById('rtBtnConfirmDrug').disabled = false;
-        showToast('สแกนยาสำเร็จ — 7 Rights ผ่าน');
+        showToast('สแกนยาสำเร็จ — 5 Rights ผ่าน');
         setTimeout(() => showToast(''), 1500);
     }
 
@@ -1487,8 +1487,8 @@
         if (el.classList.contains('done') || el.style.opacity === '0.6') return;
         document.querySelectorAll('.am-drug').forEach(d => d.classList.remove('active'));
         el.classList.add('active');
-        // Reset 7 Rights และ scan result ทุกครั้งที่เปลี่ยนยา
-        ['rDrug','rDose','rRoute','rDoc','rReason'].forEach(id => {
+        // Reset 5 Rights และ scan result ทุกครั้งที่เปลี่ยนยา
+        ['rDrug','rDose','rRoute'].forEach(id => {
             const r = document.getElementById(id);
             if (r) r.className = 'am-r pend';
         });
@@ -1500,8 +1500,8 @@
 
     function demoScanMed() {
         document.getElementById('amScanResult').classList.add('show');
-        // ตั้ง 7 Rights เป็น pass ทีละ right พร้อม delay เล็กน้อยเพื่อ UX
-        const rights = ['rDrug','rDose','rRoute','rDoc','rReason'];
+        // ตั้ง 5 Rights เป็น pass ทีละ right พร้อม delay เล็กน้อยเพื่อ UX
+        const rights = ['rDrug','rDose','rRoute'];
         rights.forEach((id, i) => {
             setTimeout(() => {
                 const el = document.getElementById(id);
@@ -1511,7 +1511,7 @@
         setTimeout(() => {
             document.getElementById('btnConfirmAdmin').disabled = false;
         }, rights.length * 80);
-        showToast('สแกนยาสำเร็จ — 7 Rights ผ่านทั้งหมด');
+        showToast('สแกนยาสำเร็จ — 5 Rights ผ่านทั้งหมด');
         setTimeout(() => showToast(''), 2000);
     }
 
