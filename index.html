@@ -14162,7 +14162,8 @@
 
     // Pages that require nurse/head-nurse permission.
     const assessmentPages = ['pg-post-assess','pg-assess-list'];
-    const dispensePages = ['pg-order-plan','pg-nurse-schedule','pg-emar','pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail'];
+    const dispensePages = ['pg-nurse-schedule','pg-emar','pg-routine','pg-stat','pg-prn','pg-highalert','pg-omit-flow','pg-overdue','pg-scan-pt','pg-admin-med','pg-witness','pg-omit','pg-record','pg-hardstop','pg-dispense','pg-pt-detail'];
+    // Note: pg-order-plan removed — pharma needs access to see Dr→Ph orders
     const landingPages = ['pg-cart-list','pg-cart','pg-confirm','pg-ward-select','pg-login','pg-role'];
     const prepHardwarePages = ['pg-prep-pt-drugs','pg-prep-med-detail','pg-sched-detail'];
     let prepHardwareReady = false;
@@ -15029,8 +15030,22 @@
         // Pipeline step indicator
         showEl(document.getElementById('dashPipelineBar'), isSuper);
 
-        // Step 1: Order Plan — nurse + super only
-        showEl(document.getElementById('dashOrderPlanQuickLink'), !isPharma);
+        // Step 1: Order Plan — ALL roles can see (pharma sees Dr→Ph view)
+        showEl(document.getElementById('dashOrderPlanQuickLink'), true);
+        // Update Order Plan text per role
+        var opLink = document.getElementById('dashOrderPlanQuickLink');
+        if (opLink) {
+            var opTitle = opLink.querySelector('div[style*="font-size:15px"]');
+            var opDesc = opLink.querySelector('div[style*="font-size:12px"]');
+            if (isPharma) {
+                if (opTitle) opTitle.textContent = 'คำสั่งยาจากแพทย์ — Order Plan';
+                if (opDesc) opDesc.textContent = 'ตรวจสอบ 5 Rights แล้วจัดยาเข้า Cassette ตามใบสั่ง';
+            } else {
+                if (opTitle) opTitle.textContent = 'รับคำสั่งยา — Order Plan';
+                if (opDesc) opDesc.textContent = 'คำสั่งยาจากแพทย์ (HIS Sync) + Verbal / Telephone Order';
+            }
+        }
+
         // Step 2: Nurse Schedule — nurse + super only
         showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
         // Step 3: eMAR — nurse + super only
