@@ -7120,7 +7120,7 @@
                     </div>
                     <span style="font-size:10px;color:#64748b;font-weight:500;">วันนี้</span>
                 </div>
-                <div style="display:flex;flex-direction:column;gap:0;">
+                <div id="dashActivityLogWrap" style="display:flex;flex-direction:column;gap:0;">
                     <div class="db-log-item" style="border-bottom:1px dashed #f1f5f9;padding:10px 8px;">
                         <div style="width:32px;height:32px;background:#f0fdf4;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -22274,16 +22274,8 @@
         if (statAlertNum) statAlertNum.textContent = storeStats ? storeStats.stat : (typeof stPatients !== 'undefined' ? stPatients.length : 0);
 
         // ── Activity log — render from MedCartStore ──
-        const latestPanel = document.querySelectorAll('#pg-dashboard .db-panel')[1];
-        const logWrap = latestPanel ? latestPanel.querySelector('div[style*="flex-direction:column"]') : null;
+        var logWrap = document.getElementById('dashActivityLogWrap');
         if (logWrap && typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) {
-            // Update panel title per role
-            var panelTitle = latestPanel ? latestPanel.querySelector('.db-panel-head') : null;
-            if (panelTitle) {
-                var titleText = panelTitle.querySelector('div > div:last-child') || panelTitle;
-                var r = typeof currentRole !== 'undefined' ? currentRole : 'super';
-                if (r === 'nurse') { if (titleText.childNodes.length > 1) titleText.childNodes[1].textContent = 'การจ่ายยาล่าสุด'; else titleText.textContent = 'การจ่ายยาล่าสุด'; }
-            }
             // Filter activity by role:
             // Nurse: dispensed/assessed only (จ่ายยา)
             // Pharma: prepped only (จัดยา) — but pharma panel is hidden, this is fallback
