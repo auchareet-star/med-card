@@ -14126,7 +14126,7 @@
         const navActions = document.getElementById('ghNavActions');
         if (navActions) navActions.style.display = isLandingPage ? 'none' : 'flex';
         const backendBtn = document.getElementById('ghBackendBtn');
-        if (backendBtn) backendBtn.style.display = (isLoggedIn && !isLandingPage) ? 'flex' : 'none';
+        if (backendBtn) backendBtn.style.display = (isLoggedIn && !isLandingPage && currentRole === 'super') ? 'flex' : 'none';
         const logoutBtn = document.getElementById('ghLogoutBtn');
         if (logoutBtn) {
             logoutBtn.style.display = (isLoggedIn && !isLandingPage) ? 'flex' : 'none';
