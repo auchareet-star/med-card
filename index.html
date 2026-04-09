@@ -7337,64 +7337,7 @@
                     </span>
                 </div>
                 <div id="opPhysicianOrders" class="op-queue-list">
-                    <!-- Physician orders — demo data -->
-                    <div class="op-order-row" style="border-left-color:#0D9488;">
-                        <div class="op-order-main">
-                            <div class="op-order-name">Amlodipine 5 mg <span class="op-tag">PO</span> <span class="op-tag">Routine</span></div>
-                            <div class="op-order-meta">สมชาย มานะ · ห้อง 3A-01 · สั่งโดย <strong>นพ.สุรศักดิ์ วงศ์แพทย์</strong></div>
-                            <div class="op-order-tags">
-                                <span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">HIS Order</span>
-                                <span class="op-tag">รอบเช้า 08:00</span>
-                                <span class="op-tag done">จัดยาแล้ว</span>
-                            </div>
-                        </div>
-                        <div class="op-row-actions">
-                            <span style="font-size:10px;color:var(--text-3);">08 เม.ย. 06:30</span>
-                        </div>
-                    </div>
-                    <div class="op-order-row" style="border-left-color:#0D9488;">
-                        <div class="op-order-main">
-                            <div class="op-order-name">Metformin 500 mg <span class="op-tag">PO</span> <span class="op-tag">Routine</span></div>
-                            <div class="op-order-meta">มาลี สุขใจ · ห้อง 3A-03 · สั่งโดย <strong>พญ.วรรณา คำดี</strong></div>
-                            <div class="op-order-tags">
-                                <span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">HIS Order</span>
-                                <span class="op-tag">รอบเช้า 08:00</span>
-                                <span class="op-tag done">จ่ายยาแล้ว</span>
-                            </div>
-                        </div>
-                        <div class="op-row-actions">
-                            <span style="font-size:10px;color:var(--text-3);">08 เม.ย. 06:15</span>
-                        </div>
-                    </div>
-                    <div class="op-order-row" style="border-left-color:#D97706;">
-                        <div class="op-order-main">
-                            <div class="op-order-name">Warfarin 3 mg <span class="op-tag">PO</span> <span class="op-tag ha">High Alert</span></div>
-                            <div class="op-order-meta">กัลยา ชัยวงศ์ · ห้อง 3A-05 · สั่งโดย <strong>นพ.สุรศักดิ์ วงศ์แพทย์</strong></div>
-                            <div class="op-order-tags">
-                                <span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">HIS Order</span>
-                                <span class="op-tag">ก่อนนอน 20:00</span>
-                            </div>
-                        </div>
-                        <div class="op-row-actions">
-                            <span style="font-size:10px;color:var(--text-3);">08 เม.ย. 07:00</span>
-                        </div>
-                    </div>
-                    <div class="op-order-row" style="border-left-color:#EF4444;">
-                        <div class="op-order-main">
-                            <div class="op-order-name">Ceftriaxone 1 g <span class="op-tag">IV</span> <span class="op-tag stat">STAT</span></div>
-                            <div class="op-order-meta">วิชัย ตั้งใจ · ห้อง 3A-08 · สั่งโดย <strong>พญ.นภา เจริญสุข</strong></div>
-                            <div class="op-order-tags">
-                                <span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">HIS Order</span>
-                                <span class="op-tag">ให้ทันที</span>
-                            </div>
-                        </div>
-                        <div class="op-row-actions">
-                            <button type="button" class="op-btn primary" style="font-size:11px;padding:7px 12px;" onclick="nav('pg-routine')">
-                                ดำเนินการ
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                            </button>
-                        </div>
-                    </div>
+                    <!-- Rendered dynamically from MedCartStore -->
                 </div>
             </section>
 
@@ -14393,16 +14336,241 @@
     var emarSelectedRef = '';
     const EMAR_RIGHTS = [
         { key:'patient', label:'Right patient', thai:'ผู้ป่วยถูกต้อง' },
-        { key:'medication', label:'Right medication', thai:'ยาถูกต้อง' },
+        { key:'medication', label:'Right drug', thai:'ยาถูกต้อง' },
         { key:'dose', label:'Right dose', thai:'ขนาดยาถูกต้อง' },
         { key:'route', label:'Right route', thai:'ช่องทางถูกต้อง' },
-        { key:'time', label:'Right time', thai:'เวลาถูกต้อง' },
-        { key:'reason', label:'Right reason', thai:'เหตุผล/ข้อบ่งใช้ถูกต้อง' },
-        { key:'documentation', label:'Right documentation', thai:'บันทึกถูกต้อง' }
+        { key:'time', label:'Right time', thai:'เวลาถูกต้อง' }
     ];
     var currentWardName = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
     var selectedWardName = currentWardName;
     var wardDataReady = false;
+
+    /* ══════════════════════════════════════════════
+       CENTRAL DATA STORE — MedCartStore
+       ══════════════════════════════════════════════
+       Single source of truth for all medication data.
+       Every page reads from here. Changes propagate to all views.
+
+       Status flow per order:
+       ordered → scheduled → prepped → dispensed → assessed
+    ══════════════════════════════════════════════ */
+    var MedCartStore = {
+        orders: [],   // All medication orders (physician + manual)
+        offcart: [],  // Off-cart administrations
+        _listeners: [],
+
+        // Initialize with demo physician orders
+        init: function() {
+            this.orders = [
+                // ── Physician Orders (HIS) ──
+                { id:'HIS-001', source:'HIS', patient:'01', drug:'Amlodipine 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'06:30', highAlert:false },
+                { id:'HIS-002', source:'HIS', patient:'01', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'06:30', highAlert:false },
+                { id:'HIS-003', source:'HIS', patient:'01', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'prepped', createdAt:'06:30', highAlert:false },
+                { id:'HIS-004', source:'HIS', patient:'01', drug:'Heparin 5000u', dose:'1 vial', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'scheduled', createdAt:'06:30', highAlert:true },
+                { id:'HIS-005', source:'HIS', patient:'01', drug:'Simvastatin 20 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'ordered', createdAt:'06:30', highAlert:false },
+
+                { id:'HIS-006', source:'HIS', patient:'03', drug:'Amlodipine 10 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'dispensed', createdAt:'06:15', highAlert:false },
+                { id:'HIS-007', source:'HIS', patient:'03', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'dispensed', createdAt:'06:15', highAlert:false },
+                { id:'HIS-008', source:'HIS', patient:'03', drug:'Enalapril 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'prepped', createdAt:'06:15', highAlert:false },
+                { id:'HIS-009', source:'HIS', patient:'03', drug:'Furosemide 40 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'scheduled', createdAt:'06:15', highAlert:false },
+
+                { id:'HIS-010', source:'HIS', patient:'05', drug:'Warfarin 3 mg', dose:'1 เม็ด', route:'PO', priority:'high-alert', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'ordered', createdAt:'07:00', highAlert:true },
+                { id:'HIS-011', source:'HIS', patient:'05', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'scheduled', createdAt:'07:00', highAlert:false },
+                { id:'HIS-012', source:'HIS', patient:'05', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'prepped', createdAt:'07:00', highAlert:false },
+
+                { id:'HIS-013', source:'HIS', patient:'08', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'06:45', highAlert:false },
+                { id:'HIS-014', source:'HIS', patient:'08', drug:'Glipizide 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'06:45', highAlert:false },
+
+                { id:'HIS-015', source:'HIS', patient:'10', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'07:10', highAlert:false },
+                { id:'HIS-016', source:'HIS', patient:'10', drug:'Amoxicillin 500 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'07:10', highAlert:false },
+
+                { id:'HIS-017', source:'HIS', patient:'12', drug:'Insulin Glargine 20u', dose:'20 units', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'scheduled', createdAt:'06:30', highAlert:true },
+
+                { id:'HIS-018', source:'HIS', patient:'15', drug:'Amlodipine 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเที่ยง', time:'12:00', doctor:'พญ.นภา เจริญสุข', status:'ordered', createdAt:'07:15', highAlert:false },
+                { id:'HIS-019', source:'HIS', patient:'15', drug:'Hydrochlorothiazide 25 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:15', highAlert:false },
+
+                // STAT order
+                { id:'HIS-020', source:'HIS', patient:'08', drug:'Ceftriaxone 1 g', dose:'1 vial', route:'IV', priority:'stat', schedule:'STAT now', time:'STAT', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:45', highAlert:false }
+            ];
+            this.offcart = [];
+            this._notify();
+        },
+
+        // ── Query helpers ──
+        getPatientName: function(patientKey) {
+            var p = typeof patientData !== 'undefined' ? patientData[patientKey] : null;
+            return p ? p.name : 'ผู้ป่วย ' + patientKey;
+        },
+        getPatientBed: function(patientKey) {
+            var p = typeof patientData !== 'undefined' ? patientData[patientKey] : null;
+            return p ? p.bed : '';
+        },
+
+        // Count by status
+        countByStatus: function(status) { return this.orders.filter(function(o){ return o.status === status; }).length; },
+        countByPriority: function(pri) { return this.orders.filter(function(o){ return o.priority === pri && o.status !== 'dispensed' && o.status !== 'assessed'; }).length; },
+        countHighAlert: function() { return this.orders.filter(function(o){ return o.highAlert && o.status !== 'dispensed' && o.status !== 'assessed'; }).length; },
+
+        // All stats for dashboard
+        getDashStats: function() {
+            var total = this.orders.length;
+            var dispensed = this.countByStatus('dispensed') + this.countByStatus('assessed');
+            var pending = total - dispensed;
+            var patients = [];
+            this.orders.forEach(function(o) { if (patients.indexOf(o.patient) === -1) patients.push(o.patient); });
+            return {
+                patients: patients.length,
+                totalMeds: total,
+                done: dispensed,
+                pending: pending,
+                pctDone: total > 0 ? Math.round(dispensed / total * 100) : 0,
+                highAlert: this.countHighAlert(),
+                stat: this.countByPriority('stat'),
+                prn: this.countByPriority('prn')
+            };
+        },
+
+        // Orders grouped by schedule for Nurse Schedule
+        getBySchedule: function() {
+            var groups = {};
+            this.orders.forEach(function(o) {
+                var key = o.schedule || 'อื่นๆ';
+                if (!groups[key]) groups[key] = [];
+                groups[key].push(o);
+            });
+            return groups;
+        },
+
+        // Add manual order (Verbal/Telephone)
+        addManualOrder: function(order) {
+            order.id = 'MAN-' + Date.now();
+            order.source = 'Manual';
+            order.status = 'ordered';
+            order.createdAt = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+            this.orders.push(order);
+            this._notify();
+            return order;
+        },
+
+        // Update order status
+        updateStatus: function(orderId, newStatus) {
+            var order = this.orders.find(function(o){ return o.id === orderId; });
+            if (order) { order.status = newStatus; this._notify(); }
+        },
+
+        // Add off-cart record
+        addOffcart: function(record) {
+            record.id = 'OFF-' + Date.now();
+            record.timestamp = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+            this.offcart.push(record);
+            this._notify();
+        },
+
+        // ── Listener system (notify all pages on change) ──
+        onChange: function(fn) { this._listeners.push(fn); },
+        _notify: function() {
+            var self = this;
+            this._listeners.forEach(function(fn){ try { fn(self); } catch(e){} });
+        }
+    };
+
+    // ── Dashboard sync function ──
+    function syncDashboardFromStore() {
+        var s = MedCartStore.getDashStats();
+        var el;
+        el = document.getElementById('dashStatPatients'); if (el) el.textContent = s.patients;
+        el = document.getElementById('dashStatMeds'); if (el) el.textContent = s.totalMeds;
+        el = document.getElementById('dashStatDone'); if (el) el.textContent = s.done;
+        el = document.getElementById('dashStatPending'); if (el) el.textContent = s.pending;
+        el = document.getElementById('dashStatDoneBar'); if (el) el.style.width = s.pctDone + '%';
+        el = document.getElementById('dashStatPendingBar'); if (el) el.style.width = (100 - s.pctDone) + '%';
+        // Banner text
+        el = document.querySelector('.db-banner-sub');
+        if (el) el.innerHTML = 'มีรายการยา <strong style="color:var(--green);">' + s.pending + ' รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="color:var(--green);">' + s.done + ' จาก ' + s.totalMeds + '</strong> รายการ';
+        // Progress donut (update stroke-dashoffset)
+        var donutCircle = document.querySelector('.db-progress svg circle:nth-child(2)');
+        if (donutCircle) {
+            var circumference = 2 * Math.PI * parseFloat(donutCircle.getAttribute('r'));
+            donutCircle.setAttribute('stroke-dasharray', circumference);
+            donutCircle.setAttribute('stroke-dashoffset', circumference * (1 - s.pctDone / 100));
+        }
+        el = document.querySelector('.db-progress-num'); if (el) el.textContent = s.pctDone + '%';
+        // Quick links counts
+        el = document.getElementById('dashOrderPlanCount'); if (el) el.textContent = s.totalMeds + ' รายการ';
+        el = document.getElementById('dashNurseScheduleCount');
+        if (el) el.textContent = MedCartStore.countByStatus('ordered') + ' รอจัด';
+        el = document.getElementById('dashEmarCount');
+        if (el) el.textContent = (s.totalMeds - s.done) + ' รอให้ยา';
+        // Alert badges
+        var statBadge = document.querySelector('#dashQuickAlerts .db-alert:nth-child(1) .db-alert-num');
+        if (statBadge) statBadge.textContent = s.stat;
+        var haBadge = document.querySelector('#dashQuickAlerts .db-alert:nth-child(3) .db-alert-num');
+        if (haBadge) haBadge.textContent = s.highAlert;
+        // eMAR 5 Rights counters
+        el = document.getElementById('emar7rPending'); if (el) el.textContent = s.pending;
+        el = document.getElementById('emar7rPassed'); if (el) el.textContent = s.done;
+    }
+
+    // ── Render physician orders in Order Plan ──
+    function renderPhysicianOrders() {
+        var container = document.getElementById('opPhysicianOrders');
+        if (!container) return;
+        var orders = MedCartStore.orders.filter(function(o){ return o.source === 'HIS'; });
+        if (!orders.length) {
+            container.innerHTML = '<div class="op-empty">ยังไม่มีคำสั่งยาจากแพทย์</div>';
+            return;
+        }
+        container.innerHTML = orders.map(function(o) {
+            var priorityTag = o.priority === 'stat' ? '<span class="op-tag stat">STAT</span>'
+                : o.priority === 'high-alert' ? '<span class="op-tag ha">High Alert</span>'
+                : o.priority === 'prn' ? '<span class="op-tag prn">PRN</span>'
+                : '<span class="op-tag">Routine</span>';
+            var statusTag = o.status === 'dispensed' || o.status === 'assessed' ? '<span class="op-tag done">จ่ายยาแล้ว</span>'
+                : o.status === 'prepped' ? '<span class="op-tag done">จัดยาแล้ว</span>'
+                : o.status === 'scheduled' ? '<span class="op-tag">รอจัดยา</span>'
+                : '<span class="op-tag">รับคำสั่ง</span>';
+            var borderColor = o.priority === 'stat' ? '#EF4444' : o.highAlert ? '#D97706' : '#0D9488';
+            var ptName = MedCartStore.getPatientName(o.patient);
+            var ptBed = MedCartStore.getPatientBed(o.patient);
+            var needsAction = o.status === 'scheduled' && o.priority === 'stat';
+            var actionHtml = needsAction
+                ? '<button type="button" class="op-btn primary" style="font-size:11px;padding:7px 12px;" onclick="nav(\'pg-routine\')">ดำเนินการ <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>'
+                : '<span style="font-size:10px;color:var(--text-3);">' + o.createdAt + '</span>';
+            return '<div class="op-order-row" style="border-left-color:' + borderColor + ';">'
+                + '<div class="op-order-main">'
+                + '<div class="op-order-name">' + escHtml(o.drug) + ' <span class="op-tag">' + escHtml(o.route) + '</span> ' + priorityTag + '</div>'
+                + '<div class="op-order-meta">' + escHtml(ptName) + ' · ห้อง ' + escHtml(ptBed) + ' · สั่งโดย <strong>' + escHtml(o.doctor) + '</strong></div>'
+                + '<div class="op-order-tags"><span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">' + escHtml(o.source) + ' Order</span><span class="op-tag">' + escHtml(o.schedule) + (o.time && o.time !== 'STAT' && o.time !== 'PRN' ? ' ' + o.time : '') + '</span>' + statusTag + '</div>'
+                + '</div>'
+                + '<div class="op-row-actions">' + actionHtml + '</div>'
+                + '</div>';
+        }).join('');
+    }
+
+    // ── Sync Order Plan stats ──
+    function syncOrderPlanStats() {
+        var s = MedCartStore.getDashStats();
+        var el;
+        el = document.getElementById('opTotalOrders'); if (el) el.textContent = s.totalMeds;
+        el = document.getElementById('opPendingOrders'); if (el) el.textContent = MedCartStore.countByStatus('scheduled') + MedCartStore.countByStatus('ordered');
+        el = document.getElementById('opHighAlertOrders'); if (el) el.textContent = s.highAlert;
+        el = document.getElementById('opPrnOrders'); if (el) el.textContent = s.stat + s.prn;
+        // eMAR stats
+        el = document.getElementById('emarTotalItems'); if (el) el.textContent = s.totalMeds;
+        el = document.getElementById('emarPendingItems'); if (el) el.textContent = s.pending;
+        el = document.getElementById('emarDoneItems'); if (el) el.textContent = s.done;
+        el = document.getElementById('emarOffCartItems'); if (el) el.textContent = MedCartStore.offcart.length;
+        // Nurse Schedule stats
+        el = document.getElementById('nsTotalOrders'); if (el) el.textContent = s.totalMeds;
+        el = document.getElementById('nsPendingPrep'); if (el) el.textContent = MedCartStore.countByStatus('scheduled') + MedCartStore.countByStatus('ordered');
+        el = document.getElementById('nsPrepared'); if (el) el.textContent = MedCartStore.countByStatus('prepped');
+        el = document.getElementById('nsGiven'); if (el) el.textContent = s.done;
+    }
+
+    // Register listeners
+    MedCartStore.onChange(syncDashboardFromStore);
+    MedCartStore.onChange(renderPhysicianOrders);
+    MedCartStore.onChange(syncOrderPlanStats);
 
     // On load: restore page + login state from URL hash (survive refresh)
     (function() {
@@ -14432,6 +14600,9 @@
             history.replaceState({ page: 'pg-cart' }, '', '#pg-cart');
         }
     })();
+
+    // Initialize central data store
+    MedCartStore.init();
 
     /* ── Keep same ward → go to Login ── */
     function keepWard() {
@@ -21845,10 +22016,14 @@
     }
 
     function renderDashboardDynamic() {
+        // Sync from central store first
+        if (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) {
+            syncDashboardFromStore();
+        }
         const metrics = getDashboardMetrics();
         const ward = currentWardName || DEFAULT_DEMO_WARD;
         const bannerSub = document.querySelector('#pg-dashboard .db-banner-sub');
-        if (bannerSub) bannerSub.innerHTML = 'มีรายการยา <strong style="opacity:1;color:#a7f3d0;">' + metrics.pending + ' รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="opacity:1;color:#a7f3d0;">' + metrics.done + ' จาก ' + metrics.total + '</strong> รายการ';
+        if (bannerSub) bannerSub.innerHTML = 'มีรายการยา <strong style="color:var(--green);">' + metrics.pending + ' รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="color:var(--green);">' + metrics.done + ' จาก ' + metrics.total + '</strong> รายการ';
         const progressNum = document.querySelector('#pg-dashboard .db-progress-num');
         if (progressNum) progressNum.textContent = metrics.percent + '%';
         const progressCircle = document.querySelector('#pg-dashboard .db-progress svg circle:nth-child(2)');
