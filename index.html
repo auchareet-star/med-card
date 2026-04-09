@@ -22709,12 +22709,49 @@
             .filter(Boolean);
     }
 
-    function scanMultiDrug(flow, idx) {
+    function scanMultiDrug(flow, idx, simulateFail) {
         const currentItems = getCurrentFlowDrugs(flow);
         const data = currentItems[idx];
         const btn = document.getElementById(`${flow}drug_${idx}_btn`);
         if (!btn) return;
 
+        // ── 5 Rights FAIL demo ──
+        if (simulateFail) {
+            btn.disabled = true;
+            btn.innerHTML = '...กำลังสแกน...';
+            setTimeout(function() {
+                var card = document.getElementById(`${flow}drug_${idx}`);
+                if (!card) return;
+                card.classList.add('fail');
+                card.dataset.rightsFail = 'true';
+                card.style.borderColor = '#FECACA';
+                card.style.background = '#FEF2F2';
+                var doneRow = document.getElementById(`${flow}drug_${idx}_done`);
+                if (doneRow) {
+                    doneRow.style.display = '';
+                    doneRow.innerHTML =
+                        '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px;">'
+                        + '<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Patient</div>'
+                        + '<div class="rt-r" style="font-size:9px;padding:3px 6px;background:#FEE2E2;color:#DC2626;border-color:#FECACA;font-weight:900;">Drug ✗</div>'
+                        + '<div class="rt-r" style="font-size:9px;padding:3px 6px;background:#FEE2E2;color:#DC2626;border-color:#FECACA;font-weight:900;">Dose ✗</div>'
+                        + '<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Route</div>'
+                        + '<div class="rt-r pass" style="font-size:9px;padding:3px 6px;">Time</div>'
+                        + '</div>'
+                        + '<div style="display:flex;align-items:center;gap:8px;color:#DC2626;font-weight:800;font-size:12px;">'
+                        + '<svg width="16" height="16" viewBox="0 0 24 24" fill="#DC2626"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>'
+                        + ' ยาไม่ตรงคำสั่งแพทย์ — สแกนได้ Paracetamol 500mg แทน Omeprazole 20mg'
+                        + '</div>';
+                }
+                // Hide both buttons in the container
+                var btnContainer = btn.parentElement;
+                if (btnContainer) btnContainer.style.display = 'none';
+                showToast('5 Rights ไม่ผ่าน — ยาไม่ตรงกับคำสั่งแพทย์');
+                checkMultiDrugDone(flow);
+            }, 1200);
+            return;
+        }
+
+        // ── Normal scan flow ──
         function continueMultiDrugScan() {
             if (data && data.requiresWitness && flow !== 'ha') {
                 showHAVerifyModal(data.name, data.lot || 'N/A', function() {
