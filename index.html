@@ -7135,7 +7135,7 @@
         <div class="op-shell">
             <div class="op-topbar">
                 <div>
-                    <div class="op-kicker">Order Plan</div>
+                    <div class="op-kicker">รายการสั่งยา</div>
                     <div class="op-title">รายการสั่งยา</div>
                     <div class="op-sub">
                         <span id="opWardLabel">Ward 3A</span> · <span id="opCartLabel">Med Cart A-1</span>
@@ -7361,20 +7361,16 @@
             <div class="op-topbar">
                 <div>
                     <div class="op-kicker">Nurse Schedule</div>
-                    <div class="op-title">ตารางยาจาก Order Plan</div>
+                    <div class="op-title">ตารางรอบยาประจำวัน</div>
                     <div class="op-sub">
                         <span id="nsWardLabel">Ward 3A</span> · <span id="nsCartLabel">Med Cart A-1</span>
-                        · แสดงเฉพาะรายการที่เพิ่มจาก Order Plan
+                        · คำสั่งยาจากแพทย์ (HIS) จัดตามรอบเวลา + เพิ่ม Verbal/Telephone Order
                     </div>
                 </div>
                 <div class="op-actions">
                     <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
                         Dashboard
-                    </button>
-                    <button type="button" class="op-btn" onclick="nav('pg-order-plan')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                        เพิ่ม Order
                     </button>
                     <button type="button" class="op-btn primary" onclick="goToPrepType()">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/></svg>
@@ -7384,7 +7380,7 @@
             </div>
 
             <div class="op-summary-grid">
-                <div class="op-stat"><strong id="nsTotalOrders">0</strong><span>Order Plan ทั้งหมด</span></div>
+                <div class="op-stat"><strong id="nsTotalOrders">0</strong><span>คำสั่งยาทั้งหมด</span></div>
                 <div class="op-stat"><strong id="nsPendingPrep">0</strong><span>รอจัดยา</span></div>
                 <div class="op-stat"><strong id="nsPrepared">0</strong><span>จัดแล้ว</span></div>
                 <div class="op-stat"><strong id="nsGiven">0</strong><span>ให้ยาแล้ว</span></div>
@@ -7395,7 +7391,7 @@
                     <div class="op-panel-head">
                         <div>
                             <div class="op-panel-title">Schedule Timeline</div>
-                            <div class="op-panel-sub">รายการถูกจัดกลุ่มตามรอบเวลาที่ระบุใน Order Plan</div>
+                            <div class="op-panel-sub">คำสั่งยาจากแพทย์ จัดกลุ่มตามรอบเวลา เช้า/เที่ยง/เย็น/ก่อนนอน</div>
                         </div>
                         <span class="op-badge" id="nsTimelineBadge">0 รายการ</span>
                     </div>
@@ -7412,10 +7408,10 @@
                 <aside class="op-panel">
                     <div class="op-panel-head">
                         <div>
-                            <div class="op-panel-title">Workload จาก Order Plan</div>
-                            <div class="op-panel-sub">ใช้ดูว่ารายการที่เพิ่มเองกระทบรอบยาไหน</div>
+                            <div class="op-panel-title">สรุปตามรอบเวลา</div>
+                            <div class="op-panel-sub">จำนวนรายการยาแยกตามรอบ พร้อมสถานะจัดยา/จ่ายยา</div>
                         </div>
-                        <span class="op-badge" id="nsSourceBadge">Order Plan</span>
+                        <span class="op-badge" id="nsSourceBadge">HIS + Manual</span>
                     </div>
                     <div class="ns-side-list" id="nsSideSummary"></div>
                 </aside>
@@ -7443,10 +7439,6 @@
                     <button type="button" class="op-btn" onclick="nav('pg-dashboard')">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
                         Dashboard
-                    </button>
-                    <button type="button" class="op-btn" onclick="nav('pg-order-plan')">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                        Order Plan
                     </button>
                     <button type="button" class="op-btn" onclick="nav('pg-nurse-schedule')">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -7522,7 +7514,7 @@
                         <button type="button" class="ns-filter-btn" onclick="emarSetFilter('pending', this)">รอให้ยา</button>
                         <button type="button" class="ns-filter-btn" onclick="emarSetFilter('done', this)">ให้แล้ว</button>
                         <button type="button" class="ns-filter-btn" onclick="emarSetFilter('high-alert', this)">High Alert</button>
-                        <button type="button" class="ns-filter-btn" onclick="emarSetFilter('order-plan', this)">Order Plan</button>
+                        <button type="button" class="ns-filter-btn" onclick="emarSetFilter('order-plan', this)">Verbal/Tel Order</button>
                     </div>
                     <div id="emarScheduledList" class="emar-list"></div>
                 </section>
@@ -7688,7 +7680,7 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2.5" style="vertical-align:-2px;margin-right:6px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                             eMAR Audit Log
                         </div>
-                        <div class="op-panel-sub">บันทึกทั้งหมด — ให้ยาจากรถเข็น, Order Plan, Off-cart และงดยา</div>
+                        <div class="op-panel-sub">บันทึกทั้งหมด — ให้ยาจากรถเข็น, Verbal/Tel Order, Off-cart และงดยา</div>
                     </div>
                     <span class="op-badge" id="emarLogBadge">0 records</span>
                 </div>
