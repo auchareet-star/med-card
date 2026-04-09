@@ -6891,7 +6891,7 @@
              ════════════════════════════════════════════ -->
 
         <!-- Pipeline step indicator (super only) -->
-        <div id="dashPipelineBar" style="display:flex;align-items:center;gap:0;margin-bottom:22px;padding:0 4px;">
+        <div id="dashPipelineBar" style="display:none;align-items:center;gap:0;margin-bottom:22px;padding:0 4px;">
             <div style="display:flex;align-items:center;gap:8px;flex:1;">
                 <div style="width:28px;height:28px;background:linear-gradient(135deg,#1D4ED8,#3B82F6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">1</div>
                 <span style="font-size:11px;font-weight:700;color:#1D4ED8;">ตารางรอบยา</span>
@@ -15008,7 +15008,8 @@
         function showEl(el, visible) { if (el) el.style.display = visible ? '' : 'none'; }
 
         // Pipeline step indicator
-        showEl(document.getElementById('dashPipelineBar'), isSuper);
+        var pipeBar = document.getElementById('dashPipelineBar');
+        if (pipeBar) pipeBar.style.display = isSuper ? 'flex' : 'none';
 
         // Step 1: Nurse Schedule — nurse + super only
         showEl(document.getElementById('dashNurseScheduleQuickLink'), !isPharma);
