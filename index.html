@@ -6891,7 +6891,7 @@
              ════════════════════════════════════════════ -->
 
         <!-- Pipeline step indicator -->
-        <div style="display:flex;align-items:center;gap:0;margin-bottom:22px;padding:0 4px;">
+        <div id="dashPipelineBar" style="display:flex;align-items:center;gap:0;margin-bottom:22px;padding:0 4px;">
             <div style="display:flex;align-items:center;gap:8px;flex:1;">
                 <div style="width:28px;height:28px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;">1</div>
                 <span style="font-size:11px;font-weight:700;color:#0F766E;">รับคำสั่งยา</span>
@@ -14841,8 +14841,7 @@
         function showEl(el, visible) { if (el) el.style.display = visible ? '' : 'none'; }
 
         // Pipeline step indicator
-        var pipelineBar = dashEl?.querySelector('[style*="align-items:center;gap:0;margin-bottom:22px"]');
-        if (pipelineBar) pipelineBar.style.display = isSuper ? '' : 'none';
+        showEl(document.getElementById('dashPipelineBar'), isSuper);
 
         // Step 1: Order Plan — nurse + super only
         showEl(document.getElementById('dashOrderPlanQuickLink'), !isPharma);
