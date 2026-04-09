@@ -7507,23 +7507,40 @@
             </div>
 
             <!-- ── 5 Rights Banner ── -->
-            <div style="background:linear-gradient(135deg,#065F46 0%,#0D9488 55%,#14B8A6 100%);border-radius:16px;padding:20px 24px;margin-bottom:18px;color:white;display:flex;align-items:center;gap:18px;box-shadow:0 4px 20px rgba(13,148,136,0.18);">
-                <div style="width:52px;height:52px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
-                </div>
-                <div style="flex:1;">
-                    <div style="font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;opacity:.7;margin-bottom:3px;">Safety Protocol</div>
-                    <div style="font-size:17px;font-weight:800;letter-spacing:-.2px;">ตรวจสอบ 5 Rights ก่อนให้ยาทุกครั้ง</div>
-                    <div style="font-size:12px;opacity:.8;margin-top:4px;">Right Patient · Right Drug · Right Dose · Right Route · Right Time</div>
-                </div>
-                <div style="display:flex;gap:6px;flex-shrink:0;">
-                    <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:8px 14px;text-align:center;">
-                        <div style="font-size:20px;font-weight:800;" id="emar7rPending">0</div>
-                        <div style="font-size:9px;opacity:.7;">รอตรวจ</div>
+            <!-- 5 Rights Banner — 3-role verification -->
+            <div style="background:linear-gradient(135deg,#065F46 0%,#0D9488 55%,#14B8A6 100%);border-radius:16px;padding:20px 24px;margin-bottom:18px;color:white;box-shadow:0 4px 20px rgba(13,148,136,0.18);">
+                <div style="display:flex;align-items:center;gap:18px;margin-bottom:16px;">
+                    <div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
                     </div>
-                    <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:8px 14px;text-align:center;">
-                        <div style="font-size:20px;font-weight:800;" id="emar7rPassed">0</div>
-                        <div style="font-size:9px;opacity:.7;">ผ่านแล้ว</div>
+                    <div style="flex:1;">
+                        <div style="font-size:16px;font-weight:800;letter-spacing:-.2px;">5 Rights — ทวนซ้ำ 3 จุด</div>
+                        <div style="font-size:11px;opacity:.75;margin-top:3px;">แพทย์ → เภสัชกร → พยาบาล ตรวจคนละจุดก่อนยาถึงผู้ป่วย</div>
+                    </div>
+                    <div style="display:flex;gap:6px;flex-shrink:0;">
+                        <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:8px 14px;text-align:center;">
+                            <div style="font-size:18px;font-weight:800;" id="emar7rPending">0</div>
+                            <div style="font-size:9px;opacity:.7;">รอตรวจ</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:10px;padding:8px 14px;text-align:center;">
+                            <div style="font-size:18px;font-weight:800;" id="emar7rPassed">0</div>
+                            <div style="font-size:9px;opacity:.7;">ผ่านครบ</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3-role checklist summary -->
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                    <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;">
+                        <div style="font-size:10px;font-weight:800;opacity:.6;margin-bottom:4px;">แพทย์ · สั่งยา</div>
+                        <div style="font-size:10px;line-height:1.6;opacity:.85;">เลือกยาตรงโรค · กำหนด dose/route · ระบุผู้ป่วยถูกต้อง</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:10px 12px;">
+                        <div style="font-size:10px;font-weight:800;opacity:.6;margin-bottom:4px;">เภสัชกร · ตรวจก่อนจ่าย</div>
+                        <div style="font-size:10px;line-height:1.6;opacity:.85;">ตรวจยาตรงใบสั่ง · dose/interaction · HN/allergy</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:10px;padding:10px 12px;">
+                        <div style="font-size:10px;font-weight:800;margin-bottom:4px;">พยาบาล · ให้ยา ←</div>
+                        <div style="font-size:10px;line-height:1.6;opacity:.85;">ตรวจ label · ชื่อ-HN 2 อย่าง · route/time ตรงแผน</div>
                     </div>
                 </div>
             </div>
@@ -7569,26 +7586,33 @@
 
                     <!-- 5 Rights Checklist (visible when item selected) -->
                     <div id="emar7RightsChecklist" style="display:none;">
+                        <!-- Verification trail — who checked before you -->
+                        <div id="emarVerifyTrail" style="background:#F8FAFC;border:1px solid var(--border-light);border-radius:10px;padding:10px 12px;margin-bottom:12px;display:none;">
+                            <div style="font-size:10px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Verification Trail — ตรวจก่อนหน้า</div>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;" id="emarVerifyTrailContent"></div>
+                        </div>
+
+                        <div style="font-size:10px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">พยาบาลตรวจก่อนให้ยา</div>
                         <div class="emar-rights" style="margin-top:0;">
                             <label class="emar-right" style="border-color:#99F6E4;background:#F0FDF9;">
                                 <input type="checkbox" class="emar-7r-check" data-right="patient">
-                                <div><strong>1. Right Patient — ถูกคน</strong><span>ตรวจสอบชื่อ-สกุล, HN หรือเลขบัตรประชาชน อย่างน้อย 2 อย่าง หรือ Scan wristband ก่อนให้ยา</span></div>
+                                <div><strong>1. Right Patient — ถูกคน</strong><span>ตรวจชื่อ-HN ผู้ป่วย อย่างน้อย 2 อย่าง หรือ Scan wristband ก่อนให้ยา</span></div>
                             </label>
                             <label class="emar-right" style="border-color:#99F6E4;background:#F0FDF9;">
                                 <input type="checkbox" class="emar-7r-check" data-right="drug">
-                                <div><strong>2. Right Drug — ถูกยา</strong><span>ให้ยาชนิดที่ถูกต้องตามใบสั่งแพทย์ ไม่สับสนชื่อยา รูปแบบยา หรือยี่ห้อ</span></div>
+                                <div><strong>2. Right Drug — ถูกยา</strong><span>ตรวจ label ยา / กล่องยา / eMAR ว่าตรงกับคำสั่งแพทย์ ไม่สับสนชื่อ/รูปแบบ/ยี่ห้อ</span></div>
                             </label>
                             <label class="emar-right" style="border-color:#99F6E4;background:#F0FDF9;">
                                 <input type="checkbox" class="emar-7r-check" data-right="dose">
-                                <div><strong>3. Right Dose — ถูกขนาด</strong><span>คำนวณและให้ยาในขนาดที่ถูกต้อง เช่น 500 mg, 1 เม็ด, 10 mg/kg ตามคำสั่งแพทย์</span></div>
+                                <div><strong>3. Right Dose — ถูกขนาด</strong><span>ตรวจว่าได้ยาขนาดถูกต้องที่จะให้ ณ เวลานี้ (จำนวน เม็ด/vial/mL ตามคำสั่ง)</span></div>
                             </label>
                             <label class="emar-right" style="border-color:#99F6E4;background:#F0FDF9;">
                                 <input type="checkbox" class="emar-7r-check" data-right="route">
-                                <div><strong>4. Right Route — ถูกทาง</strong><span>บริหารยาตามช่องทางที่ถูกต้อง เช่น PO / IV / SC / IM / SL / Neb / Topical ไม่เปลี่ยนเส้นทางเอง</span></div>
+                                <div><strong>4. Right Route — ถูกทาง</strong><span>ปฏิบัติให้ยาตาม route ที่สั่ง (PO / IV / SC / IM) ไม่เปลี่ยนเส้นทางเอง</span></div>
                             </label>
                             <label class="emar-right" style="border-color:#99F6E4;background:#F0FDF9;">
                                 <input type="checkbox" class="emar-7r-check" data-right="time">
-                                <div><strong>5. Right Time — ถูกเวลา</strong><span>ให้ยาตรงตามเวลาที่แพทย์สั่ง เช่น 08:00 / 12:00 / 20:00 หรือก่อนอาหาร/หลังอาหาร/ก่อนนอน</span></div>
+                                <div><strong>5. Right Time — ถูกเวลา</strong><span>ให้ยาตรงเวลาที่กำหนดในแผนการรักษา (เช้า/เที่ยง/เย็น/ก่อนนอน/STAT)</span></div>
                             </label>
                         </div>
                         <div style="display:flex;gap:10px;margin-top:14px;">
@@ -14362,7 +14386,53 @@
                     { id:'HIS-020', source:'HIS', ward:'Ward 3A', patient:'08', drug:'Ceftriaxone 1 g', dose:'1 vial', route:'IV', priority:'stat', schedule:'STAT now', time:'STAT', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:45', highAlert:false }
                 ];
             }
+            this._autoVerifyDoctor();
             this._notify();
+        },
+
+        /* ── 5 Rights verification per role ──
+           Each order tracks who verified what:
+           - doctor:  verified at prescribing (HIS orders always verified)
+           - pharma:  verified before prep/dispense
+           - nurse:   verified before administration
+        */
+        _autoVerifyDoctor: function() {
+            // All HIS orders = doctor already verified at prescribing
+            this.orders.forEach(function(o) {
+                if (o.source === 'HIS' && !o.verified) {
+                    o.verified = {
+                        doctor: { done:true, by:o.doctor, at:o.createdAt, checks:{
+                            drug:'เลือกยาตรงโรค/กลุ่มผู้ป่วย',
+                            dose:'กำหนด dose ตาม น้ำหนัก/อายุ/โรค',
+                            route:'สั่ง route ที่เหมาะสม',
+                            time:'กำหนดเวลาให้ยา',
+                            patient:'ระบุผู้ป่วยถูกต้องใน order'
+                        }},
+                        pharma: { done:false, by:null, at:null, checks:{} },
+                        nurse:  { done:false, by:null, at:null, checks:{} }
+                    };
+                }
+                // Auto-verify pharma for prepped/dispensed orders
+                if (o.verified && !o.verified.pharma.done && (o.status === 'prepped' || o.status === 'dispensed' || o.status === 'assessed')) {
+                    o.verified.pharma = { done:true, by:'ภญ.วิภา เจริญยา', at:o.createdAt, checks:{
+                        drug:'ตรวจยาตรงใบสั่ง ไม่มียาซ้ำ/อันตราย',
+                        dose:'ตรวจ dose, drug interaction, contraindication',
+                        route:'ตรวจรูปแบบยาเหมาะสมกับ route',
+                        time:'ตรวจยาตรงเวลา/แผน',
+                        patient:'ตรวจ HN, drug allergy, ประวัติยา'
+                    }};
+                }
+                // Auto-verify nurse for dispensed/assessed orders
+                if (o.verified && !o.verified.nurse.done && (o.status === 'dispensed' || o.status === 'assessed')) {
+                    o.verified.nurse = { done:true, by:'นส.สมใจ ดีมาก', at:o.createdAt, checks:{
+                        drug:'ตรวจ label ยาตรงกับ eMAR',
+                        dose:'ตรวจขนาดยาตรงตามที่จะให้',
+                        route:'ให้ยาตาม route ที่สั่ง',
+                        time:'ให้ยาตรงเวลาที่กำหนด',
+                        patient:'ตรวจชื่อ-HN 2 อย่างก่อนให้ยา'
+                    }};
+                }
+            });
         },
 
         // ── Query helpers ──
@@ -14511,7 +14581,17 @@
                 + '<div class="op-order-main">'
                 + '<div class="op-order-name">' + escHtml(o.drug) + ' <span class="op-tag">' + escHtml(o.route) + '</span> ' + priorityTag + '</div>'
                 + '<div class="op-order-meta">' + escHtml(ptName) + ' · ห้อง ' + escHtml(ptBed) + ' · สั่งโดย <strong>' + escHtml(o.doctor) + '</strong></div>'
-                + '<div class="op-order-tags"><span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">' + escHtml(o.source) + ' Order</span><span class="op-tag">' + escHtml(o.schedule) + (o.time && o.time !== 'STAT' && o.time !== 'PRN' ? ' ' + o.time : '') + '</span>' + statusTag + '</div>'
+                + '<div class="op-order-tags">'
+                + '<span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#CCFBF1;">' + escHtml(o.source) + ' Order</span>'
+                + '<span class="op-tag">' + escHtml(o.schedule) + (o.time && o.time !== 'STAT' && o.time !== 'PRN' ? ' ' + o.time : '') + '</span>'
+                + statusTag
+                // 5 Rights verification trail
+                + (o.verified ? (
+                    (o.verified.doctor && o.verified.doctor.done ? '<span class="op-tag" style="background:#DBEAFE;color:#1D4ED8;border-color:#93C5FD;font-size:9px;" title="แพทย์ตรวจ: เลือกยาตรงโรค, กำหนด dose/route/time">Dr ✓</span>' : '')
+                    + (o.verified.pharma && o.verified.pharma.done ? '<span class="op-tag" style="background:#F0FDFA;color:#0F766E;border-color:#99F6E4;font-size:9px;" title="เภสัชตรวจ: ยาตรงใบสั่ง, dose/interaction, HN/allergy">Ph ✓</span>' : '')
+                    + (o.verified.nurse && o.verified.nurse.done ? '<span class="op-tag" style="background:#F5F3FF;color:#6D28D9;border-color:#DDD6FE;font-size:9px;" title="พยาบาลตรวจ: label ยา, ชื่อ-HN, route/time">RN ✓</span>' : '')
+                ) : '')
+                + '</div>'
                 + '</div>'
                 + '<div class="op-row-actions">' + actionHtml + '</div>'
                 + '</div>';
