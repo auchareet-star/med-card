@@ -7141,88 +7141,10 @@
                         <div class="db-panel-head-icon" style="background:#f0fdf4;color:var(--green);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
                         ตารางรอบยาวันนี้
                     </div>
-                    <span style="font-size:10px;color:#0D9488;font-weight:600;background:#f0fdf4;padding:3px 10px;border-radius:8px;">4 รอบ</span>
+                    <span id="dashScheduleCount" style="font-size:10px;color:#0D9488;font-weight:600;background:#f0fdf4;padding:3px 10px;border-radius:8px;">— รอบ</span>
                 </div>
-                <div style="display:flex;flex-direction:column;">
-
-                    <!-- รอบเช้า (active) -->
-                    <div style="display:flex;gap:0;">
-                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
-                            <div style="width:14px;height:14px;background:#0D9488;border-radius:50%;border:2.5px solid white;box-shadow:0 0 0 3px rgba(13,148,136,0.25);flex-shrink:0;margin-top:14px;z-index:1;"></div>
-                            <div style="width:2px;flex:1;background:#d1fae5;margin-top:2px;"></div>
-                        </div>
-                        <div onclick="nav('pg-routine')"
-                             style="flex:1;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:0;"
-                             onmouseover="this.style.background='#d1fae5';this.style.borderColor='#0D9488';this.style.boxShadow='0 4px 18px rgba(13,148,136,0.18)';this.style.transform='translateX(3px)'"
-                             onmouseout="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='';this.style.transform=''">
-                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-                                <div style="font-size:13px;font-weight:700;color:#0F766E;">06:00 – 08:00 · รอบเช้า</div>
-                                <div style="display:flex;align-items:center;gap:6px;">
-                                    <span style="font-size:10px;font-weight:600;color:#0284c7;background:#e0f2fe;padding:2px 9px;border-radius:8px;">กำลังดำเนินการ</span>
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                                </div>
-                            </div>
-                            <div style="font-size:11px;color:#0D9488;margin-bottom:8px;">8 ผู้ป่วย · 16/24 จ่ายแล้ว</div>
-                            <div style="width:100%;height:4px;background:rgba(13,148,136,0.15);border-radius:3px;"><div style="width:67%;height:100%;background:#0D9488;border-radius:3px;"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- รอบเที่ยง -->
-                    <div style="display:flex;gap:0;">
-                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
-                            <div style="width:12px;height:12px;background:white;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;margin-top:14px;z-index:1;"></div>
-                            <div style="width:2px;flex:1;background:#e2e8f0;margin-top:2px;"></div>
-                        </div>
-                        <div onclick="nav('pg-routine')"
-                             style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;"
-                             onmouseover="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='0 4px 14px rgba(13,148,136,0.1)';this.style.transform='translateX(3px)'"
-                             onmouseout="this.style.background='#fff';this.style.borderColor='#e2e8f0';this.style.boxShadow='';this.style.transform=''">
-                            <div style="flex:1;">
-                                <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:3px;">11:00 – 12:00 · รอบเที่ยง</div>
-                                <div style="font-size:11px;color:var(--text-3);">5 ผู้ป่วย · 12 รายการ</div>
-                            </div>
-                            <span style="font-size:10px;font-weight:500;color:#94a3b8;background:#f8fafc;padding:2px 9px;border-radius:8px;white-space:nowrap;">รอ</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
-                        </div>
-                    </div>
-
-                    <!-- รอบเย็น -->
-                    <div style="display:flex;gap:0;">
-                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
-                            <div style="width:12px;height:12px;background:white;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;margin-top:14px;z-index:1;"></div>
-                            <div style="width:2px;flex:1;background:#e2e8f0;margin-top:2px;"></div>
-                        </div>
-                        <div onclick="nav('pg-routine')"
-                             style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;"
-                             onmouseover="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='0 4px 14px rgba(13,148,136,0.1)';this.style.transform='translateX(3px)'"
-                             onmouseout="this.style.background='#fff';this.style.borderColor='#e2e8f0';this.style.boxShadow='';this.style.transform=''">
-                            <div style="flex:1;">
-                                <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:3px;">16:00 – 18:00 · รอบเย็น</div>
-                                <div style="font-size:11px;color:var(--text-3);">6 ผู้ป่วย · 15 รายการ</div>
-                            </div>
-                            <span style="font-size:10px;font-weight:500;color:#94a3b8;background:#f8fafc;padding:2px 9px;border-radius:8px;white-space:nowrap;">รอ</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
-                        </div>
-                    </div>
-
-                    <!-- กลางคืน (last) -->
-                    <div style="display:flex;gap:0;">
-                        <div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">
-                            <div style="width:12px;height:12px;background:white;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;margin-top:14px;z-index:1;"></div>
-                        </div>
-                        <div onclick="nav('pg-routine')"
-                             style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-left:8px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;"
-                             onmouseover="this.style.background='#f0fdf4';this.style.borderColor='#6ee7b7';this.style.boxShadow='0 4px 14px rgba(13,148,136,0.1)';this.style.transform='translateX(3px)'"
-                             onmouseout="this.style.background='#fff';this.style.borderColor='#e2e8f0';this.style.boxShadow='';this.style.transform=''">
-                            <div style="flex:1;">
-                                <div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:3px;">20:00 – 22:00 · กลางคืน</div>
-                                <div style="font-size:11px;color:var(--text-3);">4 ผู้ป่วย · 6 รายการ</div>
-                            </div>
-                            <span style="font-size:10px;font-weight:500;color:#94a3b8;background:#f8fafc;padding:2px 9px;border-radius:8px;white-space:nowrap;">รอ</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
-                        </div>
-                    </div>
-
+                <div id="dashScheduleTimeline" style="display:flex;flex-direction:column;">
+                    <!-- Rendered dynamically from MedCartStore -->
                 </div>
             </div>
 
@@ -14610,10 +14532,77 @@
         el = document.getElementById('nsGiven'); if (el) el.textContent = s.done;
     }
 
+    // ── Render dashboard schedule timeline from store ──
+    function renderDashScheduleTimeline() {
+        var container = document.getElementById('dashScheduleTimeline');
+        var countEl = document.getElementById('dashScheduleCount');
+        if (!container || typeof MedCartStore === 'undefined') return;
+        var groups = MedCartStore.getBySchedule();
+        var scheduleMap = {
+            'รอบเช้า': { label:'06:00 – 08:00 · รอบเช้า', order:1 },
+            'รอบเที่ยง': { label:'11:00 – 12:00 · รอบเที่ยง', order:2 },
+            'รอบเย็น': { label:'16:00 – 18:00 · รอบเย็น', order:3 },
+            'ก่อนนอน': { label:'20:00 – 22:00 · ก่อนนอน', order:4 },
+            'STAT now': { label:'STAT ให้ทันที', order:0 },
+            'PRN': { label:'PRN ตามอาการ', order:5 }
+        };
+        var keys = Object.keys(groups).sort(function(a,b){
+            return (scheduleMap[a]?scheduleMap[a].order:9) - (scheduleMap[b]?scheduleMap[b].order:9);
+        });
+        if (countEl) countEl.textContent = keys.length + ' รอบ';
+        // Find which round is "active" (first one with non-dispensed orders)
+        var activeKey = '';
+        keys.forEach(function(k){ if (!activeKey && groups[k].some(function(o){ return o.status !== 'dispensed' && o.status !== 'assessed'; })) activeKey = k; });
+        container.innerHTML = keys.map(function(key, idx) {
+            var items = groups[key];
+            var info = scheduleMap[key] || { label:key, order:9 };
+            var total = items.length;
+            var done = items.filter(function(o){ return o.status === 'dispensed' || o.status === 'assessed'; }).length;
+            var patients = [];
+            items.forEach(function(o){ if (patients.indexOf(o.patient) === -1) patients.push(o.patient); });
+            var isActive = key === activeKey;
+            var isLast = idx === keys.length - 1;
+            var pct = total > 0 ? Math.round(done / total * 100) : 0;
+            var allDone = done === total;
+            // Timeline dot
+            var dotHtml = isActive
+                ? '<div style="width:14px;height:14px;background:#0D9488;border-radius:50%;border:2.5px solid white;box-shadow:0 0 0 3px rgba(13,148,136,0.25);flex-shrink:0;margin-top:14px;z-index:1;"></div>'
+                : allDone
+                ? '<div style="width:12px;height:12px;background:#10B981;border-radius:50%;border:2px solid white;box-shadow:0 0 0 3px rgba(16,185,129,0.2);flex-shrink:0;margin-top:14px;z-index:1;"></div>'
+                : '<div style="width:12px;height:12px;background:white;border-radius:50%;border:2px solid #cbd5e1;flex-shrink:0;margin-top:14px;z-index:1;"></div>';
+            var lineHtml = isLast ? '' : '<div style="width:2px;flex:1;background:' + (isActive?'#d1fae5':'#e2e8f0') + ';margin-top:2px;"></div>';
+            // Status badge
+            var statusBadge = allDone
+                ? '<span style="font-size:10px;font-weight:600;color:#15803d;background:#dcfce7;padding:2px 9px;border-radius:8px;">เสร็จแล้ว</span>'
+                : isActive
+                ? '<span style="font-size:10px;font-weight:600;color:#0284c7;background:#e0f2fe;padding:2px 9px;border-radius:8px;">กำลังดำเนินการ</span>'
+                : '<span style="font-size:10px;font-weight:500;color:#94a3b8;background:#f8fafc;padding:2px 9px;border-radius:8px;">รอ</span>';
+            // Card
+            if (isActive) {
+                return '<div style="display:flex;gap:0;">'
+                    + '<div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">' + dotHtml + lineHtml + '</div>'
+                    + '<div onclick="nav(\'pg-routine\')" style="flex:1;background:#f0fdf4;border:1.5px solid #6ee7b7;border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;flex-direction:column;gap:0;" onmouseover="this.style.background=\'#d1fae5\';this.style.transform=\'translateX(3px)\'" onmouseout="this.style.background=\'#f0fdf4\';this.style.transform=\'\'">'
+                    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;"><div style="font-size:13px;font-weight:700;color:#0F766E;">' + escHtml(info.label) + '</div><div style="display:flex;align-items:center;gap:6px;">' + statusBadge + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></div></div>'
+                    + '<div style="font-size:11px;color:#0D9488;margin-bottom:8px;">' + patients.length + ' ผู้ป่วย · ' + done + '/' + total + ' จ่ายแล้ว</div>'
+                    + '<div style="width:100%;height:4px;background:rgba(13,148,136,0.15);border-radius:3px;"><div style="width:' + pct + '%;height:100%;background:#0D9488;border-radius:3px;"></div></div>'
+                    + '</div></div>';
+            }
+            return '<div style="display:flex;gap:0;">'
+                + '<div style="display:flex;flex-direction:column;align-items:center;width:32px;flex-shrink:0;">' + dotHtml + lineHtml + '</div>'
+                + '<div onclick="nav(\'pg-routine\')" style="flex:1;background:' + (allDone?'#f0fdf4':'#fff') + ';border:1px solid ' + (allDone?'#bbf7d0':'#e2e8f0') + ';border-radius:14px;padding:12px 14px;margin-left:8px;margin-bottom:8px;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:8px;" onmouseover="this.style.transform=\'translateX(3px)\'" onmouseout="this.style.transform=\'\'">'
+                + '<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:3px;">' + escHtml(info.label) + '</div>'
+                + '<div style="font-size:11px;color:var(--text-3);">' + patients.length + ' ผู้ป่วย · ' + total + ' รายการ' + (allDone?' ✓':'') + '</div></div>'
+                + statusBadge
+                + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="2.5" style="flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>'
+                + '</div></div>';
+        }).join('');
+    }
+
     // Register listeners
     MedCartStore.onChange(syncDashboardFromStore);
     MedCartStore.onChange(renderPhysicianOrders);
     MedCartStore.onChange(syncOrderPlanStats);
+    MedCartStore.onChange(renderDashScheduleTimeline);
 
     // On load: restore page + login state from URL hash (survive refresh)
     (function() {
@@ -22065,12 +22054,17 @@
         }
         const metrics = getDashboardMetrics();
         const ward = currentWardName || DEFAULT_DEMO_WARD;
+        var storeStats = (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) ? MedCartStore.getDashStats() : null;
+        var bannerPending = storeStats ? storeStats.pending : metrics.pending;
+        var bannerDone = storeStats ? storeStats.done : metrics.done;
+        var bannerTotal = storeStats ? storeStats.totalMeds : metrics.total;
+        var bannerPct = storeStats ? storeStats.pctDone : metrics.percent;
         const bannerSub = document.querySelector('#pg-dashboard .db-banner-sub');
-        if (bannerSub) bannerSub.innerHTML = 'มีรายการยา <strong style="color:var(--green);">' + metrics.pending + ' รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="color:var(--green);">' + metrics.done + ' จาก ' + metrics.total + '</strong> รายการ';
+        if (bannerSub) bannerSub.innerHTML = 'มีรายการยา <strong style="color:var(--green);">' + bannerPending + ' รายการ</strong> รอดำเนินการ · จ่ายแล้ว <strong style="color:var(--green);">' + bannerDone + ' จาก ' + bannerTotal + '</strong> รายการ';
         const progressNum = document.querySelector('#pg-dashboard .db-progress-num');
-        if (progressNum) progressNum.textContent = metrics.percent + '%';
+        if (progressNum) progressNum.textContent = bannerPct + '%';
         const progressCircle = document.querySelector('#pg-dashboard .db-progress svg circle:nth-child(2)');
-        if (progressCircle) progressCircle.setAttribute('stroke-dashoffset', String(Math.round(251 - (251 * metrics.percent / 100))));
+        if (progressCircle) progressCircle.setAttribute('stroke-dashoffset', String(Math.round(251 - (251 * bannerPct / 100))));
         const cartState = getDashboardCassetteState();
         const donePct = metrics.total ? Math.round((metrics.done / metrics.total) * 100) : 0;
         const pendingPct = metrics.total ? Math.round((metrics.pending / metrics.total) * 100) : 0;
@@ -22082,38 +22076,79 @@
         const statDoneBar = document.getElementById('dashStatDoneBar');
         const statPending = document.getElementById('dashStatPending');
         const statPendingBar = document.getElementById('dashStatPendingBar');
-        if (statPatients) statPatients.textContent = metrics.patients;
-        if (statPatientsSub) statPatientsSub.textContent = ward + ' ทั้งหมด · โหลดตัวอย่าง ' + metrics.loadedPatients + ' ราย';
-        if (statMeds) statMeds.textContent = metrics.total;
-        if (statMedsSub) statMedsSub.textContent = 'จากข้อมูลยาของ ' + metrics.loadedPatients + ' ราย';
-        if (statDone) statDone.textContent = metrics.done;
-        if (statDoneBar) statDoneBar.style.width = donePct + '%';
-        if (statPending) statPending.textContent = metrics.pending;
-        if (statPendingBar) statPendingBar.style.width = pendingPct + '%';
+        // Use store data if available (more accurate), fallback to legacy metrics
+        var ss = storeStats || {};
+        var useStore = !!storeStats;
+        var displayPatients = useStore ? ss.patients : metrics.patients;
+        var displayTotal = useStore ? ss.totalMeds : metrics.total;
+        var displayDone = useStore ? ss.done : metrics.done;
+        var displayPending = useStore ? ss.pending : metrics.pending;
+        var displayDonePct = useStore ? ss.pctDone : donePct;
+        var displayPendPct = useStore ? (100 - ss.pctDone) : pendingPct;
+        if (statPatients) statPatients.textContent = displayPatients;
+        if (statPatientsSub) statPatientsSub.textContent = ward + ' ทั้งหมด';
+        if (statMeds) statMeds.textContent = displayTotal;
+        if (statMedsSub) statMedsSub.textContent = 'คำสั่งยาจาก HIS + Manual';
+        if (statDone) statDone.textContent = displayDone;
+        if (statDoneBar) statDoneBar.style.width = displayDonePct + '%';
+        if (statPending) statPending.textContent = displayPending;
+        if (statPendingBar) statPendingBar.style.width = displayPendPct + '%';
         renderDashboardCassetteUsageCard(cartState);
+        // Action badges & alert nums — prefer store data
+        var storeStats = (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) ? MedCartStore.getDashStats() : null;
+        var storePrepPending = storeStats ? MedCartStore.countByStatus('scheduled') + MedCartStore.countByStatus('ordered') : metrics.pending;
+        var storeDispPending = storeStats ? (storeStats.totalMeds - storeStats.done) : metrics.pending;
         const actionBadges = document.querySelectorAll('#pg-dashboard .db-action-badge');
-        if (actionBadges[0]) actionBadges[0].textContent = metrics.pending + ' รอจ่าย';
-        if (actionBadges[1]) actionBadges[1].textContent = metrics.pending + ' รอจัด';
+        if (actionBadges[0]) actionBadges[0].textContent = storePrepPending + ' รอจัด';
+        if (actionBadges[1]) actionBadges[1].textContent = storeDispPending + ' รอจ่าย';
         const alertNums = document.querySelectorAll('#dashQuickAlerts .db-alert-num');
-        if (alertNums[0]) alertNums[0].textContent = (typeof stPatients !== 'undefined' ? stPatients.length : 0);
-        if (alertNums[1]) alertNums[1].textContent = metrics.prn || (typeof prnPatients !== 'undefined' ? prnPatients.length : 0);
-        if (alertNums[2]) alertNums[2].textContent = metrics.highAlert;
+        if (alertNums[0]) alertNums[0].textContent = storeStats ? storeStats.stat : (typeof stPatients !== 'undefined' ? stPatients.length : 0);
+        if (alertNums[1]) alertNums[1].textContent = storeStats ? storeStats.prn : (metrics.prn || 0);
+        if (alertNums[2]) alertNums[2].textContent = storeStats ? storeStats.highAlert : metrics.highAlert;
         if (alertNums[3]) alertNums[3].textContent = (typeof ovPatients !== 'undefined' ? ovPatients.length : 0);
 
+        // ── Activity log — render from MedCartStore ──
         const latestPanel = document.querySelectorAll('#pg-dashboard .db-panel')[1];
         const logWrap = latestPanel ? latestPanel.querySelector('div[style*="flex-direction:column"]') : null;
-        if (logWrap) {
-            const latest = getDispensePatientKeys().slice(0, 5).map(function(key, idx) {
-                const pt = patientData[key];
-                const drug = (pt.drugs || [])[0] || {};
-                return { time: ['08:12','08:08','07:55','07:45','07:30'][idx] || '—', pt: pt, drug: drug, done: !!drug.done };
-            });
-            logWrap.innerHTML = latest.map(function(item, idx) {
-                const border = idx === latest.length - 1 ? '' : 'border-bottom:1px dashed #f1f5f9;';
-                const color = item.done ? '#0D9488' : isLegacyHighAlertDrug(item.drug) ? '#d97706' : '#3b82f6';
-                const bg = item.done ? '#f0fdf4' : isLegacyHighAlertDrug(item.drug) ? '#fffbeb' : '#eff6ff';
-                const action = item.done ? 'จ่ายยา' : 'รอจ่ายยา';
-                return '<div class="db-log-item" style="' + border + 'padding:10px 8px;"><div style="width:32px;height:32px;background:' + bg + ';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div style="flex:1;min-width:0;"><div class="db-log-text">' + action + ' <strong>' + escHtml(item.drug.name || '—') + '</strong></div><div style="font-size:11px;color:var(--text-3);">' + escHtml(item.pt.name) + ' · ห้อง ' + escHtml(item.pt.bed) + '</div></div><div class="db-log-time">' + item.time + '</div></div>';
+        if (logWrap && typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) {
+            // Build activity from store orders sorted by status (dispensed first, then prepped, then scheduled)
+            var storeOrders = MedCartStore.orders.slice();
+            var statusOrder = { dispensed:0, assessed:0, prepped:1, scheduled:2, ordered:3 };
+            storeOrders.sort(function(a,b){ return (statusOrder[a.status]||9) - (statusOrder[b.status]||9); });
+            var activityItems = storeOrders.slice(0, 5);
+            var demoTimes = ['08:12','08:08','07:55','07:45','07:30'];
+            logWrap.innerHTML = activityItems.map(function(o, idx) {
+                var border = idx === activityItems.length - 1 ? '' : 'border-bottom:1px dashed #f1f5f9;';
+                var isDone = o.status === 'dispensed' || o.status === 'assessed';
+                var isHA = o.highAlert;
+                var isPrep = o.status === 'prepped';
+                var color = isDone ? '#0D9488' : isHA ? '#d97706' : isPrep ? '#3b82f6' : '#64748b';
+                var bg = isDone ? '#f0fdf4' : isHA ? '#fffbeb' : isPrep ? '#eff6ff' : '#f8fafc';
+                var action = isDone ? 'จ่ายยา' : isPrep ? 'จัดยา' : o.status === 'scheduled' ? 'รอจัดยา' : 'รับคำสั่ง';
+                var icon = isDone
+                    ? '<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>'
+                    : isPrep ? '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>'
+                    : isHA ? '<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
+                    : '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>';
+                var ptName = MedCartStore.getPatientName(o.patient);
+                var ptBed = MedCartStore.getPatientBed(o.patient);
+                return '<div class="db-log-item" style="' + border + 'padding:10px 8px;">'
+                    + '<div style="width:32px;height:32px;background:' + bg + ';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+                    + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5">' + icon + '</svg></div>'
+                    + '<div style="flex:1;min-width:0;"><div class="db-log-text">' + action + ' <strong>' + escHtml(o.drug) + '</strong></div>'
+                    + '<div style="font-size:11px;color:var(--text-3);">' + escHtml(ptName) + ' · ห้อง ' + escHtml(ptBed) + '</div></div>'
+                    + '<div class="db-log-time">' + (demoTimes[idx] || o.createdAt || '—') + '</div></div>';
+            }).join('');
+        } else if (logWrap) {
+            // Fallback to legacy
+            var legacyKeys = getDispensePatientKeys().slice(0, 5);
+            logWrap.innerHTML = legacyKeys.map(function(key, idx) {
+                var pt = patientData[key]; if (!pt) return '';
+                var drug = (pt.drugs || [])[0] || {};
+                var border = idx === legacyKeys.length - 1 ? '' : 'border-bottom:1px dashed #f1f5f9;';
+                var done = !!drug.done;
+                var color = done ? '#0D9488' : '#3b82f6'; var bg = done ? '#f0fdf4' : '#eff6ff';
+                return '<div class="db-log-item" style="' + border + 'padding:10px 8px;"><div style="width:32px;height:32px;background:' + bg + ';border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><div style="flex:1;min-width:0;"><div class="db-log-text">' + (done?'จ่ายยา':'รอจ่าย') + ' <strong>' + escHtml(drug.name||'—') + '</strong></div><div style="font-size:11px;color:var(--text-3);">' + escHtml(pt.name) + ' · ห้อง ' + escHtml(pt.bed) + '</div></div><div class="db-log-time">' + (['08:12','08:08','07:55','07:45','07:30'][idx]||'—') + '</div></div>';
             }).join('');
         }
         const roleSection = document.getElementById('dashRoleSection');
