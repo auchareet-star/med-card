@@ -15006,13 +15006,93 @@
         }
 
         if (role === 'pharma') {
-            return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">'
+            // Build dynamic report from MedCartStore
+            var storeData = (typeof MedCartStore !== 'undefined' && MedCartStore.orders.length > 0) ? MedCartStore : null;
+            var holdCount = 0, failCount = 0, offcartCount = 0, cassetteRemain = 0;
+            var holdItems = [], failItems = [], offcartItems = [], cassetteItems = [];
+            if (storeData) {
+                // ยาค้างใน cassette = prepped but not dispensed
+                storeData.orders.forEach(function(o) {
+                    if (o.status === 'prepped') {
+                        cassetteItems.push(o);
+                    }
+                });
+                cassetteRemain = cassetteItems.length;
+                // ยาที่ hold/omit = จำลองจากข้อมูล overdue
+                holdCount = typeof ovPatients !== 'undefined' ? ovPatients.length : 0;
+                // Off-cart
+                offcartCount = storeData.offcart.length;
+            }
+
+            var reportRow = function(icon, iconBg, title, detail, borderColor) {
+                return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:white;border-radius:10px;border-left:3px solid '+borderColor+';box-shadow:0 1px 3px rgba(0,0,0,0.04);">'
+                    +'<div style="width:32px;height:32px;background:'+iconBg+';border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+icon+'</div>'
+                    +'<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:var(--text-1);">'+title+'</div><div style="font-size:10px;color:var(--text-2);margin-top:1px;">'+detail+'</div></div>'
+                    +'</div>';
+            };
+
+            return ''
+                // ── รายงานยาที่ต้องตรวจสอบ ──
+                +'<div style="'+glass+'padding:18px 20px;margin-bottom:14px;">'
+                +'<div style="font-size:15px;font-weight:700;color:var(--text-1);margin-bottom:6px;display:flex;align-items:center;gap:8px;">'
+                +'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="12" y1="9" x2="12.01" y2="9"/></svg>'
+                +'รายงานยาที่ต้องตรวจสอบ'
+                +'</div>'
+                +'<div style="font-size:11px;color:var(--text-3);margin-bottom:16px;">ยาค้างใน Cassette, ยา Hold/Omit, Off-cart และ 5 Rights Fail — ต้องติดตามแก้ไข</div>'
+
+                // Stats row
+                +'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">'
+                +'<div style="background:#FEF2F2;border-radius:12px;padding:12px;text-align:center;border:1px solid #FECACA;"><div style="font-size:22px;font-weight:800;color:#DC2626;">'+cassetteRemain+'</div><div style="font-size:9px;color:#991B1B;font-weight:700;margin-top:2px;">ค้าง Cassette</div></div>'
+                +'<div style="background:#FFFBEB;border-radius:12px;padding:12px;text-align:center;border:1px solid #FDE68A;"><div style="font-size:22px;font-weight:800;color:#D97706;">'+holdCount+'</div><div style="font-size:9px;color:#92400E;font-weight:700;margin-top:2px;">Hold / Omit</div></div>'
+                +'<div style="background:#FFF7ED;border-radius:12px;padding:12px;text-align:center;border:1px solid #FED7AA;"><div style="font-size:22px;font-weight:800;color:#EA580C;">'+offcartCount+'</div><div style="font-size:9px;color:#9A3412;font-weight:700;margin-top:2px;">Off-cart</div></div>'
+                +'<div style="background:#FEF2F2;border-radius:12px;padding:12px;text-align:center;border:1px solid #FECACA;"><div style="font-size:22px;font-weight:800;color:#DC2626;">0</div><div style="font-size:9px;color:#991B1B;font-weight:700;margin-top:2px;">5 Rights Fail</div></div>'
+                +'</div>'
+
+                // Detail list
+                +'<div style="display:flex;flex-direction:column;gap:8px;">'
+                // ยาค้าง cassette
+                + (cassetteItems.length > 0 ? cassetteItems.slice(0,3).map(function(o) {
+                    return reportRow(
+                        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>',
+                        '#FEF2F2', 'ค้าง Cassette — ' + o.drug,
+                        MedCartStore.getPatientName(o.patient) + ' · จัดแล้วแต่ยังไม่จ่าย · ' + (o.schedule||'') + ' ' + (o.time||''),
+                        '#DC2626'
+                    );
+                }).join('') : reportRow(
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+                    '#F0FDF4', 'ไม่มียาค้างใน Cassette', 'ยาที่จัดแล้วถูกจ่ายครบ', '#10B981'
+                ))
+                // Hold/Omit
+                + reportRow(
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>',
+                    '#FFFBEB', 'Hold / Omit — ' + holdCount + ' รายการ',
+                    holdCount > 0 ? 'ยาที่ถูกงดให้ ต้องตรวจสอบว่าต้องคืน stock หรือทำลาย' : 'ไม่มียาที่ถูก hold หรืองด',
+                    '#D97706'
+                )
+                // Off-cart
+                + reportRow(
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4z"/><line x1="2" y1="2" x2="22" y2="22"/></svg>',
+                    '#FFF7ED', 'Off-cart — ' + offcartCount + ' รายการ',
+                    offcartCount > 0 ? 'ยาที่ให้นอก Med Cart ต้องตรวจ stock reconciliation' : 'ไม่มีการให้ยานอกรถเข็นวันนี้',
+                    '#EA580C'
+                )
+                // 5 Rights Fail
+                + reportRow(
+                    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+                    '#FEF2F2', '5 Rights Fail — 0 รายการ',
+                    'ยาที่สแกนแล้วไม่ผ่านการตรวจ 5 Rights ต้องตรวจสอบ root cause',
+                    '#DC2626'
+                )
+                +'</div></div>'
+
+                // ── Stock + Prep Activity (2 cols) ──
+                +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">'
                 // Stock alert
                 +'<div style="'+glass+'padding:18px 20px;">'
                 +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
                 +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
                 +'<span>Stock ยาใกล้หมด</span>'
-                +'<span style="margin-left:auto;background:#fff7ed;color:#d97706;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">4 รายการ</span></div>'
+                +'<span style="margin-left:auto;background:#fff7ed;color:#d97706;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">3 รายการ</span></div>'
                 +'<div style="display:flex;flex-direction:column;gap:8px;">'
                 +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fef2f2;border-radius:10px;border-left:3px solid #ef4444;">'
                 +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text-1);">Heparin 5000u Inj</div><div style="font-size:11px;color:#ef4444;">เหลือ 3 vials · ต่ำกว่า safety stock</div></div>'
@@ -15027,8 +15107,8 @@
                 // Prep activity log
                 +'<div style="'+glass+'padding:18px 20px;">'
                 +'<div style="font-size:14px;font-weight:600;color:var(--text-1);margin-bottom:14px;display:flex;align-items:center;gap:6px;">'
-                +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
-                +'<span>กิจกรรมการจัดยาวันนี้</span>'
+                +'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'
+                +'<span>กิจกรรมจัดยาวันนี้</span>'
                 +'<span style="margin-left:auto;background:#f0fdf4;color:#0D9488;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;">3 รายการ</span></div>'
                 +'<div style="display:flex;flex-direction:column;gap:7px;">'
                 +'<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f0fdf4;border-radius:10px;border-left:3px solid #0D9488;">'
