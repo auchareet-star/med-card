@@ -205,136 +205,10 @@
         selectRole('super','นส.ปราณี หัวหน้าเวร','หัวหน้าเวร');
     }
 
-    function selectRole(role, name, roleText) {
-        currentRole = role;
-        name = name || 'คุณสมใจ';
-        roleText = roleText || {nurse:'พยาบาล',pharma:'เภสัชกร',super:'หัวหน้าเวร'}[role];
+    // selectRole is defined in index.html — this stub removed to prevent override
 
-        const ward = document.getElementById('loginWardLabel')?.textContent || 'Ward 3A';
-        document.getElementById('dashWard').textContent = ward;
-
-        // Update welcome name
-        const welcomeH1 = document.getElementById('dashWelcomeName');
-        if (welcomeH1) welcomeH1.textContent = name;
-
-        // Update banner gradient per role
-        const banner = document.getElementById('dashBanner');
-        if (banner) {
-            const gradients = {
-                nurse:  'linear-gradient(135deg,#0a5c55 0%,#0F766E 30%,#0D9488 65%,#0ea59a 100%)',
-                pharma: 'linear-gradient(135deg,#1e3a8a 0%,#1D4ED8 30%,#3B82F6 65%,#60A5FA 100%)',
-                super:  'linear-gradient(135deg,#3b0764 0%,#5B21B6 30%,#7C3AED 65%,#a855f7 100%)'
-            };
-            banner.style.background = gradients[role] || gradients.super;
-        }
-
-        // Update header avatar/name
-        const avatarEl = document.querySelector('#pg-dashboard .hdr-avatar');
-        if (avatarEl) avatarEl.textContent = name.substring(0,2).replace(/[ภญนส.]/g,'');
-        const nameEl = document.querySelector('#pg-dashboard .hdr-user-name');
-        if (nameEl) nameEl.textContent = name;
-        const roleEl = document.querySelector('#pg-dashboard .hdr-user-role');
-        if (roleEl) roleEl.textContent = roleText;
-
-        // Show/disable action cards based on role
-        const dashEl = document.getElementById('pg-dashboard');
-        const dispenseBtn = dashEl?.querySelector('.db-action[onclick*="pg-routine"]');
-        const prepBtn = dashEl?.querySelector('.db-action[onclick*="goToPrepType"]');
-
-        if (dispenseBtn) {
-            const noAccess = role === 'pharma';
-            dispenseBtn.style.opacity = noAccess ? '0.45' : '';
-            dispenseBtn.style.pointerEvents = noAccess ? 'none' : '';
-            dispenseBtn.style.filter = noAccess ? 'grayscale(0.6)' : '';
-            // Add/remove lock overlay
-            let lock = dispenseBtn.querySelector('.lock-overlay');
-            if (noAccess && !lock) {
-                lock = document.createElement('div');
-                lock.className = 'lock-overlay';
-                lock.style.cssText = 'position:absolute;inset:0;background:rgba(255,255,255,0.5);backdrop-filter:blur(2px);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;';
-                lock.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div style="font-size:12px;font-weight:600;color:#94a3b8;margin-top:6px;">ไม่มีสิทธิ์เข้าถึง</div>';
-                dispenseBtn.appendChild(lock);
-            } else if (!noAccess && lock) {
-                lock.remove();
-            }
-        }
-
-        if (prepBtn) {
-            const noAccess = role === 'nurse';
-            prepBtn.style.opacity = noAccess ? '0.45' : '';
-            prepBtn.style.pointerEvents = noAccess ? 'none' : '';
-            prepBtn.style.filter = noAccess ? 'grayscale(0.6)' : '';
-            let lock = prepBtn.querySelector('.lock-overlay');
-            if (noAccess && !lock) {
-                lock = document.createElement('div');
-                lock.className = 'lock-overlay';
-                lock.style.cssText = 'position:absolute;inset:0;background:rgba(255,255,255,0.5);backdrop-filter:blur(2px);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:2;';
-                lock.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg><div style="font-size:12px;font-weight:600;color:#94a3b8;margin-top:6px;">ไม่มีสิทธิ์เข้าถึง</div>';
-                prepBtn.appendChild(lock);
-            } else if (!noAccess && lock) {
-                lock.remove();
-            }
-        }
-
-        // db-actions is always 2 columns; alerts row is a separate element
-
-        // Inject role-specific section
-        const sec = document.getElementById('dashRoleSection');
-        if (sec) sec.innerHTML = getRoleSectionHTML(role, name, roleText);
-
-        // Inject bottom section (super: team + performance below schedule/activity)
-        const secBottom = document.getElementById('dashRoleBottom');
-        if (secBottom) secBottom.innerHTML = getRoleBottomHTML(role);
-
-        // Hide quick alerts for super role
-        const quickAlerts = document.getElementById('dashQuickAlerts');
-        if (quickAlerts) {
-            quickAlerts.style.display = role === 'super' ? 'none' : '';
-        }
-
-        // Disable dispense-related cards for pharma
-        const dispenseKeywords = ['pg-stat','pg-prn','pg-highalert','pg-routine','pg-omit-flow','pg-overdue'];
-        dashEl?.querySelectorAll('[onclick]').forEach(card => {
-            const onclick = card.getAttribute('onclick') || '';
-            const isDispense = dispenseKeywords.some(k => onclick.includes(k));
-            if (role === 'pharma' && isDispense) {
-                card.style.opacity = '0.4';
-                card.style.pointerEvents = 'none';
-                card.style.filter = 'grayscale(0.5)';
-                card.style.position = 'relative';
-                // Add lock icon if not already there
-                if (!card.querySelector('.lock-mini')) {
-                    const lk = document.createElement('div');
-                    lk.className = 'lock-mini';
-                    lk.style.cssText = 'position:absolute;top:6px;right:6px;width:22px;height:22px;background:rgba(148,163,184,0.7);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;';
-                    lk.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
-                    card.appendChild(lk);
-                }
-            } else {
-                card.style.opacity = '';
-                card.style.pointerEvents = '';
-                card.style.filter = '';
-                const lk = card.querySelector('.lock-mini');
-                if (lk) lk.remove();
-            }
-        });
-
-        // Show user section in header
-        document.body.classList.add('logged-in');
-        document.getElementById('ghUserSection').style.display = 'flex';
-        // Update global header info
-        document.getElementById('ghUserName').textContent = name;
-        document.getElementById('ghUserRole').textContent = roleText;
-        document.getElementById('ghAvatar').textContent = name.substring(0,2).replace(/[ภญนส.]/g,'');
-        const avatarColors = {nurse:'var(--green)',pharma:'#3b82f6',super:'#7c3aed'};
-        document.getElementById('ghAvatar').style.background = 'linear-gradient(135deg,' + (avatarColors[role]||'var(--green)') + ',#5db840)';
-
-        nav('pg-dashboard');
-        showToast('เข้าสู่ระบบ: ' + name + ' (' + roleText + ')');
-        setTimeout(() => showToast(''), 2500);
-    }
-
-    function getRoleSectionHTML(role, name, roleText) {
+    // getRoleSectionHTML defined in index.html — removed from app.js
+    function _appjs_getRoleSectionHTML_REMOVED(role, name, roleText) {
         const glass = 'background:rgba(255,255,255,0.9);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);';
 
         if (role === 'nurse') {
@@ -414,7 +288,7 @@
         return '';
     }
 
-    function getRoleBottomHTML(role) {
+    function _appjs_getRoleBottomHTML_REMOVED(role) {
         if (role !== 'super') return '';
         const glass = 'background:rgba(255,255,255,0.9);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);';
         return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">'
