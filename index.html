@@ -14359,40 +14359,83 @@
         offcart: [],  // Off-cart administrations
         _listeners: [],
 
-        // Initialize with demo physician orders
-        init: function() {
-            this.orders = [
-                // ── Physician Orders (HIS) ──
-                { id:'HIS-001', source:'HIS', patient:'01', drug:'Amlodipine 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'06:30', highAlert:false },
-                { id:'HIS-002', source:'HIS', patient:'01', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'06:30', highAlert:false },
-                { id:'HIS-003', source:'HIS', patient:'01', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'prepped', createdAt:'06:30', highAlert:false },
-                { id:'HIS-004', source:'HIS', patient:'01', drug:'Heparin 5000u', dose:'1 vial', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'scheduled', createdAt:'06:30', highAlert:true },
-                { id:'HIS-005', source:'HIS', patient:'01', drug:'Simvastatin 20 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'ordered', createdAt:'06:30', highAlert:false },
-
-                { id:'HIS-006', source:'HIS', patient:'03', drug:'Amlodipine 10 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'dispensed', createdAt:'06:15', highAlert:false },
-                { id:'HIS-007', source:'HIS', patient:'03', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'dispensed', createdAt:'06:15', highAlert:false },
-                { id:'HIS-008', source:'HIS', patient:'03', drug:'Enalapril 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'prepped', createdAt:'06:15', highAlert:false },
-                { id:'HIS-009', source:'HIS', patient:'03', drug:'Furosemide 40 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'scheduled', createdAt:'06:15', highAlert:false },
-
-                { id:'HIS-010', source:'HIS', patient:'05', drug:'Warfarin 3 mg', dose:'1 เม็ด', route:'PO', priority:'high-alert', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'ordered', createdAt:'07:00', highAlert:true },
-                { id:'HIS-011', source:'HIS', patient:'05', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'scheduled', createdAt:'07:00', highAlert:false },
-                { id:'HIS-012', source:'HIS', patient:'05', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'prepped', createdAt:'07:00', highAlert:false },
-
-                { id:'HIS-013', source:'HIS', patient:'08', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'06:45', highAlert:false },
-                { id:'HIS-014', source:'HIS', patient:'08', drug:'Glipizide 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'06:45', highAlert:false },
-
-                { id:'HIS-015', source:'HIS', patient:'10', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'07:10', highAlert:false },
-                { id:'HIS-016', source:'HIS', patient:'10', drug:'Amoxicillin 500 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'07:10', highAlert:false },
-
-                { id:'HIS-017', source:'HIS', patient:'12', drug:'Insulin Glargine 20u', dose:'20 units', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'scheduled', createdAt:'06:30', highAlert:true },
-
-                { id:'HIS-018', source:'HIS', patient:'15', drug:'Amlodipine 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเที่ยง', time:'12:00', doctor:'พญ.นภา เจริญสุข', status:'ordered', createdAt:'07:15', highAlert:false },
-                { id:'HIS-019', source:'HIS', patient:'15', drug:'Hydrochlorothiazide 25 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:15', highAlert:false },
-
-                // STAT order
-                { id:'HIS-020', source:'HIS', patient:'08', drug:'Ceftriaxone 1 g', dose:'1 vial', route:'IV', priority:'stat', schedule:'STAT now', time:'STAT', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:45', highAlert:false }
-            ];
+        // Initialize with demo physician orders — per ward
+        init: function(wardName) {
+            wardName = wardName || currentWardName || DEFAULT_DEMO_WARD;
+            this.currentWard = wardName;
             this.offcart = [];
+
+            if (wardName === 'Ward 5A') {
+                this.orders = [
+                    // ── Ward 5A: ออร์โธปิดิกส์ — 22 ผู้ป่วย, 69 คำสั่งยา ──
+                    // ผู้ป่วย 01 — ภูริทัต (Post TKR day 2)
+                    { id:'5A-001', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:00', highAlert:false },
+                    { id:'5A-002', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:00', highAlert:false },
+                    { id:'5A-003', source:'HIS', ward:'Ward 5A', patient:'01', drug:'Enoxaparin 40 mg', dose:'1 syringe', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'prepped', createdAt:'06:00', highAlert:true },
+                    // ผู้ป่วย 02 — ชนากานต์ (Post ORIF ankle)
+                    { id:'5A-004', source:'HIS', ward:'Ward 5A', patient:'02', drug:'Celecoxib 200 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'prepped', createdAt:'06:15', highAlert:false },
+                    { id:'5A-005', source:'HIS', ward:'Ward 5A', patient:'02', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'prepped', createdAt:'06:15', highAlert:false },
+                    { id:'5A-006', source:'HIS', ward:'Ward 5A', patient:'02', drug:'Tramadol 50 mg', dose:'1 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'พญ.สุภาวดี ข้อต่อ', status:'scheduled', createdAt:'06:15', highAlert:false },
+                    // ผู้ป่วย 03 — อดิศักดิ์ (Post hip replacement)
+                    { id:'5A-007', source:'HIS', ward:'Ward 5A', patient:'03', drug:'Warfarin 3 mg', dose:'1 เม็ด', route:'PO', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'06:30', highAlert:true },
+                    { id:'5A-008', source:'HIS', ward:'Ward 5A', patient:'03', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:30', highAlert:false },
+                    { id:'5A-009', source:'HIS', ward:'Ward 5A', patient:'03', drug:'Calcium Carbonate 600 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:30', highAlert:false },
+                    { id:'5A-010', source:'HIS', ward:'Ward 5A', patient:'03', drug:'Vitamin D3 1000 IU', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:30', highAlert:false },
+                    // ผู้ป่วย 04 — วรวุฒิ (Post spine surgery)
+                    { id:'5A-011', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเที่ยง', time:'12:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'06:45', highAlert:false },
+                    { id:'5A-012', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Morphine 5 mg', dose:'5 mg', route:'IV', priority:'high-alert', schedule:'PRN', time:'PRN', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'06:45', highAlert:true },
+                    { id:'5A-013', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'routine', schedule:'รอบเที่ยง', time:'12:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'dispensed', createdAt:'06:45', highAlert:false },
+                    // ผู้ป่วย 05 — จิตรา (Knee arthroscopy)
+                    { id:'5A-014', source:'HIS', ward:'Ward 5A', patient:'05', drug:'Gabapentin 300 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'ordered', createdAt:'07:00', highAlert:false },
+                    { id:'5A-015', source:'HIS', ward:'Ward 5A', patient:'05', drug:'Celecoxib 200 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'ordered', createdAt:'07:00', highAlert:false },
+                    { id:'5A-016', source:'HIS', ward:'Ward 5A', patient:'05', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'dispensed', createdAt:'07:00', highAlert:false },
+                    // ผู้ป่วย 06 — ธวัชชัย (Fracture fixation)
+                    { id:'5A-017', source:'HIS', ward:'Ward 5A', patient:'06', drug:'Enoxaparin 40 mg', dose:'1 syringe', route:'SC', priority:'high-alert', schedule:'รอบเย็น', time:'16:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'07:10', highAlert:true },
+                    { id:'5A-018', source:'HIS', ward:'Ward 5A', patient:'06', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'07:10', highAlert:false },
+                    { id:'5A-019', source:'HIS', ward:'Ward 5A', patient:'06', drug:'Docusate 100 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'07:10', highAlert:false },
+                    // ผู้ป่วย 07 — นลินี (Post rotator cuff repair)
+                    { id:'5A-020', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Cefazolin 1 g', dose:'1 vial', route:'IV', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'dispensed', createdAt:'06:30', highAlert:false },
+                    { id:'5A-021', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Tramadol 50 mg', dose:'1 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'พญ.สุภาวดี ข้อต่อ', status:'scheduled', createdAt:'06:30', highAlert:false },
+                    { id:'5A-022', source:'HIS', ward:'Ward 5A', patient:'07', drug:'Gabapentin 300 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'พญ.สุภาวดี ข้อต่อ', status:'ordered', createdAt:'06:30', highAlert:false },
+                    // ผู้ป่วย 08 — เอกชัย (Multiple fractures)
+                    { id:'5A-023', source:'HIS', ward:'Ward 5A', patient:'08', drug:'Aspirin 81 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'prepped', createdAt:'07:15', highAlert:false },
+                    { id:'5A-024', source:'HIS', ward:'Ward 5A', patient:'08', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'prepped', createdAt:'07:15', highAlert:false },
+                    { id:'5A-025', source:'HIS', ward:'Ward 5A', patient:'08', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'routine', schedule:'รอบเย็น', time:'16:00', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'ordered', createdAt:'07:15', highAlert:false },
+                    // STAT order — ผู้ป่วย 04 severe pain
+                    { id:'5A-026', source:'HIS', ward:'Ward 5A', patient:'04', drug:'Ketorolac 30 mg', dose:'1 amp', route:'IV', priority:'stat', schedule:'STAT now', time:'STAT', doctor:'นพ.ธีรวัฒน์ กระดูกดี', status:'scheduled', createdAt:'07:30', highAlert:false }
+                ];
+            } else {
+                // ── Ward 3A: อายุรกรรม — 8 ผู้ป่วย, 20 คำสั่งยา ──
+                this.orders = [
+                    { id:'HIS-001', source:'HIS', ward:'Ward 3A', patient:'01', drug:'Amlodipine 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'06:30', highAlert:false },
+                    { id:'HIS-002', source:'HIS', ward:'Ward 3A', patient:'01', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'06:30', highAlert:false },
+                    { id:'HIS-003', source:'HIS', ward:'Ward 3A', patient:'01', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'prepped', createdAt:'06:30', highAlert:false },
+                    { id:'HIS-004', source:'HIS', ward:'Ward 3A', patient:'01', drug:'Heparin 5000u', dose:'1 vial', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'scheduled', createdAt:'06:30', highAlert:true },
+                    { id:'HIS-005', source:'HIS', ward:'Ward 3A', patient:'01', drug:'Simvastatin 20 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'ordered', createdAt:'06:30', highAlert:false },
+
+                    { id:'HIS-006', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Amlodipine 10 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'dispensed', createdAt:'06:15', highAlert:false },
+                    { id:'HIS-007', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'dispensed', createdAt:'06:15', highAlert:false },
+                    { id:'HIS-008', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Enalapril 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'prepped', createdAt:'06:15', highAlert:false },
+                    { id:'HIS-009', source:'HIS', ward:'Ward 3A', patient:'03', drug:'Furosemide 40 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'scheduled', createdAt:'06:15', highAlert:false },
+
+                    { id:'HIS-010', source:'HIS', ward:'Ward 3A', patient:'05', drug:'Warfarin 3 mg', dose:'1 เม็ด', route:'PO', priority:'high-alert', schedule:'ก่อนนอน', time:'20:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'ordered', createdAt:'07:00', highAlert:true },
+                    { id:'HIS-011', source:'HIS', ward:'Ward 3A', patient:'05', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'scheduled', createdAt:'07:00', highAlert:false },
+                    { id:'HIS-012', source:'HIS', ward:'Ward 3A', patient:'05', drug:'Omeprazole 20 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'prepped', createdAt:'07:00', highAlert:false },
+
+                    { id:'HIS-013', source:'HIS', ward:'Ward 3A', patient:'08', drug:'Metformin 500 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'06:45', highAlert:false },
+                    { id:'HIS-014', source:'HIS', ward:'Ward 3A', patient:'08', drug:'Glipizide 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'06:45', highAlert:false },
+
+                    { id:'HIS-015', source:'HIS', ward:'Ward 3A', patient:'10', drug:'Paracetamol 500 mg', dose:'2 เม็ด', route:'PO', priority:'prn', schedule:'PRN', time:'PRN', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'07:10', highAlert:false },
+                    { id:'HIS-016', source:'HIS', ward:'Ward 3A', patient:'10', drug:'Amoxicillin 500 mg', dose:'1 แคปซูล', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'นพ.สุรศักดิ์ วงศ์แพทย์', status:'dispensed', createdAt:'07:10', highAlert:false },
+
+                    { id:'HIS-017', source:'HIS', ward:'Ward 3A', patient:'12', drug:'Insulin Glargine 20u', dose:'20 units', route:'SC', priority:'high-alert', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.วรรณา คำดี', status:'scheduled', createdAt:'06:30', highAlert:true },
+
+                    { id:'HIS-018', source:'HIS', ward:'Ward 3A', patient:'15', drug:'Amlodipine 5 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเที่ยง', time:'12:00', doctor:'พญ.นภา เจริญสุข', status:'ordered', createdAt:'07:15', highAlert:false },
+                    { id:'HIS-019', source:'HIS', ward:'Ward 3A', patient:'15', drug:'Hydrochlorothiazide 25 mg', dose:'1 เม็ด', route:'PO', priority:'routine', schedule:'รอบเช้า', time:'08:00', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:15', highAlert:false },
+
+                    { id:'HIS-020', source:'HIS', ward:'Ward 3A', patient:'08', drug:'Ceftriaxone 1 g', dose:'1 vial', route:'IV', priority:'stat', schedule:'STAT now', time:'STAT', doctor:'พญ.นภา เจริญสุข', status:'scheduled', createdAt:'07:45', highAlert:false }
+                ];
+            }
             this._notify();
         },
 
@@ -23221,6 +23264,8 @@
         if (!wardDataReady) return;
         replaceSharedPatientData(resolvedWard);
         syncWardFlowDatasets();
+        // Re-init central store for the new ward
+        if (typeof MedCartStore !== 'undefined') MedCartStore.init(resolvedWard);
         if (!options.silent) {
             const info = getCurrentWardInfo();
             showToast('เปลี่ยนเป็น ' + resolvedWard + ' — โหลดข้อมูล ' + info.desc + ' แล้ว');
