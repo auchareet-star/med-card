@@ -14977,6 +14977,80 @@
         }
     };
 
+    // ── PatientData Notifier — pub/sub for patientData changes ──
+    var PatientDataNotifier = {
+        _listeners: [],
+        _debounceTimer: null,
+        onChange: function(fn) { this._listeners.push(fn); },
+        notify: function() {
+            var self = this;
+            clearTimeout(this._debounceTimer);
+            this._debounceTimer = setTimeout(function() {
+                self._listeners.forEach(function(fn) { try { fn(); } catch(e) { console.warn('[PatientDataNotifier]', e); } });
+            }, 50);
+        }
+    };
+
+    // ── Unified active-page re-render ──
+    function renderActivePage() {
+        var pg = getActivePageId();
+        if (!pg || !wardDataReady) return;
+        var map = {
+            'pg-dashboard':       function() {
+                syncDashboardFromStore();
+                if (typeof renderDashboardDynamic === 'function') renderDashboardDynamic();
+                var sec = document.getElementById('dashRoleSection');
+                if (sec && typeof getRoleSectionHTML === 'function') sec.innerHTML = getRoleSectionHTML(currentRole);
+                var pvBadge = document.getElementById('dashPendingVerifyCount');
+                if (pvBadge) pvBadge.textContent = MedCartStore.countPendingVerify();
+                var nursePrepBtn = document.getElementById('dashNursePrepLink');
+                if (nursePrepBtn && currentRole === 'nurse') {
+                    var approved = MedCartStore.orders.filter(function(o){ return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected'; }).length;
+                    var npBadge = document.getElementById('dashNursePrepCount');
+                    if (npBadge) npBadge.textContent = approved;
+                    var npSub = document.getElementById('dashNursePrepSub');
+                    if (approved > 0) {
+                        nursePrepBtn.style.opacity = '';
+                        nursePrepBtn.style.pointerEvents = '';
+                        nursePrepBtn.style.borderColor = '#86EFAC';
+                        nursePrepBtn.style.background = 'linear-gradient(135deg,#F0FDF4,#DCFCE7)';
+                        if (npSub) npSub.textContent = approved + ' รายการพร้อมจัด';
+                    } else {
+                        nursePrepBtn.style.opacity = '0.5';
+                        nursePrepBtn.style.pointerEvents = 'none';
+                        nursePrepBtn.style.borderColor = '#E2E8F0';
+                        nursePrepBtn.style.background = '#F8FAFC';
+                        if (npSub) npSub.textContent = 'ยังไม่มีรายการอนุมัติ';
+                    }
+                    var cassettePanel = document.getElementById('dashCassettePanel');
+                    if (cassettePanel) cassettePanel.style.display = approved > 0 ? '' : 'none';
+                }
+            },
+            'pg-prep-type':       function() { if (typeof renderPrepTypePage === 'function') renderPrepTypePage(); },
+            'pg-order-plan':      function() { if (typeof renderOrderPlanPage === 'function') renderOrderPlanPage(); },
+            'pg-nurse-schedule':  function() { if (typeof renderNurseSchedulePage === 'function') renderNurseSchedulePage(); },
+            'pg-emar':            function() { if (typeof renderEmarPage === 'function') renderEmarPage(); },
+            'pg-nurse-prep':      function() { if (typeof renderNursePrepPage === 'function') renderNursePrepPage(); },
+            'pg-pharma-report':   function() { if (typeof renderPharmaReportPage === 'function') renderPharmaReportPage(); },
+            'pg-pharma-verify':   function() { if (typeof renderPharmaVerifyPage === 'function') renderPharmaVerifyPage(); },
+            'pg-prep-patient':    function() { if (typeof renderPrepPatientPage === 'function') renderPrepPatientPage(); },
+            'pg-prep-med':        function() { if (typeof renderPrepMedicationPage === 'function') renderPrepMedicationPage(); },
+            'pg-prep-sched':      function() { if (typeof renderPrepSchedulePage === 'function') renderPrepSchedulePage(); },
+            'pg-sched-detail':    function() { if (typeof renderPrepScheduleDetail === 'function') renderPrepScheduleDetail(); },
+            'pg-routine':         function() { if (typeof renderRoutinePatientSelectionPage === 'function') renderRoutinePatientSelectionPage(); },
+            'pg-stat':            function() { if (typeof stRenderList === 'function') stRenderList(); },
+            'pg-prn':             function() { if (typeof prnRenderList === 'function') prnRenderList(); },
+            'pg-highalert':       function() { if (typeof haRenderList === 'function') haRenderList(); },
+            'pg-omit-flow':       function() { if (typeof omRenderList === 'function') omRenderList(); },
+            'pg-overdue':         function() { if (typeof ovRenderList === 'function') ovRenderList(); },
+            'pg-dispense':        function() { if (typeof renderDispenseList === 'function') renderDispenseList(); },
+            'pg-prep-pt-drugs':   function() { if (typeof npGoPrep === 'function') npGoPrep(currentPatientBed); },
+            'pg-summary':         function() { if (typeof renderPrepSummary === 'function') renderPrepSummary(); }
+        };
+        var fn = map[pg];
+        if (fn) fn();
+    }
+
     // ── Dashboard sync function ──
     function syncDashboardFromStore() {
         var s = MedCartStore.getDashStats();
@@ -15289,53 +15363,12 @@
     }
     MedCartStore.onChange(renderNsCalendar);
 
-    // Re-render active pages when MedCartStore changes (verbal order / approve / reject)
+    // ── Dynamic sync: re-render active page on ANY data change ──
     MedCartStore.onChange(function() {
-        var activePage = getActivePageId();
-        // Sync approved drugs to patientData on any change
         try { syncApprovedDrugsToPatientData(); } catch(e) {}
-        // Nurse prep page
-        if (activePage === 'pg-nurse-prep' && typeof renderNursePrepPage === 'function') renderNursePrepPage();
-        // Pharma verify page
-        if (activePage === 'pg-pharma-verify' && typeof renderPharmaVerifyPage === 'function') renderPharmaVerifyPage();
-        // Order plan page (queue list + banner)
-        if (activePage === 'pg-order-plan' && typeof renderOrderPlanPage === 'function') renderOrderPlanPage();
-        // Pharma report page
-        if (activePage === 'pg-pharma-report' && typeof renderPharmaReportPage === 'function') renderPharmaReportPage();
-        // eMAR page
-        if (activePage === 'pg-emar' && typeof renderEmarPage === 'function') renderEmarPage();
-        // Dashboard — update role section + badges
-        if (activePage === 'pg-dashboard') {
-            var sec = document.getElementById('dashRoleSection');
-            if (sec && typeof getRoleSectionHTML === 'function') sec.innerHTML = getRoleSectionHTML(currentRole);
-            var pvBadge = document.getElementById('dashPendingVerifyCount');
-            if (pvBadge) pvBadge.textContent = MedCartStore.countPendingVerify();
-            // Nurse prep button — update state
-            var nursePrepBtn = document.getElementById('dashNursePrepLink');
-            if (nursePrepBtn && currentRole === 'nurse') {
-                var approved = MedCartStore.orders.filter(function(o){ return o.source === 'Manual' && o.status !== 'pending_verify' && o.status !== 'rejected'; }).length;
-                var npBadge = document.getElementById('dashNursePrepCount');
-                if (npBadge) npBadge.textContent = approved;
-                var npSub = document.getElementById('dashNursePrepSub');
-                if (approved > 0) {
-                    nursePrepBtn.style.opacity = '';
-                    nursePrepBtn.style.pointerEvents = '';
-                    nursePrepBtn.style.borderColor = '#86EFAC';
-                    nursePrepBtn.style.background = 'linear-gradient(135deg,#F0FDF4,#DCFCE7)';
-                    if (npSub) npSub.textContent = approved + ' รายการพร้อมจัด';
-                } else {
-                    nursePrepBtn.style.opacity = '0.5';
-                    nursePrepBtn.style.pointerEvents = 'none';
-                    nursePrepBtn.style.borderColor = '#E2E8F0';
-                    nursePrepBtn.style.background = '#F8FAFC';
-                    if (npSub) npSub.textContent = 'ยังไม่มีรายการอนุมัติ';
-                }
-                // Cassette panel visibility for nurse
-                var cassettePanel = document.getElementById('dashCassettePanel');
-                if (cassettePanel) cassettePanel.style.display = approved > 0 ? '' : 'none';
-            }
-        }
+        renderActivePage();
     });
+    PatientDataNotifier.onChange(renderActivePage);
 
     // On load: restore page + login state from URL hash (survive refresh)
     (function() {
@@ -16385,6 +16418,7 @@
                 });
             }
         });
+        PatientDataNotifier.notify();
     }
 
     function getApprovedManualDrugIds() {
@@ -21472,6 +21506,7 @@
                 pt.drugs.push(nextDrug);
             }
         });
+        PatientDataNotifier.notify();
     }
 
     function findOrderPlanDrug(orderId) {
@@ -21498,6 +21533,7 @@
                 return !drug || drug.orderPlanId !== orderId;
             });
         });
+        PatientDataNotifier.notify();
     }
 
     function orderPlanPatientOptionsHtml(selectedKey) {
@@ -22333,6 +22369,7 @@
         }
         recordEmarAdministration(emarRecordFromRow(row, givenTime, note));
         syncWardFlowDatasets();
+        PatientDataNotifier.notify();
         showToast('บันทึก eMAR แล้ว — ' + row.view.name);
         setTimeout(function(){ showToast(''); }, 2000);
     }
@@ -23697,6 +23734,7 @@
         renderDispenseList();
         renderDashboardDynamic();
         renderAssessmentListDynamic();
+        PatientDataNotifier.notify();
         nav('pg-success');
     }
 
@@ -23901,6 +23939,7 @@
                 preparedFlow: drug.preparedFlow
             });
         }
+        PatientDataNotifier.notify();
         return true;
     }
 
@@ -23913,16 +23952,17 @@
     function refreshDynamicPagesAfterDataCommit() {
         if (typeof syncWardFlowDatasets === 'function') {
             syncWardFlowDatasets();
-            return;
+        } else {
+            renderDashboardDynamic();
+            renderDispenseList();
+            renderPrepTypePage();
+            renderPrepPatientPage();
+            renderPrepMedicationPage();
+            renderPrepSchedulePage();
+            renderPrepScheduleDetail();
+            renderAssessmentListDynamic();
         }
-        renderDashboardDynamic();
-        renderDispenseList();
-        renderPrepTypePage();
-        renderPrepPatientPage();
-        renderPrepMedicationPage();
-        renderPrepSchedulePage();
-        renderPrepScheduleDetail();
-        renderAssessmentListDynamic();
+        PatientDataNotifier.notify();
     }
 
     function commitPrepSummaryState() {
