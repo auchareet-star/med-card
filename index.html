@@ -14768,23 +14768,7 @@
                         self.orders.push(o);
                     }
                 });
-                // Re-add approved manual drugs to patientData
-                self.orders.forEach(function(o) {
-                    if (o.source !== 'Manual' || o.status === 'pending_verify' || o.status === 'rejected') return;
-                    if (typeof patientData === 'undefined' || !o.patient || !patientData[o.patient]) return;
-                    var pt = patientData[o.patient];
-                    pt.drugs = pt.drugs || [];
-                    var exists = pt.drugs.some(function(d){ return d.manualOrderId === o.id; });
-                    if (!exists) {
-                        var scheduleMap = {'รอบเช้า':'OD เช้า','รอบเที่ยง':'OD เที่ยง','รอบเย็น':'OD เย็น','ก่อนนอน':'OD ก่อนนอน','STAT now':'STAT','PRN':'PRN'};
-                        pt.drugs.push({
-                            name: o.drug, dose: o.dose || o.drug, route: o.route || 'PO',
-                            freq: scheduleMap[o.schedule] || o.schedule || '', schedule: o.schedule || '', time: o.time || '',
-                            color: o.priority === 'stat' ? '#EF4444' : o.priority === 'high-alert' ? '#D97706' : '#7C3AED',
-                            highAlert: o.priority === 'high-alert', manualOrderId: o.id, source: 'Manual', doctor: o.doctor || ''
-                        });
-                    }
-                });
+                // Note: drugs are re-added to patientData by syncApprovedDrugsToPatientData() called after init
             } catch(e) {}
             this._autoVerifyDoctor();
             this._notify();
@@ -15204,6 +15188,9 @@
     }
 
     // Register listeners
+    // Sync approved manual drugs to patientData (patientData is now available)
+    try { syncApprovedDrugsToPatientData(); } catch(e) {}
+
     MedCartStore.onChange(syncDashboardFromStore);
     MedCartStore.onChange(function() { opApplyRoleDefaults(); renderPhysicianOrders(); renderPharmaToNurseOrders(); });
     MedCartStore.onChange(syncOrderPlanStats);
@@ -15279,6 +15266,8 @@
     // Re-render active pages when MedCartStore changes (verbal order / approve / reject)
     MedCartStore.onChange(function() {
         var activePage = getActivePageId();
+        // Sync approved drugs to patientData on any change
+        try { syncApprovedDrugsToPatientData(); } catch(e) {}
         // Nurse prep page
         if (activePage === 'pg-nurse-prep' && typeof renderNursePrepPage === 'function') renderNursePrepPage();
         // Pharma verify page
@@ -16299,6 +16288,26 @@
             const hn = (c.dataset.hn || '').toLowerCase();
             const bed = (c.dataset.bed || '').toLowerCase();
             c.style.display = (!q || name.includes(q) || hn.includes(q) || bed.includes(q)) ? '' : 'none';
+        });
+    }
+
+    function syncApprovedDrugsToPatientData() {
+        if (typeof MedCartStore === 'undefined' || typeof patientData === 'undefined') return;
+        var scheduleMap = {'รอบเช้า':'OD เช้า','รอบเที่ยง':'OD เที่ยง','รอบเย็น':'OD เย็น','ก่อนนอน':'OD ก่อนนอน','STAT now':'STAT','PRN':'PRN'};
+        MedCartStore.orders.forEach(function(o) {
+            if (o.source !== 'Manual' || o.status === 'pending_verify' || o.status === 'rejected') return;
+            if (!o.patient || !patientData[o.patient]) return;
+            var pt = patientData[o.patient];
+            pt.drugs = pt.drugs || [];
+            var exists = pt.drugs.some(function(d){ return d.manualOrderId === o.id; });
+            if (!exists) {
+                pt.drugs.push({
+                    name: o.drug, dose: o.dose || o.drug, route: o.route || 'PO',
+                    freq: scheduleMap[o.schedule] || o.schedule || '', schedule: o.schedule || '', time: o.time || '',
+                    color: o.priority === 'stat' ? '#EF4444' : o.priority === 'high-alert' ? '#D97706' : '#7C3AED',
+                    highAlert: o.priority === 'high-alert', manualOrderId: o.id, source: 'Manual', doctor: o.doctor || ''
+                });
+            }
         });
     }
 
@@ -24642,7 +24651,8 @@
         syncWardFlowDatasets();
         // Re-init central store for the new ward
         try { if (typeof MedCartStore !== 'undefined') MedCartStore.init(resolvedWard); } catch(e) { console.error('MedCartStore.init error:', e); }
-        // Re-sync after init — approved manual drugs now in patientData
+        // Re-sync after init — add approved drugs to patientData then rebuild flow datasets
+        try { syncApprovedDrugsToPatientData(); } catch(e) {}
         try { syncWardFlowDatasets(); } catch(e) {}
         if (!options.silent) {
             const info = getCurrentWardInfo();
