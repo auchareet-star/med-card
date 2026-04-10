@@ -17342,25 +17342,28 @@
                 return '<span style="background:linear-gradient(135deg,#FEF2F2,#FEE2E2);color:#DC2626;font-size:10px;font-weight:700;padding:4px 10px;border-radius:8px;border:1px solid #FECACA;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;">' + icon + ' ' + t + '</span>';
             }).join('');
         }
-        // Drug count (only pending)
-        const pendingDrugs = pt.drugs.filter(d => !d.done);
+        // Drug count (only pending) — filter if nurse approved mode
+        var displayDrugs = filterDrugsIfApprovedMode(pt.drugs);
+        const pendingDrugs = displayDrugs.filter(d => !d.done);
         document.getElementById('ptDrugCountLabel').textContent = 'รายการยา (' + pendingDrugs.length + ')';
         // Drug list
         const listEl = document.getElementById('ptDrugList');
-        listEl.innerHTML = pt.drugs.map(d => {
-            const borderColor = d.done ? 'rgba(13,148,136,0.1)' : (d.highAlert ? 'rgba(239,68,68,0.2)' : 'rgba(' + hexToRgb(d.color) + ',0.15)');
-            const statusBg = d.done ? 'linear-gradient(135deg,#F0FDF4,#DCFCE7)' : 'linear-gradient(135deg,' + d.colorLight[0] + ',' + d.colorLight[1] + ')';
-            const statusColor = d.done ? 'var(--green)' : d.color;
+        listEl.innerHTML = displayDrugs.map(d => {
+            const cl = d.colorLight || ['#F8FAFC','#F1F5F9'];
+            const borderColor = d.done ? 'rgba(13,148,136,0.1)' : (d.highAlert ? 'rgba(239,68,68,0.2)' : 'rgba(' + hexToRgb(d.color || '#7C3AED') + ',0.15)');
+            const statusBg = d.done ? 'linear-gradient(135deg,#F0FDF4,#DCFCE7)' : 'linear-gradient(135deg,' + cl[0] + ',' + cl[1] + ')';
+            const statusColor = d.done ? 'var(--green)' : (d.color || '#7C3AED');
             const opacity = d.done ? 'opacity:.55;' : '';
             const shadow = d.highAlert ? '0 2px 12px rgba(239,68,68,0.06)' : '0 2px 12px rgba(0,0,0,0.03)';
             const haLabel = haBadge(d.name);
+            const dColor = d.color || '#7C3AED';
             const iconSvg = d.highAlert
-                ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="' + d.color + '" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>'
-                : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="' + d.color + '" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="4"/><line x1="6" y1="12" x2="18" y2="12"/></svg>';
-            return '<div style="background:rgba(255,255,255,0.72);backdrop-filter:blur(16px);border:1px solid ' + borderColor + ';border-left:4px solid ' + d.color + ';border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px;box-shadow:' + shadow + ';transition:all 0.2s ease;' + opacity + '">'
-                + '<div style="width:40px;height:40px;background:linear-gradient(135deg,' + d.colorLight[0] + ',' + d.colorLight[1] + ');border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + iconSvg + '</div>'
-                + '<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:var(--text-1);line-height:1.3;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' + d.name + haLabel + '</div><div style="font-size:11px;color:var(--text-3);margin-top:1px;">' + d.desc + '</div></div>'
-                + '<span style="padding:4px 12px;border-radius:8px;font-size:10px;font-weight:700;background:' + statusBg + ';color:' + statusColor + ';border:1px solid rgba(' + hexToRgb(d.color) + ',0.2);white-space:nowrap;">' + d.status + '</span>'
+                ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="' + dColor + '" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>'
+                : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="' + dColor + '" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="4"/><line x1="6" y1="12" x2="18" y2="12"/></svg>';
+            return '<div style="background:rgba(255,255,255,0.72);backdrop-filter:blur(16px);border:1px solid ' + borderColor + ';border-left:4px solid ' + dColor + ';border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px;box-shadow:' + shadow + ';transition:all 0.2s ease;' + opacity + '">'
+                + '<div style="width:40px;height:40px;background:linear-gradient(135deg,' + cl[0] + ',' + cl[1] + ');border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' + iconSvg + '</div>'
+                + '<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:var(--text-1);line-height:1.3;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' + d.name + haLabel + '</div><div style="font-size:11px;color:var(--text-3);margin-top:1px;">' + (d.desc || d.dose + ' · ' + (d.route||'') + ' · ' + (d.freq||d.schedule||'')) + '</div></div>'
+                + '<span style="padding:4px 12px;border-radius:8px;font-size:10px;font-weight:700;background:' + statusBg + ';color:' + statusColor + ';border:1px solid rgba(' + hexToRgb(dColor) + ',0.2);white-space:nowrap;">' + (d.status || 'รอจัด') + '</span>'
                 + '</div>';
         }).join('');
         // Reset steps
