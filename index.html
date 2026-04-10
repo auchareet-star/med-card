@@ -14452,7 +14452,6 @@
     }
 
     function nav(targetId, skipHistory, options) {
-      try {
         options = options || {};
         if (!canAccessAssessment() && assessmentPages.includes(targetId)) {
             showAssessmentAccessDenied();
@@ -14532,15 +14531,6 @@
             renderPrepHardwareFromDashboard(targetId);
         }
         return true;
-      } catch(e) {
-        // Fallback: at least show the target page
-        try {
-            document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-            var el = document.getElementById(targetId);
-            if (el) el.classList.add('active');
-        } catch(e2) {}
-        return false;
-      }
     }
 
     function openBackofficePage() {
