@@ -15593,6 +15593,19 @@
             }
         }
 
+        // Reset prep card for pharma/super — always use goToPrepType
+        if (!isNurse) {
+            var prepCardReset = dashEl.querySelector('.db-action.secondary');
+            if (prepCardReset) {
+                prepCardReset.setAttribute('onclick', 'goToPrepType()');
+                var titleReset = prepCardReset.querySelector('.db-action-title');
+                if (titleReset) titleReset.textContent = 'จัดยาเข้ารถเข็น';
+                var descReset = prepCardReset.querySelector('.db-action-desc');
+                if (descReset) descReset.textContent = 'เตรียมยาเข้า Cassette ตามผู้ป่วย / ตามยา / ตามรอบเวลา';
+                prepCardReset.style.display = '';
+            }
+        }
+
         // Nurse: show/hide จัดยา card based on approved manual orders
         if (isNurse && typeof MedCartStore !== 'undefined') {
             var approvedManualOrders = MedCartStore.orders.filter(function(o){
