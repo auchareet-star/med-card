@@ -39,54 +39,60 @@
 
     <div style="flex:1;max-width:960px;margin:0 auto;padding:36px 28px 48px;width:100%;">
 
-        <!-- Mini cart strip -->
-        <div class="cart-mini" style="margin-bottom:28px;">
-            <div class="cart-mini-badge">A-1</div>
-            <div class="cart-mini-info">
-                <div class="cart-mini-name">Med Cart A-1</div>
-                <div class="cart-mini-sub">รหัส: MC-A-001 &nbsp;·&nbsp; หอผู้ป่วย ตึก A</div>
+        <!-- ── Med Cart Hero ── -->
+        <div style="background:linear-gradient(135deg,var(--green) 0%,#14B8A6 100%);border-radius:20px;padding:28px 32px;color:white;margin-bottom:24px;box-shadow:0 8px 32px rgba(13,148,136,0.25);display:flex;align-items:center;gap:24px;">
+            <div style="width:72px;height:72px;background:rgba(255,255,255,0.2);border-radius:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="white">
+                    <path d="M19 3H5C3.9 3 3 3.9 3 5v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1v3h3c.55 0 1 .45 1 1s-.45 1-1 1h-3v3c0 .55-.45 1-1 1s-1-.45-1-1v-3H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7c0-.55.45-1 1-1z"/>
+                </svg>
             </div>
-            <div class="cart-mini-meta">
-                <span class="cart-mini-ward">Ward 3A</span>
-                <span class="cart-mini-time">ล่าสุด: วันนี้ 08:42 น.</span>
+            <div style="flex:1;min-width:0;">
+                <div style="font-size:13px;opacity:.7;font-weight:600;margin-bottom:4px;">เริ่มใช้งานรถเข็น</div>
+                <div style="font-size:28px;font-weight:800;letter-spacing:-.5px;">Med Cart A-1</div>
+                <div style="font-size:13px;opacity:.8;margin-top:4px;">รหัส: MC-A-001 &nbsp;·&nbsp; หอผู้ป่วย ตึก A &nbsp;·&nbsp; OmniRx Pro X2</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                <div style="background:rgba(255,255,255,0.2);border-radius:10px;padding:6px 14px;font-size:12px;font-weight:700;">
+                    <span style="display:inline-block;width:8px;height:8px;background:#4ade80;border-radius:50%;margin-right:6px;"></span>พร้อมใช้งาน
+                </div>
+                <div style="font-size:11px;opacity:.65;">ล่าสุด: วันนี้ 08:42 น.</div>
             </div>
         </div>
 
-        <!-- 2-Column layout -->
+        <!-- ── Ward Assignment Section ── -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;">
 
-            <!-- LEFT: Ward info -->
+            <!-- LEFT: Current Ward assignment -->
             <div>
-                <!-- Ward card -->
                 <div style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1px solid rgba(224,230,239,0.5);border-radius:var(--r);box-shadow:var(--shadow);padding:28px;margin-bottom:18px;">
                     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-                        <div style="width:52px;height:52px;background:linear-gradient(135deg,var(--green-light) 0%,#d4eddf 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-                            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <div style="width:44px;height:44px;background:linear-gradient(135deg,#EFF6FF,#DBEAFE);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
                                 <polyline points="9 22 9 12 15 12 15 22"/>
                             </svg>
                         </div>
                         <div>
-                            <div style="font-size:13px;color:var(--text-3);font-weight:500;">Ward ล่าสุดที่ใช้งาน</div>
-                            <div style="font-size:15px;font-weight:600;color:var(--text-1);">รถเข็น A-1 ถูกใช้งานล่าสุดที่</div>
+                            <div style="font-size:11px;color:var(--text-3);font-weight:700;text-transform:uppercase;letter-spacing:.5px;">Ward ที่ผูกกับรถเข็น</div>
+                            <div style="font-size:15px;font-weight:700;color:var(--text-1);">รถเข็นถูกใช้งานล่าสุดที่</div>
                         </div>
                     </div>
 
-                    <!-- Large ward display -->
-                    <div style="background:linear-gradient(135deg,var(--green) 0%,#14B8A6 100%);border-radius:16px;padding:24px;color:white;margin-bottom:18px;box-shadow:0 4px 16px rgba(13,148,136,0.2);">
+                    <!-- Ward display -->
+                    <div style="background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:16px;padding:20px;margin-bottom:18px;">
                         <div style="display:flex;align-items:center;gap:14px;">
-                            <div style="width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;">
-                                <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
+                            <div style="width:48px;height:48px;background:linear-gradient(135deg,#CCFBF1,#99F6E4);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D9488" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg>
                             </div>
                             <div>
-                                <div style="font-size:28px;font-weight:700;letter-spacing:-0.5px;">Ward 3A</div>
-                                <div style="font-size:14px;opacity:.8;">หอผู้ป่วยอายุรกรรม · ชั้น 3 ตึก A</div>
+                                <div style="font-size:24px;font-weight:800;color:var(--text-1);letter-spacing:-.3px;">Ward 3A</div>
+                                <div style="font-size:13px;color:var(--text-2);">หอผู้ป่วยอายุรกรรม · ชั้น 3 ตึก A</div>
                             </div>
                         </div>
                     </div>
 
-                    <div style="font-size:16px;font-weight:600;color:var(--text-1);line-height:1.6;">
-                        คุณต้องการใช้ Ward เดิม<br>หรือเปลี่ยนไป Ward ใหม่?
+                    <div style="font-size:15px;font-weight:600;color:var(--text-1);line-height:1.6;">
+                        ต้องการใช้ Ward เดิม<br>หรือเปลี่ยนไป Ward อื่น?
                     </div>
                 </div>
 
@@ -122,10 +128,10 @@
                         </div>
                     </div>
                     <div style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:16px;">
-                        ดำเนินการต่อด้วย Ward เดิมทันที โดยไม่ต้องเลือก Ward ใหม่
+                        เริ่มใช้งาน Med Cart A-1 กับ Ward 3A ทันที
                     </div>
                     <div style="background:linear-gradient(135deg,var(--green) 0%,#14B8A6 100%);color:white;border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:600;box-shadow:0 2px 8px rgba(13,148,136,0.2);">
-                        ดำเนินการต่อ →
+                        เริ่มใช้งาน →
                     </div>
                 </div>
 
@@ -139,11 +145,11 @@
                         </div>
                         <div>
                             <div style="font-size:19px;font-weight:700;color:var(--text-1);">เปลี่ยน Ward</div>
-                            <div style="font-size:13px;color:var(--text-2);">เลือก Ward ใหม่สำหรับการใช้งานครั้งนี้</div>
+                            <div style="font-size:13px;color:var(--text-2);">ย้ายรถเข็นไปใช้กับ Ward อื่น</div>
                         </div>
                     </div>
                     <div style="font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:16px;">
-                        เลือก Ward อื่นจากรายการที่มี ระบบจะรีเซ็ต session เดิม
+                        เลือก Ward ใหม่สำหรับ Med Cart A-1 ระบบจะรีเซ็ต session เดิม
                     </div>
                     <div style="background:var(--bg);color:var(--text-2);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:600;">
                         เลือก Ward ใหม่ →
