@@ -604,6 +604,69 @@
         .wm-danger-btn { border:1.5px solid #FECDD3; background:white; color:#BE123C; border-radius:8px; padding:6px 12px; font-size:11px; font-weight:800; cursor:pointer; font-family:'Prompt',sans-serif; transition:all .15s; }
         .wm-danger-btn:hover { background:#FFF1F2; border-color:#FB7185; }
 
+        /* ── BED ZONES ──────────────────────── */
+        .wm-zone-list { display:flex; flex-direction:column; gap:8px; margin-top:4px; }
+        .wm-zone-card {
+            border:1.5px solid #E2E8F0; border-radius:12px; overflow:hidden;
+            transition:border-color .15s; background:white;
+        }
+        .wm-zone-card:hover { border-color:#0D9488; }
+        .wm-zone-header {
+            display:flex; align-items:center; gap:8px;
+            padding:8px 12px; background:#F8FAFC; border-bottom:1px solid #F1F5F9;
+        }
+        .wm-zone-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+        .wm-zone-name-input {
+            flex:1; border:none; background:transparent; font-family:'Prompt',sans-serif;
+            font-size:12px; font-weight:800; color:#0F172A; outline:none; min-width:0;
+        }
+        .wm-zone-name-input:focus { color:#0D9488; }
+        .wm-zone-bed-count {
+            font-size:10px; font-weight:800; color:#94A3B8;
+            background:#F1F5F9; border-radius:999px; padding:2px 8px; white-space:nowrap; flex-shrink:0;
+        }
+        .wm-zone-remove {
+            width:22px; height:22px; border:none; background:transparent; cursor:pointer;
+            color:#CBD5E1; border-radius:6px; display:flex; align-items:center; justify-content:center;
+            font-size:13px; flex-shrink:0; transition:all .12s; font-family:'Prompt',sans-serif;
+        }
+        .wm-zone-remove:hover { background:#FEE2E2; color:#DC2626; }
+        .wm-zone-body { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:10px 12px; align-items:center; }
+        .wm-zone-range { display:flex; align-items:center; gap:6px; }
+        .wm-zone-range-label { font-size:10px; font-weight:800; color:#94A3B8; white-space:nowrap; }
+        .wm-zone-range-input {
+            width:60px; border:1.5px solid #E2E8F0; border-radius:8px;
+            padding:5px 8px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:700;
+            color:#0F172A; outline:none; text-align:center; transition:border-color .15s;
+        }
+        .wm-zone-range-input:focus { border-color:#0D9488; }
+        .wm-zone-range-sep { color:#94A3B8; font-size:12px; font-weight:700; }
+        .wm-zone-cart-wrap { display:flex; flex-direction:column; gap:5px; }
+        .wm-zone-cart-badge {
+            font-size:10px; font-weight:800; color:#0F766E;
+            background:#CCFBF1; border-radius:6px; padding:3px 8px; display:inline-block;
+        }
+        .wm-zone-no-cart { font-size:10px; font-weight:700; color:#F59E0B; }
+        .wm-zone-select { width:100%; border:1.5px solid #E2E8F0; border-radius:8px; padding:5px 8px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:700; color:#475569; background:white; cursor:pointer; outline:none; }
+        .wm-zone-select:focus { border-color:#0D9488; }
+        .wm-add-zone-btn {
+            border:1.5px dashed #CBD5E1; background:white; color:#64748B; border-radius:8px;
+            padding:5px 12px; font-family:'Prompt',sans-serif; font-size:11px; font-weight:800;
+            cursor:pointer; transition:all .15s;
+        }
+        .wm-add-zone-btn:hover { border-color:#0D9488; color:#0D9488; background:#F0FDFA; }
+        .wm-section-head-row { display:flex; align-items:center; justify-content:space-between; }
+        /* Zone coverage in cart tab */
+        .wm-coverage-list { display:flex; flex-direction:column; gap:6px; margin-top:4px; }
+        .wm-coverage-row {
+            display:flex; align-items:center; gap:10px; padding:8px 12px;
+            background:#F8FAFC; border:1px solid #F1F5F9; border-radius:10px;
+        }
+        .wm-coverage-dot { width:9px; height:9px; border-radius:3px; flex-shrink:0; }
+        .wm-coverage-ward { font-size:11px; font-weight:800; color:#0F172A; }
+        .wm-coverage-zone { font-size:10px; color:#64748B; }
+        .wm-coverage-beds { font-size:10px; font-weight:700; color:#0D9488; margin-left:auto; white-space:nowrap; }
+
         /* ── DRUG LIST MODAL ─────────────────── */
         .drug-search-bar { display:flex; gap:10px; padding:4px 24px 14px; align-items:center; }
         .drug-search-wrap { flex:1; position:relative; }
@@ -2509,17 +2572,28 @@
         var WM_COLORS = ['#0D9488','#3B82F6','#EC4899','#A855F7','#14B8A6','#F59E0B','#06B6D4','#EF4444','#DC2626','#94A3B8'];
 
         var WM_WARDS = [
-            { id:'ww1',  name:'Ward 3A',  dept:'หอผู้ป่วยอายุรกรรม',  floor:'3', bedsTotal:30, bedsOcc:24, patients:8,  status:'active',   color:'#0D9488', cartId:'wc1'  },
-            { id:'ww2',  name:'Ward 3B',  dept:'ศัลยกรรมชาย',          floor:'3', bedsTotal:30, bedsOcc:28, patients:26, status:'active',   color:'#3B82F6', cartId:'wc2'  },
-            { id:'ww3',  name:'Ward 4A',  dept:'กุมารเวชกรรม',          floor:'4', bedsTotal:20, bedsOcc:18, patients:15, status:'active',   color:'#EC4899', cartId:'wc3'  },
-            { id:'ww4',  name:'Ward 4B',  dept:'สูติ-นรีเวชกรรม',       floor:'4', bedsTotal:25, bedsOcc:22, patients:20, status:'active',   color:'#A855F7', cartId:'wc4'  },
-            { id:'ww5',  name:'Ward 5A',  dept:'ออร์โธปิดิกส์',          floor:'5', bedsTotal:30, bedsOcc:24, patients:22, status:'active',   color:'#14B8A6', cartId:'wc5'  },
-            { id:'ww6',  name:'Ward 5B',  dept:'อายุรกรรมชาย',          floor:'5', bedsTotal:30, bedsOcc:29, patients:29, status:'active',   color:'#F59E0B', cartId:'wc6'  },
-            { id:'ww7',  name:'Ward 6A',  dept:'จักษุวิทยา',             floor:'6', bedsTotal:15, bedsOcc:10, patients:8,  status:'active',   color:'#06B6D4', cartId:'wc7'  },
-            { id:'ww8',  name:'Ward 7A',  dept:'โสต ศอ นาสิก',           floor:'7', bedsTotal:20, bedsOcc:12, patients:10, status:'active',   color:'#0D9488', cartId:'wc8'  },
-            { id:'ww9',  name:'ICU',      dept:'ผู้ป่วยวิกฤต',           floor:'2', bedsTotal:10, bedsOcc:8,  patients:8,  status:'active',   color:'#EF4444', cartId:'wc9'  },
-            { id:'ww10', name:'ER',       dept:'ห้องฉุกเฉิน',            floor:'1', bedsTotal:20, bedsOcc:14, patients:11, status:'active',   color:'#DC2626', cartId:'wc10' },
-            { id:'ww11', name:'Ward 8A',  dept:'ปิดปรับปรุง',            floor:'8', bedsTotal:30, bedsOcc:0,  patients:0,  status:'inactive', color:'#94A3B8', cartId:null   }
+            { id:'ww1',  name:'Ward 3A',  dept:'หอผู้ป่วยอายุรกรรม',  floor:'3', bedsTotal:30, bedsOcc:24, patients:8,  status:'active',   color:'#0D9488', cartId:'wc1',
+              zones:[ { id:'z1', name:'Zone A', bedStart:301, bedEnd:315, cartId:'wc1'  }, { id:'z2', name:'Zone B', bedStart:316, bedEnd:330, cartId:'wc11' } ] },
+            { id:'ww2',  name:'Ward 3B',  dept:'ศัลยกรรมชาย',          floor:'3', bedsTotal:30, bedsOcc:28, patients:26, status:'active',   color:'#3B82F6', cartId:'wc2',
+              zones:[ { id:'z1', name:'Zone A', bedStart:301, bedEnd:315, cartId:'wc2'  }, { id:'z2', name:'Zone B', bedStart:316, bedEnd:330, cartId:null   } ] },
+            { id:'ww3',  name:'Ward 4A',  dept:'กุมารเวชกรรม',          floor:'4', bedsTotal:20, bedsOcc:18, patients:15, status:'active',   color:'#EC4899', cartId:'wc3',
+              zones:[ { id:'z1', name:'Zone A', bedStart:401, bedEnd:420, cartId:'wc3'  } ] },
+            { id:'ww4',  name:'Ward 4B',  dept:'สูติ-นรีเวชกรรม',       floor:'4', bedsTotal:25, bedsOcc:22, patients:20, status:'active',   color:'#A855F7', cartId:'wc4',
+              zones:[ { id:'z1', name:'Zone A', bedStart:401, bedEnd:413, cartId:'wc4'  }, { id:'z2', name:'Zone B', bedStart:414, bedEnd:425, cartId:null   } ] },
+            { id:'ww5',  name:'Ward 5A',  dept:'ออร์โธปิดิกส์',          floor:'5', bedsTotal:30, bedsOcc:24, patients:22, status:'active',   color:'#14B8A6', cartId:'wc5',
+              zones:[ { id:'z1', name:'Zone A', bedStart:501, bedEnd:515, cartId:'wc5'  }, { id:'z2', name:'Zone B', bedStart:516, bedEnd:530, cartId:null   } ] },
+            { id:'ww6',  name:'Ward 5B',  dept:'อายุรกรรมชาย',          floor:'5', bedsTotal:30, bedsOcc:29, patients:29, status:'active',   color:'#F59E0B', cartId:'wc6',
+              zones:[ { id:'z1', name:'Zone A', bedStart:501, bedEnd:515, cartId:'wc6'  }, { id:'z2', name:'Zone B', bedStart:516, bedEnd:530, cartId:null   } ] },
+            { id:'ww7',  name:'Ward 6A',  dept:'จักษุวิทยา',             floor:'6', bedsTotal:15, bedsOcc:10, patients:8,  status:'active',   color:'#06B6D4', cartId:'wc7',
+              zones:[ { id:'z1', name:'Zone A', bedStart:601, bedEnd:615, cartId:'wc7'  } ] },
+            { id:'ww8',  name:'Ward 7A',  dept:'โสต ศอ นาสิก',           floor:'7', bedsTotal:20, bedsOcc:12, patients:10, status:'active',   color:'#0D9488', cartId:'wc8',
+              zones:[ { id:'z1', name:'Zone A', bedStart:701, bedEnd:720, cartId:'wc8'  } ] },
+            { id:'ww9',  name:'ICU',      dept:'ผู้ป่วยวิกฤต',           floor:'2', bedsTotal:10, bedsOcc:8,  patients:8,  status:'active',   color:'#EF4444', cartId:'wc9',
+              zones:[ { id:'z1', name:'Zone A', bedStart:201, bedEnd:210, cartId:'wc9'  } ] },
+            { id:'ww10', name:'ER',       dept:'ห้องฉุกเฉิน',            floor:'1', bedsTotal:20, bedsOcc:14, patients:11, status:'active',   color:'#DC2626', cartId:'wc10',
+              zones:[ { id:'z1', name:'Zone A', bedStart:101, bedEnd:110, cartId:'wc10' }, { id:'z2', name:'Zone B', bedStart:111, bedEnd:120, cartId:null   } ] },
+            { id:'ww11', name:'Ward 8A',  dept:'ปิดปรับปรุง',            floor:'8', bedsTotal:30, bedsOcc:0,  patients:0,  status:'inactive', color:'#94A3B8', cartId:null,
+              zones:[ { id:'z1', name:'Zone A', bedStart:801, bedEnd:830, cartId:null   } ] }
         ];
 
         var WM_CARTS = [
@@ -2532,7 +2606,8 @@
             { id:'wc7',  name:'Med Cart D-1',   code:'D-1',   wardId:'ww7',  drawers:4, cassettes:24, status:'active',      lastSync:'10:05' },
             { id:'wc8',  name:'Med Cart D-2',   code:'D-2',   wardId:'ww8',  drawers:4, cassettes:24, status:'active',      lastSync:'09:45' },
             { id:'wc9',  name:'Med Cart ICU-1', code:'ICU-1', wardId:'ww9',  drawers:6, cassettes:36, status:'active',      lastSync:'10:15' },
-            { id:'wc10', name:'Med Cart ER-1',  code:'ER-1',  wardId:'ww10', drawers:6, cassettes:36, status:'active',      lastSync:'10:20' }
+            { id:'wc10', name:'Med Cart ER-1',  code:'ER-1',  wardId:'ww10', drawers:6, cassettes:36, status:'active',      lastSync:'10:20' },
+            { id:'wc11', name:'Med Cart A-1B',  code:'A-1B',  wardId:'ww1',  drawers:4, cassettes:24, status:'active',      lastSync:'08:52' }
         ];
 
         var wmTab = 'cart';
@@ -2832,12 +2907,18 @@
             var wardsWithoutCart = activeWards.filter(function(w){ return !wmGetCartForWard(w); });
             var cartsWithoutWard = activeCarts.filter(function(c){ return !wmGetWardForCart(c); });
             var maintenanceCarts = WM_CARTS.filter(function(c){ return wmCartStatus(c)==='maintenance'; });
+            var totalZones = WM_WARDS.reduce(function(s,w){ return s+(w.zones?w.zones.length:0); }, 0);
+            var assignedZones = WM_WARDS.reduce(function(s,w){ return s+wmGetZoneCartCount(w); }, 0);
+            var unassignedZones = wmGetUnassignedZones();
             return {
                 activeWards: activeWards.length,
                 activeCarts: activeCarts.length,
                 wardsWithoutCart: wardsWithoutCart,
                 cartsWithoutWard: cartsWithoutWard,
-                maintenanceCarts: maintenanceCarts
+                maintenanceCarts: maintenanceCarts,
+                totalZones: totalZones,
+                assignedZones: assignedZones,
+                unassignedZones: unassignedZones
             };
         }
         function wmIcon(name) {
@@ -2970,6 +3051,122 @@
                 }).join('');
         }
 
+        /* ── Zone helpers ── */
+        function wmGetZoneCoverage(cartId) {
+            var result = [];
+            WM_WARDS.forEach(function(w) {
+                if (!w.zones) return;
+                w.zones.forEach(function(z) {
+                    if (z.cartId === cartId) {
+                        result.push({ wardId:w.id, wardName:wmWardName(w), wardColor:wmGetField(w.id,'color',w.color), zoneName:z.name, zoneId:z.id, bedStart:z.bedStart, bedEnd:z.bedEnd });
+                    }
+                });
+            });
+            return result;
+        }
+        function wmGetZoneCartCount(ward) {
+            if (!ward.zones) return 0;
+            return ward.zones.filter(function(z){ return !!z.cartId; }).length;
+        }
+        function wmGetUnassignedZones() {
+            var result = [];
+            WM_WARDS.forEach(function(w) {
+                if (wmWardStatus(w) !== 'active' || !w.zones) return;
+                w.zones.forEach(function(z) {
+                    if (!z.cartId) result.push({ wardName:wmWardName(w), zoneName:z.name });
+                });
+            });
+            return result;
+        }
+        function wmUpdateZone(wardId, zoneId, field, value) {
+            var ward = wmFindWard(wardId);
+            if (!ward || !ward.zones) return;
+            var zone = ward.zones.find(function(z){ return z.id === zoneId; });
+            if (!zone) return;
+            if (field === 'bedStart' || field === 'bedEnd') value = parseInt(value, 10) || zone[field];
+            zone[field] = value;
+            wmRender();
+        }
+        function wmSetZoneCart(wardId, zoneId, cartId) {
+            var ward = wmFindWard(wardId);
+            if (!ward || !ward.zones) return;
+            var zone = ward.zones.find(function(z){ return z.id === zoneId; });
+            if (!zone) return;
+            zone.cartId = cartId || null;
+            /* keep ward.cartId pointing at zone 1's cart for backward compat */
+            ward.cartId = (ward.zones[0] && ward.zones[0].cartId) || null;
+            /* update cart's wardId */
+            if (cartId) { var cart = wmFindCart(cartId); if (cart) cart.wardId = wardId; }
+            wmRender();
+        }
+        function wmAddZone(wardId) {
+            var ward = wmFindWard(wardId);
+            if (!ward) return;
+            if (!ward.zones) ward.zones = [];
+            if (ward.zones.length >= 6) { showToast('Zone สูงสุด 6 Zone ต่อ Ward'); return; }
+            var maxEnd = ward.zones.reduce(function(m, z){ return Math.max(m, z.bedEnd || 0); }, parseInt(ward.floor || 1, 10) * 100);
+            var bedCount = Math.min(15, ward.bedsTotal - ward.zones.reduce(function(s, z){ return s + (z.bedEnd - z.bedStart + 1); }, 0));
+            var newStart = maxEnd + 1;
+            var newEnd = newStart + Math.max(bedCount - 1, 0);
+            var letters = 'ABCDEFGH';
+            var letter = letters[ward.zones.length] || String(ward.zones.length + 1);
+            ward.zones.push({ id:'z' + Date.now(), name:'Zone ' + letter, bedStart:newStart, bedEnd:newEnd, cartId:null });
+            wmRender();
+        }
+        function wmRemoveZone(wardId, zoneId) {
+            var ward = wmFindWard(wardId);
+            if (!ward || !ward.zones || ward.zones.length <= 1) {
+                showToast('Ward ต้องมีอย่างน้อย 1 Zone'); return;
+            }
+            ward.zones = ward.zones.filter(function(z){ return z.id !== zoneId; });
+            ward.cartId = (ward.zones[0] && ward.zones[0].cartId) || null;
+            wmRender();
+        }
+        function wmRenderZones(ward) {
+            var zones = ward.zones || [];
+            var zoneColors = [ward.color, '#3B82F6', '#A855F7', '#F59E0B', '#06B6D4', '#EC4899'];
+            var zoneCards = zones.map(function(zone, i) {
+                var cart = zone.cartId ? wmFindCart(zone.cartId) : null;
+                var bedCount = Math.max(0, zone.bedEnd - zone.bedStart + 1);
+                var allCartOpts = '<option value="">— ไม่มี Med Cart —</option>'
+                    + WM_CARTS.filter(function(c){ return wmCartStatus(c) !== 'inactive'; }).map(function(c) {
+                        var sel = (zone.cartId === c.id) ? ' selected' : '';
+                        return '<option value="'+c.id+'"'+sel+'>'+escHtml(wmCartName(c))+(wmCartStatus(c)==='maintenance'?' (ซ่อมบำรุง)':'')+'</option>';
+                    }).join('');
+                var dotColor = zoneColors[i] || '#94A3B8';
+                return '<div class="wm-zone-card">'
+                    + '<div class="wm-zone-header">'
+                    + '<div class="wm-zone-dot" style="background:'+dotColor+';"></div>'
+                    + '<input class="wm-zone-name-input" value="'+escHtml(zone.name)+'" oninput="wmUpdateZone(\''+ward.id+'\',\''+zone.id+'\',\'name\',this.value)">'
+                    + '<span class="wm-zone-bed-count">'+bedCount+' เตียง</span>'
+                    + (zones.length > 1 ? '<button class="wm-zone-remove" onclick="wmRemoveZone(\''+ward.id+'\',\''+zone.id+'\')" title="ลบ Zone">✕</button>' : '')
+                    + '</div>'
+                    + '<div class="wm-zone-body">'
+                    + '<div class="wm-zone-range">'
+                    + '<span class="wm-zone-range-label">เตียง</span>'
+                    + '<input class="wm-zone-range-input" type="number" value="'+zone.bedStart+'" onchange="wmUpdateZone(\''+ward.id+'\',\''+zone.id+'\',\'bedStart\',this.value)">'
+                    + '<span class="wm-zone-range-sep">–</span>'
+                    + '<input class="wm-zone-range-input" type="number" value="'+zone.bedEnd+'" onchange="wmUpdateZone(\''+ward.id+'\',\''+zone.id+'\',\'bedEnd\',this.value)">'
+                    + '</div>'
+                    + '<div class="wm-zone-cart-wrap">'
+                    + (cart ? '<span class="wm-zone-cart-badge">'+escHtml(wmCartName(cart))+'</span>' : '<span class="wm-zone-no-cart">⚠ ยังไม่มี Med Cart</span>')
+                    + '<select class="wm-zone-select" onchange="wmSetZoneCart(\''+ward.id+'\',\''+zone.id+'\',this.value)">'+allCartOpts+'</select>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>';
+            }).join('');
+
+            var assignedCount = zones.filter(function(z){ return !!z.cartId; }).length;
+            var totalBeds = zones.reduce(function(s, z){ return s + Math.max(0, z.bedEnd - z.bedStart + 1); }, 0);
+            return '<div class="wm-section-head" style="margin-top:16px;">'
+                + '<div class="wm-section-head-row">'
+                + '<span>Bed Zones <span style="font-size:10px;font-weight:700;color:#94A3B8;margin-left:6px;">'+assignedCount+'/'+zones.length+' Zone มี Med Cart · '+totalBeds+' เตียงรวม</span></span>'
+                + '<button class="wm-add-zone-btn" onclick="wmAddZone(\''+ward.id+'\')">+ เพิ่ม Zone</button>'
+                + '</div>'
+                + '</div>'
+                + '<div class="wm-zone-list">'+zoneCards+'</div>';
+        }
+
         /* ── Ward Tab ── */
         function wmRenderWardTab() {
             /* Left list */
@@ -3094,14 +3291,8 @@
                     + '<div class="wm-section-head" style="margin-top:16px;">สถานะ</div>'
                     + '<div class="wm-status-row">'+statusOpts+'</div>'
 
-                    /* Assigned cart */
-                    + '<div class="wm-section-head" style="margin-top:16px;">Med Cart ที่ assigned เข้า Ward นี้</div>'
-                    + '<div class="wm-cart-link">'
-                    + '<div class="wm-cart-link-icon">'+wmIcon('cart')+'</div>'
-                    + '<div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:800;color:#0F172A;">'+escHtml(cart ? wmCartName(cart) : 'ยังไม่มี Med Cart assigned')+'</div>'
-                    + '<div style="font-size:11px;color:#64748B;margin-top:2px;">'+escHtml(cart ? 'Assigned to ' + name + ' · เปิดใช้ ' + wmCartEnabledDrawers(cart) + '/' + wmCartTotalDrawers(cart) + ' Drawer · ' + wmCartEnabledCassettes(cart) + '/' + wmCartTotalCassettes(cart) + ' Cassette · ซิงค์ล่าสุด ' + cart.lastSync : 'เลือก Med Cart ที่จะ assign เข้า Ward นี้')+'</div></div>'
-                    + '<select class="wm-select" style="width:min(100%,240px);font-size:11px;padding:6px 8px;" onchange="wmSetWardCart(\''+ward.id+'\',this.value)">'+cartOptions+'</select>'
-                    + '</div>'
+                    /* Bed Zones */
+                    + wmRenderZones(ward)
                     + wmRenderAssignmentOverview()
 
                     /* Danger zone */
@@ -3238,6 +3429,24 @@
                     + '<div class="wm-section-head" style="margin-top:16px;">สถานะ</div>'
                     + '<div class="wm-status-row">'+statusOpts+'</div>'
 
+                    /* Zone Coverage */
+                    + (function() {
+                        var coverage = wmGetZoneCoverage(cart.id);
+                        if (!coverage.length) return '<div class="wm-section-head" style="margin-top:16px;">Zone Coverage</div>'
+                            + '<div style="font-size:11px;color:#94A3B8;padding:8px 0;">รถเข็นนี้ยังไม่ได้ assigned เข้า Zone ใด</div>';
+                        var rows = coverage.map(function(c) {
+                            return '<div class="wm-coverage-row">'
+                                + '<div class="wm-coverage-dot" style="background:'+escHtml(c.wardColor)+';"></div>'
+                                + '<div><div class="wm-coverage-ward">'+escHtml(c.wardName)+' — '+escHtml(c.zoneName)+'</div>'
+                                + '<div class="wm-coverage-zone">เตียง '+c.bedStart+'–'+c.bedEnd+'</div></div>'
+                                + '<span class="wm-coverage-beds">'+(c.bedEnd-c.bedStart+1)+' เตียง</span>'
+                                + '</div>';
+                        }).join('');
+                        return '<div class="wm-section-head" style="margin-top:16px;">Zone Coverage'
+                            + '<span style="font-size:10px;font-weight:700;color:#94A3B8;margin-left:6px;">'+coverage.length+' Zone</span></div>'
+                            + '<div class="wm-coverage-list">'+rows+'</div>';
+                    })()
+
                     /* Drawer map */
                     + '<div class="wm-section-head" style="margin-top:16px;">Cassette State</div>'
                     + wmRenderCassetteStateOverview(cassetteState)
@@ -3332,13 +3541,16 @@
         function wmSyncWardInfo() {
             Object.keys(wardInfo).forEach(function(key){ delete wardInfo[key]; });
             WM_WARDS.forEach(function(w) {
-                var cart = wmGetCartForWard(w);
+                var zones = w.zones || [];
+                var cartNames = zones.map(function(z){ return z.cartId ? (wmFindCart(z.cartId)||{}).name||'' : ''; }).filter(Boolean);
+                var cartSummary = cartNames.length ? cartNames.join(', ') : 'ยังไม่ได้ assign Med Cart';
                 wardInfo[w.name] = {
                     desc: w.dept,
                     floor: 'ชั้น ' + w.floor,
                     beds: w.bedsOcc + '/' + w.bedsTotal + ' เตียง',
                     patients: w.patients + ' ผู้ป่วย',
-                    cart: cart ? cart.name : 'ยังไม่ได้ assign Med Cart'
+                    cart: cartSummary,
+                    zones: zones.length
                 };
             });
         }
@@ -3350,10 +3562,12 @@
             if (chips) {
                 var activeWards = WM_WARDS.filter(function(w){ return wmGetField(w.id,'status',w.status)==='active'; }).length;
                 var activeCarts = WM_CARTS.filter(function(c){ return wmGetField(c.id,'status',c.status)==='active'; }).length;
+                var totalZones = WM_WARDS.reduce(function(s,w){ return s+(w.zones?w.zones.length:0); }, 0);
+                var assignedZones = WM_WARDS.reduce(function(s,w){ return s+wmGetZoneCartCount(w); }, 0);
                 chips.innerHTML = '<span class="modal-chip"><strong>'+WM_WARDS.length+'</strong> Ward</span>'
                     + '<span class="modal-chip"><strong>'+WM_CARTS.length+'</strong> Med Cart</span>'
-                    + '<span class="modal-chip"><strong>'+activeWards+'</strong> Ward ใช้งาน</span>'
-                    + '<span class="modal-chip"><strong>'+activeCarts+'</strong> Cart ใช้งาน</span>';
+                    + '<span class="modal-chip"><strong>'+totalZones+'</strong> Zone</span>'
+                    + '<span class="modal-chip" style="'+(assignedZones<totalZones?'background:#FFFBEB;color:#B45309;':'')+'"><strong>'+assignedZones+'/'+totalZones+'</strong> Zone มี Cart</span>';
             }
             body.innerHTML = wmTab === 'cart' ? wmRenderCartTab() : wmRenderWardTab();
         }
