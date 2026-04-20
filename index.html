@@ -2493,6 +2493,7 @@
             display:none !important;
         }
         #pg-dashboard[data-role="nurse"] .db-actions        { order:6; grid-template-columns:1fr; }
+        #pg-dashboard[data-role="nurse"] #dashOffCartAlert  { order:7; }
         #pg-dashboard[data-role="nurse"] #dashRoleSection   { order:8; }
         #pg-dashboard[data-role="nurse"] #dashBottomGrid    { order:10; grid-template-columns:1fr; }
         #pg-dashboard[data-role="nurse"] .db-actions .db-action.primary {
@@ -2516,6 +2517,7 @@
         }
         #pg-dashboard[data-role="pharma"] #dashPharmaVerifyLink { order:-2; }
         #pg-dashboard[data-role="pharma"] #dashPharmaReportLink { order:-1; }
+        #pg-dashboard[data-role="pharma"] #dashOffCartAlert  { order:3; }
         #pg-dashboard[data-role="pharma"] .db-actions { grid-template-columns:1fr; }
         #pg-dashboard[data-role="pharma"] .db-actions .db-action.secondary {
             background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 50%,#FDE68A 100%);
@@ -2538,7 +2540,8 @@
         #pg-dashboard[data-role="super"] #dashPipelineBar  { order:2; }
         #pg-dashboard[data-role="super"] .db-stats          { order:3; }
         #pg-dashboard[data-role="super"] #dashQuickLinks    { order:4; }
-        #pg-dashboard[data-role="super"] .db-actions        { order:5; grid-template-columns:1fr 1fr; }
+        #pg-dashboard[data-role="super"] #dashOffCartAlert  { order:5; }
+        #pg-dashboard[data-role="super"] .db-actions        { order:6; grid-template-columns:1fr 1fr; }
         #pg-dashboard[data-role="super"] #dashCassettePanel { order:7; }
         #pg-dashboard[data-role="super"] #dashRoleSection   { order:8; }
         #pg-dashboard[data-role="super"] #dashBottomGrid    { order:9; grid-template-columns:1fr 1fr; }
@@ -7601,6 +7604,9 @@
             </div>
         </div>
 
+        <!-- ── Off-cart alert banner (all roles) ── -->
+        <div id="dashOffCartAlert" style="display:none;margin-bottom:12px;"></div>
+
         <!-- ── Nurse: บันทึกคำสั่งยา + จัดยาที่อนุมัติ (2-col) ── -->
         <div id="dashNurseOrderActions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
             <div id="dashManualOrderLink" onclick="nav('pg-order-plan')" style="
@@ -10704,19 +10710,19 @@
                 <!-- Patient hero -->
                 <div class="pd-hero" style="background:white;border:1px solid rgba(226,232,240,0.8);border-radius:20px;padding:22px 24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,0.04);position:relative;overflow:hidden;">
                     <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#059669,#0D9488,#14B8A6,#2DD4BF);"></div>
-                    <div class="pd-avatar" style="background:linear-gradient(135deg,#0D9488,#14B8A6);width:56px;height:56px;border-radius:16px;font-size:16px;font-weight:800;box-shadow:0 4px 14px rgba(13,148,136,0.25);">สช</div>
+                    <div id="rtStep2Avatar" class="pd-avatar" style="background:linear-gradient(135deg,#0D9488,#14B8A6);width:56px;height:56px;border-radius:16px;font-size:16px;font-weight:800;box-shadow:0 4px 14px rgba(13,148,136,0.25);">สช</div>
                     <div class="pd-pt-info">
-                        <div class="pd-pt-name" style="font-size:20px;font-weight:800;letter-spacing:-0.3px;">นายสมชาย มานะ</div>
+                        <div id="rtStep2Name" class="pd-pt-name" style="font-size:20px;font-weight:800;letter-spacing:-0.3px;">นายสมชาย มานะ</div>
                         <div class="pd-pt-meta" style="margin-top:4px;display:flex;flex-wrap:wrap;gap:8px;">
-                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">HN: 6401234</span>
-                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">เตียง 3A-01</span>
-                            <span style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">ชาย, 58 ปี</span>
+                            <span id="rtStep2HN" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">HN: 6401234</span>
+                            <span id="rtStep2Bed" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">เตียง 3A-01</span>
+                            <span id="rtStep2Age" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--text-2);background:#F8FAFC;padding:4px 10px;border-radius:8px;border:1px solid var(--border);">ชาย, 58 ปี</span>
                         </div>
-                        <div class="pd-allergy" style="margin-top:10px;display:flex;align-items:center;gap:6px;font-size:12px;color:#991B1B;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);padding:8px 12px;border-radius:10px;border:1px solid #FECACA;">
+                        <div id="rtStep2Allergy" class="pd-allergy" style="margin-top:10px;display:flex;align-items:center;gap:6px;font-size:12px;color:#991B1B;background:linear-gradient(135deg,#FEF2F2,#FEE2E2);padding:8px 12px;border-radius:10px;border:1px solid #FECACA;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                            แพ้ยา: Penicillin, Sulfonamides
+                            <span id="rtStep2AllergyText">แพ้ยา: Penicillin, Sulfonamides</span>
                         </div>
-                        <div class="pd-warnings" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
+                        <div id="rtStep2Warnings" class="pd-warnings" style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
                             <span class="pd-warn-tag fall">Fall Risk</span>
                             <span class="pd-warn-tag allergy">Drug Allergy</span>
                         </div>
@@ -10729,9 +10735,9 @@
                         <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--green-light),var(--green-mid));display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><rect x="6" y="2" width="12" height="20" rx="4"/><line x1="6" y1="12" x2="18" y2="12"/></svg>
                         </div>
-                        รายการยาปกติ — รอบเช้า (3 รายการ)
+                        <span id="rtStep2DrugTitle">รายการยาปกติ — รอบเช้า (3 รายการ)</span>
                     </div>
-                    <div style="display:flex;flex-direction:column;gap:8px;">
+                    <div id="rtStep2DrugList" style="display:flex;flex-direction:column;gap:8px;">
                         <div class="rt-drug" style="border-radius:12px;border:1px solid rgba(226,232,240,0.6);"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Amlodipine 5 mg</div><div class="rt-drug-sub">PO · รับประทาน · OD เช้า</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
                         <div class="rt-drug" style="border-radius:12px;border:1px solid rgba(226,232,240,0.6);"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Metformin 500 mg</div><div class="rt-drug-sub">PO · รับประทาน · BID หลังอาหาร</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
                         <div class="rt-drug" style="border-radius:12px;border:1px solid rgba(226,232,240,0.6);"><div class="rt-drug-bar wait"></div><div class="rt-drug-info"><div class="rt-drug-name">Omeprazole 20 mg</div><div class="rt-drug-sub">PO · รับประทาน · OD ก่อนอาหารเช้า</div></div><div class="rt-drug-right"><span class="am-drug-st wait" style="font-size:11px;">รอให้ยา</span></div></div>
@@ -10754,12 +10760,12 @@
                 <!-- Patient context card -->
                 <div style="background:white;border:1px solid rgba(13,148,136,0.15);border-radius:20px;padding:18px 22px;max-width:480px;width:100%;margin-bottom:28px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 20px rgba(13,148,136,0.08);position:relative;overflow:hidden;">
                     <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),#14B8A6,#2DD4BF);"></div>
-                    <div style="width:50px;height:50px;background:linear-gradient(135deg,#059669,#0D9488);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 4px 12px rgba(13,148,136,0.25);">สช</div>
+                    <div id="rtStep3Avatar" style="width:50px;height:50px;background:linear-gradient(135deg,#059669,#0D9488);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:white;flex-shrink:0;box-shadow:0 4px 12px rgba(13,148,136,0.25);">สช</div>
                     <div style="flex:1;min-width:0;">
-                        <div style="font-size:17px;font-weight:800;color:var(--text-1);letter-spacing:-0.2px;">นายสมชาย มานะ</div>
-                        <div style="font-size:12px;color:var(--text-3);margin-top:2px;">HN: 6401234 · เตียง 3A-01</div>
+                        <div id="rtStep3Name" style="font-size:17px;font-weight:800;color:var(--text-1);letter-spacing:-0.2px;">นายสมชาย มานะ</div>
+                        <div id="rtStep3Meta" style="font-size:12px;color:var(--text-3);margin-top:2px;">HN: 6401234 · เตียง 3A-01</div>
                     </div>
-                    <div style="background:linear-gradient(135deg,#F0FDFA,#CCFBF1);padding:10px 18px;border-radius:12px;font-size:18px;font-weight:800;color:#0F766E;border:1px solid #99F6E4;flex-shrink:0;">3A-01</div>
+                    <div id="rtStep3Bed" style="background:linear-gradient(135deg,#F0FDFA,#CCFBF1);padding:10px 18px;border-radius:12px;font-size:18px;font-weight:800;color:#0F766E;border:1px solid #99F6E4;flex-shrink:0;">3A-01</div>
                 </div>
 
                 <!-- Scan zone -->
@@ -15577,7 +15583,7 @@
                     clickAttr = ' onclick="nav(\'pg-emar\')"';
                     cursorStyle = 'cursor:pointer;';
                 } else {
-                    clickAttr = ' onclick="nsOpenQd(\'' + o.id + '\')"';
+                    clickAttr = ' onclick="nsOpenPatient(\'' + o.patient + '\')"';
                     cursorStyle = 'cursor:pointer;';
                 }
             }
@@ -15599,7 +15605,7 @@
             var totalDrugs = pt.morning.length + pt.noon.length + pt.evening.length + pt.bedtime.length;
             var borderB = idx < keys.length - 1 ? 'border-bottom:1px solid var(--border-light);' : '';
             return '<div style="display:grid;grid-template-columns:120px 1fr;'+borderB+'">'
-                + '<div style="padding:10px 12px;display:flex;align-items:center;gap:8px;border-right:1px solid var(--border-light);">'
+                + '<div style="padding:10px 12px;display:flex;align-items:center;gap:8px;border-right:1px solid var(--border-light);cursor:pointer;" onclick="nsOpenPatient(\'' + key + '\')">'
                 + '<div style="width:28px;height:28px;background:linear-gradient(135deg,var(--green),#14B8A6);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:white;flex-shrink:0;">'+escHtml(initials)+'</div>'
                 + '<div style="min-width:0;"><div style="font-size:11px;font-weight:700;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+escHtml(shortName)+'</div>'
                 + '<div style="font-size:9px;color:var(--text-3);">'+escHtml(ptBed)+' · '+totalDrugs+' ยา</div></div>'
@@ -15613,6 +15619,12 @@
         }).join('');
     }
     MedCartStore.onChange(renderNsCalendar);
+
+    // ── Open patient in Routine step 2 from Nurse Schedule ──
+    function nsOpenPatient(patientKey) {
+        nav('pg-routine');          // shows pg-routine, internally calls rtGoStep(1)
+        rtSelectPatient(patientKey); // cleans up old drugs, populates step 2 & 3, calls rtGoStep(2)
+    }
 
     // ── Quick Dispense Sheet ──────────────────────────────
     var _nsQdOrderId = null;
@@ -21491,6 +21503,7 @@
     function rtSelectPatient(bedNum, navigateToStep) {
         if (navigateToStep === undefined) navigateToStep = true;
         currentDispenseBed = bedNum;
+        currentLegacyDispenseBed = patientData[bedNum] ? bedNum : currentLegacyDispenseBed;
         var pt = dispensePatients[bedNum];
         if (!pt) return;
         rtDrugs.length = 0;
@@ -21922,6 +21935,7 @@
         MedCartStore.orders.forEach(function(mc) {
             if (existingByMed[mc.id]) return;
             if (!mc.ward) return;
+            if (mc.status === 'pending_verify' || mc.status === 'rejected') return;
             var pt = (typeof patientData !== 'undefined') ? patientData[mc.patient] : null;
             var dispensed = (mc.status === 'dispensed' || mc.status === 'assessed');
             var prepared = (mc.status === 'prepped' || dispensed);
@@ -21997,7 +22011,12 @@
             if (existingIdx >= 0) {
                 pt.drugs[existingIdx] = Object.assign({}, existingDrug, nextDrug);
             } else {
-                pt.drugs.push(nextDrug);
+                // Skip if a non-Order-Plan drug with the same name already exists (prevents HIS duplicate)
+                const nameExists = pt.drugs.some(function(d) {
+                    return d && !d.orderPlanId && d.name && nextDrug.name &&
+                        d.name.toLowerCase() === nextDrug.name.toLowerCase();
+                });
+                if (!nameExists) pt.drugs.push(nextDrug);
             }
         });
     }
@@ -22938,12 +22957,89 @@
     }
 
     function renderEmarDashboardHint() {
+        renderOffCartAlert();
         const badge = document.getElementById('dashEmarCount');
         if (!badge || currentRole === 'pharma') return;
         const rows = emarMedicationRows();
         const pending = rows.filter(function(row) { return !row.done; }).length;
         const offCart = getWardEmarRecords(emarWardName()).filter(function(record) { return record.offCart && emarIsToday(record); }).length;
         badge.textContent = pending + ' รอให้ยา' + (offCart ? ' · Off-cart ' + offCart : '');
+    }
+
+    function renderOffCartAlert() {
+        var el = document.getElementById('dashOffCartAlert');
+        if (!el) return;
+        var records = (typeof getWardEmarRecords === 'function')
+            ? getWardEmarRecords(emarWardName()).filter(function(r) { return r.offCart && emarIsToday(r); })
+            : [];
+        if (!records.length) { el.style.display = 'none'; return; }
+        el.style.display = '';
+        var count = records.length;
+
+        function recentRows(limit) {
+            return records.slice(-limit).reverse().map(function(r) {
+                return '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06);">'
+                    + '<div style="flex:1;min-width:0;">'
+                    + '<div style="font-size:12px;font-weight:700;color:var(--text-1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(r.drugName || '—') + '</div>'
+                    + '<div style="font-size:10px;color:var(--text-3);margin-top:1px;">' + escHtml(r.patientName || '—') + ' · ' + escHtml(r.bed || '') + '</div>'
+                    + '</div>'
+                    + '<span style="font-size:10px;color:var(--text-3);flex-shrink:0;">' + escHtml(r.givenTime || '') + '</span>'
+                    + '</div>';
+            }).join('');
+        }
+
+        var html = '';
+
+        if (currentRole === 'nurse') {
+            html = '<div style="background:linear-gradient(135deg,#F0FDFA,#CCFBF1);border:1.5px solid #99F6E4;border-radius:16px;padding:14px 16px;">'
+                + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:' + (count ? '10px' : '0') + ';">'
+                + '<div style="width:36px;height:36px;background:linear-gradient(135deg,#0D9488,#14B8A6);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+                + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>'
+                + '</div>'
+                + '<div style="flex:1;">'
+                + '<div style="font-size:13px;font-weight:800;color:#0F766E;">Off-cart ที่บันทึกวันนี้</div>'
+                + '<div style="font-size:10px;color:#0D9488;margin-top:1px;">' + count + ' รายการ · เก็บใน eMAR เรียบร้อย</div>'
+                + '</div>'
+                + '<button onclick="nav(\'pg-emar\')" style="font-size:11px;font-weight:700;color:#0D9488;background:white;border:1.5px solid #99F6E4;border-radius:8px;padding:5px 12px;cursor:pointer;flex-shrink:0;">ดูทั้งหมด</button>'
+                + '</div>'
+                + recentRows(2)
+                + '</div>';
+
+        } else if (currentRole === 'pharma') {
+            html = '<div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #FCD34D;border-radius:16px;padding:14px 16px;">'
+                + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:' + (count ? '10px' : '0') + ';">'
+                + '<div style="width:36px;height:36px;background:linear-gradient(135deg,#D97706,#F59E0B);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+                + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>'
+                + '</div>'
+                + '<div style="flex:1;">'
+                + '<div style="font-size:13px;font-weight:800;color:#92400E;">รอตรวจสอบ Off-cart</div>'
+                + '<div style="font-size:10px;color:#B45309;margin-top:1px;">' + count + ' รายการที่พยาบาลบันทึก · โปรดตรวจสอบความถูกต้อง</div>'
+                + '</div>'
+                + '<button onclick="nav(\'pg-emar\')" style="font-size:11px;font-weight:700;color:white;background:linear-gradient(135deg,#D97706,#F59E0B);border:none;border-radius:8px;padding:6px 14px;cursor:pointer;flex-shrink:0;">ตรวจสอบ</button>'
+                + '</div>'
+                + recentRows(3)
+                + '</div>';
+
+        } else if (currentRole === 'super') {
+            var patients = {};
+            records.forEach(function(r) { patients[r.patientKey || r.patientName] = true; });
+            var ptCount = Object.keys(patients).length;
+            html = '<div style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);border:2px solid #C4B5FD;border-radius:16px;padding:14px 16px;">'
+                + '<div style="display:flex;align-items:center;gap:10px;margin-bottom:' + (count ? '10px' : '0') + ';">'
+                + '<div style="width:36px;height:36px;background:linear-gradient(135deg,#7C3AED,#A78BFA);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'
+                + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>'
+                + '</div>'
+                + '<div style="flex:1;">'
+                + '<div style="font-size:13px;font-weight:800;color:#4C1D95;">Off-cart ใน Shift นี้</div>'
+                + '<div style="font-size:10px;color:#6D28D9;margin-top:1px;">' + count + ' รายการ · ' + ptCount + ' ผู้ป่วย · ทุกรายการถูกบันทึกใน eMAR</div>'
+                + '</div>'
+                + '<button onclick="nav(\'pg-emar\')" style="font-size:11px;font-weight:700;color:white;background:linear-gradient(135deg,#7C3AED,#A78BFA);border:none;border-radius:8px;padding:6px 14px;cursor:pointer;flex-shrink:0;">ดู eMAR</button>'
+                + '</div>'
+                + recentRows(3)
+                + '</div>';
+        }
+
+        el.innerHTML = html;
     }
 
     function renderEmarPage() {
@@ -25277,8 +25373,28 @@
         }
     }
 
+    function seedDemoOffCartRecords() {
+        var existing = getEmarRecords();
+        if (existing.some(function(r) { return r.offCart && r.id && r.id.indexOf('DEMO-OC') === 0; })) return;
+        var today = new Date(); today.setHours(0,0,0,0);
+        var ward = currentWardName || DEFAULT_DEMO_WARD;
+        var demos = [
+            { id:'DEMO-OC-001', ward:ward, offCart:true, patientKey:'08', patientName:'นางกัลยา ชัยวงศ์', hn:'6403012', bed:'3A-08',
+              drugName:'Acetaminophen 500 mg', dose:'2 เม็ด', route:'PO', routeFull:'PO (รับประทาน)', schedule:'Off-cart',
+              dueTime:'Off-cart', givenTime:'07:40 น.', source:'Ward stock', reason:'ผู้ป่วยปวดหัว ยาในรถเข็นหมด',
+              highAlert:false, prn:false, recordedAt: new Date(today.getTime()+7*3600000).toISOString(), recordedBy:'นส.สมใจ ดีมาก' },
+            { id:'DEMO-OC-002', ward:ward, offCart:true, patientKey:'01', patientName:'นายสมชาย มานะ', hn:'6401234', bed:'3A-01',
+              drugName:'Ondansetron 4 mg', dose:'1 เม็ด', route:'PO', routeFull:'PO (รับประทาน)', schedule:'Off-cart',
+              dueTime:'Off-cart', givenTime:'08:15 น.', source:'Ward stock', reason:'คลื่นไส้หลังรับยา Heparin',
+              highAlert:false, prn:false, recordedAt: new Date(today.getTime()+8.25*3600000).toISOString(), recordedBy:'นส.สมใจ ดีมาก' }
+        ];
+        var combined = demos.concat(existing);
+        saveEmarRecords(combined);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         wardDataReady = true;
+        try { seedDemoOffCartRecords(); } catch(e) {}
         applyWardSelection(currentWardName || DEFAULT_DEMO_WARD, { silent: true });
     });
 
