@@ -3930,8 +3930,8 @@
         .rt-hold-omit-btn.omit { color:#92400E; border-color:#FCD34D; }
         .rt-hold-omit-btn.omit:hover { background:#FFFBEB; }
         /* Hold/Omit modal */
-        .rtho-overlay { position:fixed; inset:0; background:rgba(15,23,42,0.45); z-index:9000; display:flex; align-items:flex-end; justify-content:center; }
-        .rtho-sheet { background:white; border-radius:24px 24px 0 0; padding:24px 20px 32px; width:100%; max-width:480px; box-shadow:0 -8px 40px rgba(0,0,0,0.18); }
+        .rtho-overlay { position:fixed; inset:0; background:rgba(15,23,42,0.45); z-index:9000; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .rtho-sheet { background:white; border-radius:20px; padding:24px 20px 28px; width:100%; max-width:420px; box-shadow:0 8px 40px rgba(0,0,0,0.22); }
         .rtho-chip { padding:8px 14px; border-radius:10px; border:1.5px solid var(--border); font-size:12px; font-weight:600; color:var(--text-2); cursor:pointer; background:white; text-align:left; }
         .rtho-chip.active { border-color:var(--green); color:#0F766E; background:#F0FDFA; }
         .mdc.hold-card { background:#FFF7ED !important; border-color:#FED7AA !important; }
@@ -10997,7 +10997,6 @@
 <!-- ══ Hold / Omit Modal (routine flow) ══ -->
 <div id="rtHoldOmitOverlay" class="rtho-overlay" style="display:none;" onclick="if(event.target===this)rtCloseHoldOmitModal()">
     <div class="rtho-sheet">
-        <div style="width:40px;height:4px;background:#E2E8F0;border-radius:4px;margin:0 auto 20px;"></div>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
             <div id="rthoIcon" style="width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"></div>
             <div>
