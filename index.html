@@ -2498,7 +2498,8 @@
         #pg-dashboard[data-role="nurse"] #dashPipelineBar,
         #pg-dashboard[data-role="nurse"] #dashTeamPanelSlot,
         #pg-dashboard[data-role="nurse"] #dashPharmaReportLink,
-        #pg-dashboard[data-role="nurse"] #dashPharmaVerifyLink {
+        #pg-dashboard[data-role="nurse"] #dashPharmaVerifyLink,
+        #pg-dashboard[data-role="nurse"] #dashPrnRestockLink {
             display:none !important;
         }
         #pg-dashboard[data-role="nurse"] .db-actions        { order:6; grid-template-columns:1fr; }
@@ -7797,6 +7798,25 @@
                 </div>
             </div>
             <!-- เติมยาสำรอง PRN (pharmacist) -->
+            <div id="dashPrnRestockLink" class="db-action" onclick="nav('pg-prn-hw')"
+                 style="background:linear-gradient(135deg,#FDF2F8 0%,#FCE7F3 50%,#FCE7F3 100%);border:2px solid #FBCFE8;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                    <div class="db-action-icon" style="background:linear-gradient(135deg,#DB2777,#EC4899);box-shadow:0 4px 12px rgba(219,39,119,0.25);margin-bottom:0;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <line x1="12" y1="8" x2="12" y2="16"/>
+                            <line x1="8" y1="12" x2="16" y2="12"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="db-action-title" style="color:#9F1239;">เติมยาสำรอง (PRN)</div>
+                <div class="db-action-sub">PRN Stock Preparation</div>
+                <div class="db-action-desc">จัดยาสำรองเข้า Cassette พร้อม tag ยาสำรอง สำหรับยา PRN ที่ต้องเตรียมไว้ล่วงหน้า</div>
+                <div class="db-action-cta" style="color:#DB2777;">
+                    เริ่มเติมยา
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                </div>
+            </div>
             <!-- จ่ายยา -->
             <div class="db-action primary" onclick="nav('pg-routine')">
                 <span class="db-action-badge" style="background:#EF4444;">3 รอจ่าย</span>
