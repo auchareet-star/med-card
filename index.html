@@ -2510,7 +2510,7 @@
         #pg-dashboard[data-role="pharma"] #dashAssessQuickLink,
         #pg-dashboard[data-role="pharma"] #dashNurseOrderActions,
         #pg-dashboard[data-role="pharma"] .db-action[onclick*="pg-routine"],
-        #pg-dashboard[data-role="pharma"] #dashPrnQuickLink,
+
         #pg-dashboard[data-role="pharma"] #dashPipelineBar,
         #pg-dashboard[data-role="pharma"] #dashBottomGrid {
             display:none !important;
@@ -7617,15 +7617,6 @@
                 </div>
                 <span class="db-qnav-label">ประวัติการให้ยา</span>
                 <span class="db-qnav-badge" id="dashEmarCount">0</span>
-            </div>
-
-            <div id="dashPrnQuickLink" onclick="nav('pg-prn')" class="db-qnav"
-                style="--qn-bg:#F5F3FF;--qn-border:#DDD6FE;--qn-icon-bg:linear-gradient(135deg,#5B21B6,#7C3AED);--qn-color:#5B21B6;--qn-badge-bg:#EDE9FE;">
-                <div class="db-qnav-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                </div>
-                <span class="db-qnav-label">ยา PRN</span>
-                <span class="db-qnav-badge" id="dashPrnCount">0</span>
             </div>
 
         </div>
@@ -15375,7 +15366,6 @@
         // STAT alert badge
         var statBadge = document.querySelector('#dashQuickAlerts .db-alert-num');
         if (statBadge) statBadge.textContent = s.stat;
-        el = document.getElementById('dashPrnCount'); if (el) el.textContent = (typeof prnPatients !== 'undefined' ? prnPatients.length : 0);
         // eMAR 7 Rights counters
         el = document.getElementById('emar7rPending'); if (el) el.textContent = s.pending;
         el = document.getElementById('emar7rPassed'); if (el) el.textContent = s.done;
