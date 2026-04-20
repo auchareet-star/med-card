@@ -6807,43 +6807,6 @@
             </div>
         </div>
 
-        <!-- PRN Stock Panel -->
-        <div id="cartPrnSection" style="margin-top:32px;padding:20px;background:linear-gradient(135deg,#F5F3FF,#FAF5FF);border:1.5px solid #EDE9FE;border-radius:16px;">
-            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
-                <div style="width:40px;height:40px;background:linear-gradient(135deg,#7C3AED,#8B5CF6);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M12 8v12m-8-8h16"/></svg>
-                </div>
-                <div>
-                    <div style="font-size:15px;font-weight:800;color:var(--text-1);">สต็อกยา PRN</div>
-                    <div style="font-size:11px;color:var(--text-3);margin-top:2px;margin-bottom:4px;">ยาขอเพิ่มเติมตามต้องการ</div>
-                    <div id="cartPrnBanner" style="font-size:12px;font-weight:700;color:#5B21B6;">-</div>
-                </div>
-            </div>
-
-            <!-- Tabs -->
-            <div style="display:flex;gap:6px;margin-bottom:16px;border-bottom:1.5px solid rgba(148, 163, 184, 0.2);">
-                <button type="button" onclick="cartShowTab('general')" class="cart-prn-tab active" style="padding:8px 14px;border:none;background:none;font-size:12px;font-weight:700;color:#5B21B6;border-bottom:2.5px solid #7C3AED;cursor:pointer;">ทั่วไป</button>
-                <button type="button" onclick="cartShowTab('ha')" class="cart-prn-tab" style="padding:8px 14px;border:none;background:none;font-size:12px;font-weight:700;color:var(--text-3);cursor:pointer;">High Alert</button>
-            </div>
-
-            <!-- General PRN Drugs -->
-            <div id="cartPrnGeneralPanel" style="display:block;">
-                <div id="cartPrnGeneralList"></div>
-            </div>
-
-            <!-- High Alert PRN Drugs -->
-            <div id="cartPrnHaPanel" style="display:none;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                    <div id="cartHaLockBadge" style="display:none;background:#FEF2F2;border:1.5px solid #FCA5A5;border-radius:10px;padding:6px 12px;font-size:11px;font-weight:700;color:#DC2626;display:flex;align-items:center;gap:5px;">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>
-                        ล็อก · ต้องใส่ PIN
-                    </div>
-                    <button type="button" id="cartHaUnlockBtn" onclick="cartOpenPinModal()" style="display:none;padding:7px 13px;border-radius:9px;border:1.5px solid #DC2626;background:white;color:#DC2626;font-size:12px;font-weight:700;font-family:'Prompt',sans-serif;cursor:pointer;">ใส่ PIN</button>
-                </div>
-                <div id="cartPrnHaList"></div>
-            </div>
-        </div>
-
         <!-- Action Buttons -->
         <div class="btn-wrap">
             <button class="btn-primary" onclick="nav('pg-confirm')">
