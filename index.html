@@ -2395,6 +2395,8 @@
         .db-cassette-cell.schedule::after { background:rgba(255,255,255,0.9); }
         .db-cassette-cell.maintenance { background:#FEE2E2; border-color:#FECACA; }
         .db-cassette-cell.maintenance::after { background:#F87171; }
+        .db-cassette-cell.closed { background:#FFF1F2; border-color:#FDA4AF; }
+        .db-cassette-cell.closed::after { content:'✕'; width:auto; height:auto; background:none; color:#BE123C; font-size:8px; font-weight:900; border-radius:0; box-shadow:none; }
         .db-cassette-cell.prn { background:linear-gradient(135deg,#FCE7F3,#F9A8D4); border-color:#FBCFE8; box-shadow:0 0 0 2px rgba(219,39,119,0.14); }
         .db-cassette-cell.prn::after {
             content:'PRN'; width:auto; height:auto; border-radius:4px;
@@ -7876,6 +7878,7 @@
                         <span><i style="background:#dbeafe;border:1px solid #93c5fd;"></i>By Item</span>
                         <span><i style="background:#ede9fe;border:1px solid #c4b5fd;"></i>By Round</span>
                         <span><i style="background:#fee2e2;border:1px solid #fecaca;"></i>ไม่พร้อมใช้</span>
+                        <span><i style="background:#fff1f2;border:1px solid #fda4af;"></i>ปิดใช้งาน</span>
                     </div>
                 </div>
             </div>
@@ -25495,6 +25498,15 @@
             preppedFromStore = MedCartStore.orders.filter(function(o){ return o.status === 'prepped'; }).length;
         }
         var actualCompleted = completedLocks.length + preppedFromStore;
+        /* Read manually-closed slots from backoffice sessionStorage */
+        var disabledSlots = new Set();
+        try {
+            var boDisabled = JSON.parse(sessionStorage.getItem('boCartDisabledSlots') || '{}');
+            var cartId = cart.id || cart.name.replace(/^Med Cart\s+/, '');
+            var slotArr = boDisabled[cartId] || [];
+            slotArr.forEach(function(k) { disabledSlots.add(k); });
+        } catch (e) {}
+
         return {
             cart: cart,
             drawers: drawers,
@@ -25510,7 +25522,8 @@
             available: Math.max(readyBase - actualCompleted, 0),
             locks: validLocks,
             completedLocks: completedLocks,
-            byMode: byMode
+            byMode: byMode,
+            disabledSlots: disabledSlots
         };
     }
 
@@ -25595,16 +25608,19 @@
         const map = document.getElementById('dashCassetteMap');
         if (map) {
             let html = '';
+            const disabledSlots = state.disabledSlots || new Set();
             for (let d = 1; d <= state.drawers; d++) {
                 let cells = '';
                 for (let c = 1; c <= state.perDrawer; c++) {
                     const globalIndex = ((d - 1) * state.perDrawer) + c;
                     if (globalIndex > state.total) continue;
-                    const lock = lockByKey[ptdCassetteKey(d, c)];
+                    const slotKey = d + ':' + c;
+                    const isManuallyClosed = disabledSlots.has(slotKey);
+                    const lock = !isManuallyClosed ? lockByKey[ptdCassetteKey(d, c)] : null;
                     const cfg = lock ? cassetteModeConfig[lock.mode] : null;
-                    const isMaintenance = !lock && globalIndex > state.readyBase;
-                    const cls = lock ? lock.mode : isMaintenance ? 'maintenance' : '';
-                    const statusText = lock && lock.__completed ? 'เติมยาเรียบร้อยแล้ว' : lock ? 'กำลังจัดยา (' + (cfg ? cfg.label : lock.mode) + ')' : isMaintenance ? 'ไม่พร้อมใช้' : 'ว่าง · รอจัดยา';
+                    const isMaintenance = !lock && !isManuallyClosed && globalIndex > state.readyBase;
+                    const cls = isManuallyClosed ? 'closed' : lock ? lock.mode : isMaintenance ? 'maintenance' : '';
+                    const statusText = isManuallyClosed ? 'ปิดใช้งาน (กำหนดจาก Backoffice)' : lock && lock.__completed ? 'เติมยาเรียบร้อยแล้ว' : lock ? 'กำลังจัดยา (' + (cfg ? cfg.label : lock.mode) + ')' : isMaintenance ? 'ไม่พร้อมใช้' : 'ว่าง · รอจัดยา';
                     const title = 'Drawer ' + d + ' · Cassette ' + c + ' · ' + statusText;
                     cells += '<button type="button" class="db-cassette-cell ' + cls + (lock && lock.__completed ? ' completed' : '') + '" title="' + escHtml(title) + '" aria-label="' + escHtml(title) + '" onclick="event.stopPropagation();showCassetteDetailModal(' + d + ',' + c + ')"></button>';
                 }

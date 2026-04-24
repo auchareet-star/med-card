@@ -3938,6 +3938,12 @@
             WM_CARTS.forEach(function(c) {
                 if (wmDirty[c.id]) Object.assign(c, wmDirty[c.id]);
             });
+            /* Persist disabledSlots for each cart to sessionStorage so index.html can read them */
+            var boDisabled = {};
+            WM_CARTS.forEach(function(c) {
+                if (c.disabledSlots && c.disabledSlots.length) boDisabled[c.id] = c.disabledSlots;
+            });
+            sessionStorage.setItem('boCartDisabledSlots', JSON.stringify(boDisabled));
             wmNormalizeRelationships();
             wmSyncWardInfo();
             var savedWard = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;
