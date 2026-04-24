@@ -25714,7 +25714,8 @@
         }) || null;
         const lock = active || completed || null;
         const globalIndex = ((drawerNum - 1) * state.perDrawer) + cassNum;
-        const isMaintenance = !lock && globalIndex > state.readyBase;
+        const isManuallyClosed = (state.disabledSlots || new Set()).has(drawerNum + ':' + cassNum);
+        const isMaintenance = !lock && !isManuallyClosed && globalIndex > state.readyBase;
         const cfg = lock ? cassetteModeConfig[lock.mode] : null;
         const detail = {
             state: state,
@@ -25731,7 +25732,8 @@
             isCompleted: !!completed,
             isActive: !!active,
             isMaintenance: isMaintenance,
-            isReady: !lock && !isMaintenance
+            isManuallyClosed: isManuallyClosed,
+            isReady: !lock && !isMaintenance && !isManuallyClosed
         };
         detail.items = getDashboardCassetteItems(detail);
         detail.drugs = cassetteDrugNamesFromItems(detail.items).length ? cassetteDrugNamesFromItems(detail.items) : detail.drugs;
@@ -25890,14 +25892,14 @@
             const globalIndex = ((drawerNum - 1) * state.perDrawer) + c;
             if (globalIndex > state.total) break;
             const detail = getDashboardCassetteDetail(drawerNum, c);
-            const modeKey = detail.isMaintenance ? 'maintenance' : detail.lock ? detail.lock.mode : 'ready';
+            const modeKey = detail.isManuallyClosed ? 'maintenance' : detail.isMaintenance ? 'maintenance' : detail.lock ? detail.lock.mode : 'ready';
             const themeKey = (modeKey === 'prn') ? 'prn' : (detail.isCompleted ? 'completed' : modeKey);
             cassettes.push({
                 num: c,
                 detail: detail,
                 theme: modeTheme[themeKey] || modeTheme.ready,
-                statusLabel: detail.isMaintenance ? 'ไม่พร้อมใช้' : detail.isCompleted ? 'เติมยาเรียบร้อยแล้ว' : detail.lock ? 'กำลังจัดยา' : 'พร้อมใช้',
-                modeLabel: detail.cfg ? detail.cfg.dashboardLabel : (detail.isMaintenance ? 'Maintenance' : 'Ready')
+                statusLabel: detail.isManuallyClosed ? 'ปิดใช้งาน' : detail.isMaintenance ? 'ไม่พร้อมใช้' : detail.isCompleted ? 'เติมยาเรียบร้อยแล้ว' : detail.lock ? 'กำลังจัดยา' : 'พร้อมใช้',
+                modeLabel: detail.isManuallyClosed ? 'ปิดโดย Backoffice' : detail.cfg ? detail.cfg.dashboardLabel : (detail.isMaintenance ? 'Maintenance' : 'Ready')
             });
         }
         const occupied = cassettes.filter(function(c){ return c.detail.lock || c.detail.items.length || c.detail.isCompleted; });
@@ -25909,7 +25911,9 @@
         const cassetteGrid = cassettes.map(function(c) {
             const th = c.theme;
             const itemCount = (c.detail.items || []).length;
-            return '<button type="button" onclick="event.stopPropagation();showCassetteDetailModal(' + drawerNum + ',' + c.num + ')" title="Drawer ' + drawerNum + ' · Cassette ' + c.num + '" style="border:none;background:' + th.bg + ';border:1.5px solid ' + th.border + ';border-radius:16px;min-height:68px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:10px;cursor:pointer;box-shadow:0 2px 10px rgba(15,23,42,0.05);position:relative;overflow:hidden;">'
+            const closedStyle = c.detail.isManuallyClosed ? 'cursor:not-allowed;pointer-events:none;opacity:0.75;' : 'cursor:pointer;';
+            const clickAttr = c.detail.isManuallyClosed ? '' : 'onclick="event.stopPropagation();showCassetteDetailModal(' + drawerNum + ',' + c.num + ')" ';
+            return '<button type="button" ' + clickAttr + 'title="Drawer ' + drawerNum + ' · Cassette ' + c.num + '" style="border:none;background:' + th.bg + ';border:1.5px solid ' + th.border + ';border-radius:16px;min-height:68px;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;padding:10px;' + closedStyle + 'box-shadow:0 2px 10px rgba(15,23,42,0.05);position:relative;overflow:hidden;">'
                 + '<span style="position:absolute;width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.6);right:-22px;top:-20px;"></span>'
                 + '<div style="display:flex;align-items:center;justify-content:space-between;width:100%;position:relative;z-index:1;">'
                     + '<span style="font-size:13px;font-weight:950;color:' + th.color + ';">C' + c.num + '</span>'
