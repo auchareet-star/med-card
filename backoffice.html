@@ -3962,6 +3962,18 @@
             });
             sessionStorage.setItem('boCartDisabledSlots', JSON.stringify(boDisabled));
             console.log('[Backoffice] Saved boCartDisabledSlots:', JSON.stringify(boDisabled));
+            /* Persist cart capacity (drawers/cassettes) so index.html can reflect changes */
+            var boCartCapacity = {};
+            WM_CARTS.forEach(function(c) {
+                var codeKey = wmGetField(c.id, 'code', c.code) || c.id;
+                boCartCapacity[codeKey] = {
+                    drawers: c.drawers,
+                    cassettes: c.cassettes,
+                    drawersEnabled: c.drawersEnabled !== undefined ? c.drawersEnabled : c.drawers,
+                    cassettesEnabled: c.cassettesEnabled !== undefined ? c.cassettesEnabled : c.cassettes
+                };
+            });
+            sessionStorage.setItem('boCartCapacity', JSON.stringify(boCartCapacity));
             wmNormalizeRelationships();
             wmSyncWardInfo();
             var savedWard = sessionStorage.getItem('mcWard') || DEFAULT_DEMO_WARD;

@@ -25451,9 +25451,16 @@
 
     function getDashboardCassetteState() {
         const cart = getCurrentDashboardCart();
-        const drawers = Math.max(parseInt(cart.drawers, 10) || 6, 1);
-        const total = Math.max(parseInt(cart.cassettes, 10) || drawers * STANDARD_CART_CASSETTES_PER_DRAWER, drawers);
-        const readyBase = Math.max(Math.min(parseInt(cart.cassettesReady, 10) || total, total), 0);
+        /* Override capacity from backoffice sessionStorage if present */
+        var boCapOverride = {};
+        try {
+            var boCapAll = JSON.parse(sessionStorage.getItem('boCartCapacity') || '{}');
+            var capKey = (cart.code || '').replace(/^MC-/i, '') || cart.id;
+            boCapOverride = boCapAll[capKey] || boCapAll[cart.id] || {};
+        } catch (e) {}
+        const drawers = Math.max(parseInt(boCapOverride.drawers || cart.drawers, 10) || 6, 1);
+        const total = Math.max(parseInt(boCapOverride.cassettes || cart.cassettes, 10) || drawers * STANDARD_CART_CASSETTES_PER_DRAWER, drawers);
+        const readyBase = Math.max(Math.min(parseInt(boCapOverride.cassettesEnabled || cart.cassettesReady || total, 10), total), 0);
         const perDrawer = Math.max(Math.ceil(total / drawers), 1);
         const locks = Object.values(cassetteModeLocks).filter(function(lock) {
             return !lock.ward || lock.ward === (currentWardName || DEFAULT_DEMO_WARD);
