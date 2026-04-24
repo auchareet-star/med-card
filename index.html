@@ -25502,8 +25502,9 @@
         var disabledSlots = new Set();
         try {
             var boDisabled = JSON.parse(sessionStorage.getItem('boCartDisabledSlots') || '{}');
-            var cartId = cart.id || cart.name.replace(/^Med Cart\s+/, '');
-            var slotArr = boDisabled[cartId] || [];
+            // Try matching by code (e.g. "A-1"), then by id, then by name-derived key
+            var codeKey = (cart.code || '').replace(/^MC-/i, '') || cart.id || cart.name.replace(/^Med Cart\s+/, '');
+            var slotArr = boDisabled[codeKey] || boDisabled[cart.id] || [];
             slotArr.forEach(function(k) { disabledSlots.add(k); });
         } catch (e) {}
 

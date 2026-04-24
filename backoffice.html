@@ -3941,7 +3941,10 @@
             /* Persist disabledSlots for each cart to sessionStorage so index.html can read them */
             var boDisabled = {};
             WM_CARTS.forEach(function(c) {
-                if (c.disabledSlots && c.disabledSlots.length) boDisabled[c.id] = c.disabledSlots;
+                if (c.disabledSlots && c.disabledSlots.length) {
+                    var codeKey = wmGetField(c.id, 'code', c.code) || c.id;
+                    boDisabled[codeKey] = c.disabledSlots;
+                }
             });
             sessionStorage.setItem('boCartDisabledSlots', JSON.stringify(boDisabled));
             wmNormalizeRelationships();
